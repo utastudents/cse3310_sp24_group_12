@@ -1,5 +1,36 @@
 package uta.cse3310;
 
+public class Game{
+    //class atributes
+    private int gameState;
+    public PlayerType players;
+    public PlayerType currentTurn;
+    public Color playerColor;
+
+    //class constructor
+    private void Game(){
+        //cote to be implemented later
+    }
+    //StartGame method
+    public void StartGame(){
+        //code to be implemented later
+    }
+    //playerToID method
+    public int playerToID(PlayerType player){
+        //code to be implemented later
+    }
+    //Update method
+    public void Update(UserEvent user){
+        //code to be implemented later
+    }
+    //tick method
+    public void tick(){
+        //code to be implemented later
+    }
+}
+
+//Old tictactoe Game.java for reference bellow
+/*
 public class Game {
 
     PlayerType Players;
@@ -169,3 +200,4 @@ public class Game {
 }
 // In windows, shift-alt-F formats the source code
 // In linux, it is ctrl-shift-I
+*/
