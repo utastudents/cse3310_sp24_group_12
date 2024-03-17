@@ -1,7 +1,7 @@
 package uta.cse3310;
 
 public class Chat{
-    protected ArrayList<Message> messages;
+    ArrayList<Message> messages;
 
     public void sendMessage(Message message){
         //code to be implemented later
