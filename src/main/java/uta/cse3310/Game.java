@@ -3,6 +3,7 @@ package uta.cse3310;
 public class Game {
     // class atributes
     private int gameState;
+    public int GameId;
     public PlayerType players;
     public PlayerType currentTurn;
     public Color playerColor;
@@ -12,7 +13,7 @@ public class Game {
         // cote to be implemented later
     }
 
-    // StartGame method
+    // StartGame methodw
     public void StartGame() {
         // code to be implemented later
     }
