@@ -1,7 +1,14 @@
 package uta.cse3310;
 
 public class Chat{
-    //chat history will be implemented later.
+    protected ArrayList<Message> messages;
 
-    //participating user will be implemented later.
+    public void sendMessage(Message message){
+        //code to be implemented later
+    }
+
+    public void clearChat(){
+        //code to be implemented later
+    }
+
 }
