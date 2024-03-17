@@ -1,6 +1,23 @@
 package uta.cse3310;
 
 public class LoginManager{
-    String[] Username;
-    //any other necessary code to be implemented later
+
+    private ArrayList<String> usernames;
+
+    public int registerUser(String username){
+        //code to be implemented later
+        return 0;
+    }
+
+    public ArrayList<String> getRegisteredUsers(){
+        //code to be implemented later
+        return /*Name of array list used in the method (TBD)*/
+    }
+
+    public int removeUser(String username){
+        //code to be implemented later
+        return 0;
+    }
+
+    
 }
