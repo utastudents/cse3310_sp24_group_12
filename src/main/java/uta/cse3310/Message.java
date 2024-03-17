@@ -2,7 +2,7 @@ package uta.cse3310;
 
 public class Message{
     
-    protected int senderID;
-    protected String message;
+    int senderID;
+    String message;
     private int receivers;
 }
