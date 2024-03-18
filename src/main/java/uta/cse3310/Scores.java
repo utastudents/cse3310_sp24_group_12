@@ -1,8 +1,9 @@
 package uta.cse3310;
+import java.util.Map;
 
 public class Scores{
     
-    private Map<int,int> score;
+    private Map<Integer,Integer> score;
     
     public void updateScore(){
         //code to be implemented later
