@@ -1,4 +1,5 @@
 package uta.cse3310;
+import java.util.ArrayList;
 
 public class LoginManager{
 
@@ -11,7 +12,7 @@ public class LoginManager{
 
     public ArrayList<String> getRegisteredUsers(){
         //code to be implemented later
-        return /*Name of array list used in the method (TBD)*/
+        return usernames;
     }
 
     public int removeUser(String username){
