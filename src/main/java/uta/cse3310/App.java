@@ -96,7 +96,7 @@ public class App extends WebSocketServer {
     // search for a game needing a player
     Game G = null;
     for (Game i : ActiveGames) {
-      if (i.players == uta.cse3310.PlayerType.Team_1) {
+      if (i.players == uta.cse3310.PlayerType.player_1) {
         G = i;
         System.out.println("found a match");
       }
@@ -108,13 +108,13 @@ public class App extends WebSocketServer {
       G.GameId = GameId;
       GameId++;
       // Add the first player
-      G.players = PlayerType.Team_1;
+      G.players = PlayerType.player_1;
       ActiveGames.add(G);
       System.out.println(" creating a new Game");
     } else {
       // join an existing game
       System.out.println(" not a new game");
-      G.players = PlayerType.Team_2;
+      G.players = PlayerType.player_4;
       G.StartGame();
     }
 

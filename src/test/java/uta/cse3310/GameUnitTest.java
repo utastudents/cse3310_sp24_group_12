@@ -30,76 +30,7 @@ public class GameUnitTest
     //////////////////////////////////////////////////////////////////////////
 
     public void testDrawOrWinner() { // first create a game object
-        // // This method tests the ability to find a winner or
-        // // a draw game.
-        // Game G = new Game();
 
-        // // set it up for a draw game
-
-        // // XOX
-        // // OOX
-        // // XXO
-        // G.SetBoard(PlayerType.Team_1, new int[] { 0, 2, 5, 6, 7 });
-        // G.SetBoard(PlayerType.Team_2, new int[] { 1, 3, 4, 8 });
-
-        // // then CheckDraw()
-
-        // PlayerType p = PlayerType.Team_2;
-
-        // assertTrue(G.CheckDraw(p));
-        // assertFalse(G.CheckBoard(PlayerType.Team_1));
-        // assertFalse(G.CheckBoard(PlayerType.Team_2));
-
-        // // This is not a draw game.
-        // // X Wins
-
-        // // XOX
-        // // OOX
-        // // OXX
-        // G.ResetBoard();
-
-        // G.SetBoard(PlayerType.XPLAYER, new int[] { 0, 2, 5, 7, 8 });
-        // G.SetBoard(PlayerType.OPLAYER, new int[] { 1, 3, 4, 6 });
-
-        // // G.PrintGame();
-        // // then CheckDraw()
-        // assertFalse(G.CheckDraw(p));
-        // assertTrue(G.CheckBoard(PlayerType.XPLAYER));
-        // assertFalse(G.CheckBoard(PlayerType.OPLAYER));
-
-        // // This is not a draw game.
-        // // O Wins
-
-        // // XOX
-        // // XOX
-        // // _O_
-        // G.ResetBoard();
-
-        // G.SetBoard(PlayerType.XPLAYER, new int[] { 0, 2, 3, 5 });
-        // G.SetBoard(PlayerType.OPLAYER, new int[] { 1, 4, 7 });
-
-        // // G.PrintGame();
-        // // then CheckDraw()
-        // assertFalse(G.CheckDraw(p));
-        // assertTrue(G.CheckBoard(PlayerType.OPLAYER));
-        // assertFalse(G.CheckBoard(PlayerType.XPLAYER));
-
-        // // This is not a draw game.
-        // // O Wins
-
-        // // OXX
-        // // XOX
-        // // __O
-        // G.ResetBoard();
-
-        // G.SetBoard(PlayerType.XPLAYER, new int[] { 1, 2, 3, 5 });
-        // G.SetBoard(PlayerType.OPLAYER, new int[] { 0, 4, 8 });
-
-        // // G.PrintGame();
-        // // then CheckDraw()
-        // assertFalse(G.CheckDraw(p));
-        // assertTrue(G.CheckBoard(PlayerType.OPLAYER));
-        // assertFalse(G.CheckBoard(PlayerType.XPLAYER));
     }
 
 }
