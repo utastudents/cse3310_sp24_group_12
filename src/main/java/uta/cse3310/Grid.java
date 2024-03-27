@@ -4,7 +4,7 @@ import java.util.HashSet;
 public class Grid {
   //class atributes
   public char[][] grid;
-  private HashSet<Word> words;
+  private HashSet<Word> wordsInGrid;
 
   //methods
   public void createGrid(){
