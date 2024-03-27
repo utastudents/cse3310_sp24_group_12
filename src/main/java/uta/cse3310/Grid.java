@@ -3,7 +3,7 @@ import java.util.HashSet;
 
 public class Grid {
   //class atributes
-  private char[] grid;
+  public char[][] grid;
   private HashSet<Word> words;
 
   //methods
