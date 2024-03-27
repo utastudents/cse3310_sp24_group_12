@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class WordList {
     ArrayList<String> wordList;
 
-    public void loadWord(){
+    public void loadWords(){
 
     }
 
