@@ -72,7 +72,46 @@ public class Game {
 
     // Update method
     public void Update(UserEvent user) {
-        // code to be implemented later
+        // Update players and messages based on tictactoe's Game.Update()
+        if((currentTurn == user.PlayerId) &&
+           (currentTurn == PlayerType.Player_1 ||
+            currentTurn == PlayerType.Player_2 || 
+            currentTurn == PlayerType.Player_3 ||
+            currentTurn == PlayerType.Player_4))
+        {
+            if((buttons[0][user.buttons] == user.PlayerID) &&
+                buttons[1][user.buttons] == user.PlayerID))
+            {
+                if(user.PlayerId == PlayerType.Player_1){
+                    currentTurn = PlayerType.Player_2;
+                    msg[1] = "Player 1's move";
+                    msg[0] = "Your move";
+                    
+                }
+                else if(user.PlayerId == PlayerType.Player_2){
+                    currentTurn = PlayerType.Player_3;
+                    msg[1] = "Player 2's move";
+                    msg[0] = "Your move";
+                }
+                else if(user.PlayerId == PlayerType.Player_3){
+                    currentTurn = PlayerType.Player_4;
+                    msg[1] = "Player 3's move";
+                    msg[0] = "Your move";
+                }
+                else if(user.PlayerId == PlayerType.Player_4){
+                    currentTurn = PlayerType.Player_1;
+                    msg[1] = "Player 4's move";
+                    msg[0] = "Your move";
+                }
+            }
+            else{
+                msg[PlayerToID(user.PlayerID)] = "Not a legal move";
+            }
+
+            //Possibly implement way to check if a player has won
+            //assuming we want our Game.Update() to work like
+            //tictactoe's Game.Update()
+        }
     }
 
     // tick method
