@@ -17,25 +17,39 @@
             <h1 id="TWSG" class="navbar-brand d-flex font-weight-bold extra-bold" title="The World Search Game" style="font-size: 2em;">TWSG</h1>
             </div>
         </nav>
+    
 
+    <div id="LoginScreen" style="display: block;">
         <div class=" container-fluid row g-3 py-2 justify-content-center">
             <form id="usernameForm" class="col-6 text-center ">
                 <div class="row mb-2">
                     <h3><label for="inputUsername" class="col-form-label">Enter Username</label></h3>
                 </div>
-                <div class="">
+                <div>
                     <input type="text" id="inputUsername" class="form-control">
                 </div>
-                <div class="">
+                <div>
                     <span class="form-text">
                         Must be atleast 3 characters.
                     </span>
                 </div>
-                <button type="submit" class="btn btn-primary mt-2"> Enter </button>
+                <div>
+                    <span id="usernameError" class = "form-text text-danger">
+
+                    </span>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2" style="width: 30%;"> SUBMIT </button>
             </form>
         </div>
-            
+    </div>
         
+    
+        <div  id="LobbyScreen" style="display: block;">
+            <div class="container text-center">
+                <h2>L O B B Y</h2>
+            </div>
+
+        </div>
 
 
 
@@ -48,31 +62,35 @@
     </body>
 </html>
 <script>
-    let usernames = ["jack","john","doe"]
-    document.getElementById('usernameForm').addEventListener('submit',function(event){
-        
-        let username = document.getElementById('inputUsername').value;
+    const LoginScreen = document.getElementById("LoginScreen")
+    const LobbyScreen = document.getElementById("LobbyScreen")
+    var usernameList = ['john']
+    var username;
+    var form = document.getElementById("usernameForm")
+    var input = document.getElementById('inputUsername')
+    var usernameError = document.getElementById('usernameError')
+    form.addEventListener('submit',function(e){
+        e.preventDefault()
+        username = input.value
         console.log(username)
-        if(username.length < 3){
-            alert('Username must be at least 3 characters long')
-            event.preventDefault()
-        }else{
-            if(usernames.indexOf(username) == -1){
-                usernames.push(username)
-                localStorage.setItem('username',username)
-                let users = JSON.stringify(usernames)
-                localStorage.setItem('stringArray',users)
-                window.location.href = ''
-                event.preventDefault()
-            }else{
-                console.log("it doesnt exists")
-                alert('Username already exists.\n please choose another username.')
-                event.preventDefault()
-            }
+        if(username.length<3){
+            usernameError.textContent = "Username entered is too short"
+            return
         }
-        
+        usernameError.textContent = ''
+        if(usernameList.indexOf(username) != -1){
+            usernameError.textContent = "Username already taken"
+            return
+        }
+        usernameList.push(username)
+        console.log(usernameList)
+        LoginScreen.style.display = 'none'
+        LobbyScreen.style.display = 'block'
+        input.value = ''
     })
 </script>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 <style>
