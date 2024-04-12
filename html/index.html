@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     </head>
     <title>TWSG</title>
@@ -18,7 +19,7 @@
             </div>
         </nav>
     
-
+                                    <!--Login Screen Here -->
     <div id="LoginScreen" style="display: block;">
         <div class=" container-fluid row g-3 py-2 justify-content-center">
             <form id="usernameForm" class="col-6 text-center ">
@@ -43,7 +44,7 @@
         </div>
     </div>
         
-    
+                                    <!--Lobby Screen Here -->
         <div  id="LobbyScreen" style="display: none;">
             <div class="container text-center mt-3">
                 <h2>L O B B Y</h2>
@@ -62,11 +63,23 @@
                     <span id="Count" class="text-danger" style="font-weight: bolder;">10</span>
                 </div>
             </div>
-            
         </div>
+                                    <!--Game Screen Here -->
+        <div id="GameScreen" class="container-fluid mt-5" style="display: none;">
+            <div class="row justify-content-start">
+                <div class="col-7">
+                    <div id="WordGrid" class="d-flex card bg-secondary p-3 align-items-center justify-content-start" style="width: 100%; height:100% ; overflow-x: auto; overflow-y: auto;">
 
-        <div id="GameScreen" style="display: none;">
-            meep
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="position-fixed  d-flex card bg-secondary mx-5" style="max-height: 300px; width: 200px;">
+                        <ul id="GameuserList" class="list-group flex-grow-1" style="height: 100%; width: 100%;">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>    
         </div>
 
 
@@ -80,13 +93,28 @@
 <script>
     const LoginScreen = document.getElementById("LoginScreen")
     const LobbyScreen = document.getElementById("LobbyScreen")
-    let usernameList = ['john','doe','jimi']
+    let usernameList = ['john','doe']
     var username;
     var form = document.getElementById("usernameForm")
     var input = document.getElementById('inputUsername')
     var usernameError = document.getElementById('usernameError')
     var startButton = document.getElementById('startButton')
     var GameScreen = document.getElementById('GameScreen')
+    var playerColor = ['Tomato','Orange','violet','DodgerBlue','MediumSeaGreen']
+    let colormap = {}
+    const gridSize = 40
+    const wordGrid = document.getElementById("WordGrid")
+    let score = 0
+    /********************************************************************/
+    // class player{//test class
+    //     constructor(name,color){
+    //         this.Pname = name
+    //         this.Pcolor = color
+    //         this.Pscore = 0
+    //     }
+    // }
+    // const players = []
+    /********************************************************************/
 
 
     form.addEventListener('submit',function(e){//take in user input (username)
@@ -107,15 +135,23 @@
         LoginScreen.style.display = 'none'
         LobbyScreen.style.display = 'block'
         input.value = ''
+        AssignColors()
         Lobby(usernameList)
     })
 
     function Lobby(usernameList){ //lobby screen, for each username in usernamelist create new list element and populate the lobby list.
-       
-        
-        
         usernameList.forEach(element => {
-            document.getElementById("usernameList").innerHTML += "<li  class='list-group-item text-center' style = 'width:100%; height:60px; font-weight: bold'>" + element.toUpperCase() + "</li>"
+            // var newPlayer = new Player(element,colormap[element])// testing player class
+            //     players.push(newPlayer)//testing player class
+            //     console.log(players[index].Pname)
+            let listItem = document.createElement("li")
+            listItem.classList.add('list-group-item', 'text-center')
+            listItem.style.width = '100%'
+            listItem.style.height = '60px'
+            listItem.style.fontWeight = 'bold'
+            listItem.style.backgroundColor = colormap[element]
+            listItem.textContent = element.toUpperCase()
+            document.getElementById("usernameList").appendChild(listItem)
         })
         if(usernameList.length >= 5){ //if there are 5 players in the game, the game starts within 10 seconds
             startButton.style.display = 'none'
@@ -130,12 +166,87 @@
         })
     }
    
+    function Game(usernameList){
+        usernameList.forEach((element,index) => {
+            let listItem = document.createElement("li")
+            listItem.classList.add('list-group-item', 'text-start')
+            listItem.style.width = '100%'
+            listItem.style.height = '60px'
+            listItem.style.fontWeight = 'bold'
+            listItem.style.backgroundColor = colormap[element]
+            // listItem.style.backgroundColor = players[index].Pcolor
+            listItem.textContent = element.toUpperCase() + "'s Score: " + score
+
+            document.getElementById("GameuserList").appendChild(listItem)
+        })
+        populateWordGrid(gridSize)
+    }
+
+    function populateWordGrid(gridSize){
+        wordGrid.innerHTML = ''
+        for(let i = 0; i < gridSize;i++){
+            const Row = document.createElement("div")
+            Row.classList.add("d-flex","flex-grow-1")
+
+            for(let j = 0; j < gridSize; j++){
+                // var letter = '?'
+                // var Col = GridElement(letter)
+
+                var Col = document.createElement("span");
+                Col.classList.add('list-group-item',"text-start")
+                Col.textContent = 'A'
+                Col.style.cursor = 'pointer'
+                Col.style.width = '15px'
+                Col.style.height = '30px'
+                Col.style.margin = '1px'
+                Col.style.backgroundColor = 'light-gray'
 
 
-</script>
+                /********************************************************************/
+                //cant figure out how to change the colors on click
+                // let clicked = false
 
+                // Col.addEventListener("click",()=>{
+                //     if(clicked){
+                //         Col.style.backgroundColor = 'light-gray'
+                //         clicked = false
+                //     }else{
+                //         Col.style.backgroundColor = 'Orange';
+                //         clicked = true
+                //     }
+                // })
+                /********************************************************************/
+                
+                Row.appendChild(Col)
+            }
+            wordGrid.appendChild(Row)
+        }
+    }
 
-<script>
+    
+
+    // function GridElement(letter){
+        // var Col = document.createElement("span");
+        // Col.classList.add('list-group-item',"text-start")
+        // Col.textContent = 'A'
+        // Col.style.cursor = 'pointer'
+        // Col.style.width = '15px'
+        // Col.style.height = '30px'
+        // Col.style.margin = '1px'
+        // Col.style.backgroundColor = 'light-gray'
+        
+        let clicked = false
+
+        Col.addEventListener("click",()=>{
+                    if(clicked){
+                        Col.style.backgroundColor = 'light-gray'
+                        clicked = false
+                    }else{
+                        Col.style.backgroundColor = 'Orange';
+                        clicked = true
+                    }
+                })
+    // }
     function startCountdown(){// 10 second countdown, displays the coundown timer
         //changes the text content of the Count span (so it displayes like 10, 9 , 8 ...)
         //when timer reaches 0 the countdown display and lobby become invisible, game screen becomes visible
@@ -154,9 +265,25 @@
                 Countdown.style.display = 'none'
                 LobbyScreen.style.display = 'none'
                 GameScreen.style.display = 'block'
+                Game(usernameList)
             }
         },1000)
     }
+    function AssignColors(){//assigns a color to each username
+        usernameList.forEach((element,index)=>{
+            if(index <= playerColor.length){
+                colormap[element] = playerColor[index]
+                
+            }else{
+                colormap[element] = 'gray'
+            }
+        })
+    }
+</script>
+
+
+<script>
+    
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
