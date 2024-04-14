@@ -45,7 +45,7 @@ public class Game {
      * @param player
      * @return
      */
-    public int playerToID(PlayerType player) {
+    public int playerToId(PlayerType player) {
         int returnValue = -1;
         switch (player) {
             case NoPlayer:
@@ -105,7 +105,7 @@ public class Game {
                 }
             }
             else{
-                msg[PlayerToID(user.PlayerID)] = "Not a legal move";
+                msg[PlayerToId(user.PlayerID)] = "Not a legal move";
             }
 
             //Possibly implement way to check if a player has won
