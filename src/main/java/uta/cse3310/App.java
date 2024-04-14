@@ -97,7 +97,7 @@ public class App extends WebSocketServer {
     Game G = null;
     for (Game i : ActiveGames) {
       System.out.println(i.latestPlayer);
-      if ((i.latestPlayer == uta.cse3310.PlayerType.player_1) || (i.latestPlayer == uta.cse3310.PlayerType.player_2) || (i.latestPlayer == uta.cse3310.PlayerType.player_3) && (i.loginManager.currentGameSize < 3)){
+      if ((i.latestPlayer == uta.cse3310.PlayerType.player_1) || (i.latestPlayer == uta.cse3310.PlayerType.player_2) || (i.latestPlayer == uta.cse3310.PlayerType.player_3) || (i.latestPlayer == uta.cse3310.PlayerType.player_4) && (i.loginManager.currentGameSize < 4)){
         G = i;
         System.out.println("found a match");
       }

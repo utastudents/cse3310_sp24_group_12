@@ -200,8 +200,6 @@
 
         if (msg == "startGame") {
             startCountdown();
-            //LobbyScreen.style.display = "none";
-            //GameScreen.style.display = "block";
             return;
         }
 
@@ -245,6 +243,15 @@
                 console.log("gameid: " + gameid);
                 buttonsList = obj.buttons;
             }
+
+            if("latestPlayer" in obj && (obj.GameId == gameid)){
+                if(obj.latestPlayer == "player_1" || obj.latestPlayer == "player_5"){
+                    startButton.style.display = "none";
+                }
+                else{
+                    startButton.style.display = "block";
+                }
+            }
         }
     };
 
@@ -271,7 +278,7 @@
                 document.getElementById("usernameList").appendChild(listItem);
             }
         });
-        if (usernameList.length >= 5) {
+        if (usernameList.length >= 4) {
             startButton.style.display = "none";
             connection.send("startGame");
         } else if (usernameList.length < 2) {
