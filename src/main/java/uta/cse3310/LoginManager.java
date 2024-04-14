@@ -4,8 +4,9 @@ import java.util.List;
 
 
 public class LoginManager{
-
+    public int currentGameSize = 0;
     private ArrayList<String> usernames;
+    public Color playerColor;
 
     public LoginManager() {
         this.usernames = new ArrayList<>();
@@ -19,6 +20,7 @@ public class LoginManager{
 
         // Add the username to the list of registered users
         usernames.add(username);
+        currentGameSize++;
         return true; // Successful registration
     }
 
