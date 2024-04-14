@@ -4,38 +4,36 @@ package uta.cse3310;
 public class Game {
     // class atributes
     public int requiredGameSize;
-    public int currentGameSize;
-    private int gameState;
+    private int gameState; // 0 = waiting for players, 1 = game in progress
     public int GameId;
     public String[] msg;
-    public PlayerType lastestPlayer;
+    public PlayerType latestPlayer;
     public PlayerType currentTurn;
-    public Color playerColor;
-    public PlayerType[][] buttons;
+    public Alphabet[][] buttons;
+    public LoginManager loginManager = new LoginManager();
 
     // class constructor
-    Game(int gameSize) {
-        this.requiredGameSize = gameSize;
-        buttons = new PlayerType[50][50];
+    Game() {
+        buttons = new Alphabet[50][50];
 
         for (int i = 0; i < 50; i++) {
             for (int j = 0; j < 50; j++) {
-                buttons[i][j] = PlayerType.NoPlayer;
+                buttons[i][j] = new Alphabet(); // Add this line to initialize each element of the buttons array
+                buttons[i][j].player = PlayerType.NoPlayer;
+                buttons[i][j].alphabet = '?';
             }
         }
 
         msg = new String[2];
-        lastestPlayer = PlayerType.player_1;
-        currentGameSize++;
+        latestPlayer = PlayerType.player_1;
         currentTurn = PlayerType.NoPlayer;
         msg[0] = "Waiting for other player to join";
         msg[1] = "";
     }
 
-    // StartGame methodw
+    // StartGame method
     public void StartGame() {
-        msg[0] = "It is your turn Player  1";
-        msg[1] = "It is not your turn at the moment. It is player 1's turn.";
+        gameState = 1;
         currentTurn = PlayerType.player_1;
     }
 
@@ -74,38 +72,38 @@ public class Game {
     public void Update(UserEvent user) {
         // Update players and messages based on tictactoe's Game.Update()
         if((currentTurn == user.PlayerId) &&
-           (currentTurn == PlayerType.Player_1 ||
-            currentTurn == PlayerType.Player_2 || 
-            currentTurn == PlayerType.Player_3 ||
-            currentTurn == PlayerType.Player_4))
+           (currentTurn == PlayerType.player_1 ||
+            currentTurn == PlayerType.player_2 || 
+            currentTurn == PlayerType.player_3 ||
+            currentTurn == PlayerType.player_4))
         {
-            if((buttons[0][user.buttons] == user.PlayerID) &&
-                buttons[1][user.buttons] == user.PlayerID))
+            if((buttons[0][user.button].player == user.PlayerId) &&
+                (buttons[1][user.button].player == user.PlayerId))
             {
-                if(user.PlayerId == PlayerType.Player_1){
-                    currentTurn = PlayerType.Player_2;
+                if(user.PlayerId == PlayerType.player_1){
+                    currentTurn = PlayerType.player_2;
                     msg[1] = "Player 1's move";
                     msg[0] = "Your move";
                     
                 }
-                else if(user.PlayerId == PlayerType.Player_2){
-                    currentTurn = PlayerType.Player_3;
+                else if(user.PlayerId == PlayerType.player_2){
+                    currentTurn = PlayerType.player_3;
                     msg[1] = "Player 2's move";
                     msg[0] = "Your move";
                 }
-                else if(user.PlayerId == PlayerType.Player_3){
-                    currentTurn = PlayerType.Player_4;
+                else if(user.PlayerId == PlayerType.player_3){
+                    currentTurn = PlayerType.player_4;
                     msg[1] = "Player 3's move";
                     msg[0] = "Your move";
                 }
-                else if(user.PlayerId == PlayerType.Player_4){
-                    currentTurn = PlayerType.Player_1;
+                else if(user.PlayerId == PlayerType.player_4){
+                    currentTurn = PlayerType.player_1;
                     msg[1] = "Player 4's move";
                     msg[0] = "Your move";
                 }
             }
             else{
-                msg[PlayerToId(user.PlayerID)] = "Not a legal move";
+                msg[playerToId(user.PlayerId)] = "Not a legal move";
             }
 
             //Possibly implement way to check if a player has won
