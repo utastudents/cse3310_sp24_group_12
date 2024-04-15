@@ -29,7 +29,9 @@ public class Game {
         gameState = 1;
         currentTurn = PlayerType.player_1;
     }
-
+    public int getGameState(){
+        return gameState;
+    }
     /**
      * Returns an index for each player based on the enum.
      * 

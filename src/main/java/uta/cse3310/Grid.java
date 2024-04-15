@@ -34,6 +34,7 @@ public class Grid {
         grid[i][j] = new Alphabet();
         grid[i][j].player = PlayerType.NoPlayer;
         grid[i][j].alphabet = (char) (random.nextInt(26) + 'a');
+        grid[i][j].color = "light-gray";
       }
     }
 

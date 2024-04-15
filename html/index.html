@@ -105,7 +105,7 @@
         </div>
         <div id="GameScreen" class="container-fluid mt-5" style="display: none">
             <div class="row justify-content-start">
-                <div class="col-7">
+                <div class="col-10">
                     <div
                         id="WordGrid"
                         class="d-flex card bg-secondary p-3 align-items-center justify-content-start"
@@ -182,16 +182,6 @@
     const gridSize = 40;
     const wordGrid = document.getElementById("WordGrid");
 
-    /********************************************************************/
-    // class player{//test class
-    //     constructor(name,color){
-    //         this.Pname = name
-    //         this.Pcolor = color
-    //         this.Pscore = 0
-    //     }
-    // }
-    // const players = []
-    /********************************************************************/
 
     connection.onmessage = function (evt) {
         var msg;
@@ -318,7 +308,6 @@
     function Game(usernameList) {
         const gameUserList = document.getElementById("GameuserList");
         gameUserList.innerHTML = ""; // Clear the previous user list
-
         if (usernameList) {
             for (let [key, value] of usernameList) {
                 let listItem = document.createElement("li");
@@ -365,21 +354,10 @@
     }
     function ClickListener(Col, i, j) {
         return function () {
-            Col.style.backgroundColor = 'purple'
+            Col.style.backgroundColor =  usernameList.get(username)
             console.log("Clicked - Row:", i, "Column:", j);
         };
     }
-    // function GridElement(letter){
-    // var Col = document.createElement("span");
-    // Col.classList.add('list-group-item',"text-start")
-    // Col.textContent = 'A'
-    // Col.style.cursor = 'pointer'
-    // Col.style.width = '15px'
-    // Col.style.height = '30px'
-    // Col.style.margin = '1px'
-    // Col.style.backgroundColor = 'light-gray'
-
-    //let clicked = false
 
     function startCountdown() {
         // 10 second countdown, displays the coundown timer
@@ -403,7 +381,7 @@
                 GameScreen.style.display = "block";
                 Game(usernameList);
             }
-        }, 1000);
+        }, 100);
     }
 </script>
 
