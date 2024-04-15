@@ -4,26 +4,17 @@ package uta.cse3310;
 public class Game {
     // class atributes
     public int requiredGameSize;
-    private int gameState; // 0 = waiting for players, 1 = game in progress
+    public int gameState; // 0 = waiting for players, 1 = game in progress
     public int GameId;
     public String[] msg;
     public PlayerType latestPlayer;
     public PlayerType currentTurn;
-    public Alphabet[][] buttons;
     public LoginManager loginManager = new LoginManager();
+    public Scores scores = new Scores();
+    public Grid grid;
 
     // class constructor
     Game() {
-        buttons = new Alphabet[50][50];
-
-        for (int i = 0; i < 50; i++) {
-            for (int j = 0; j < 50; j++) {
-                buttons[i][j] = new Alphabet(); // Add this line to initialize each element of the buttons array
-                buttons[i][j].player = PlayerType.NoPlayer;
-                buttons[i][j].alphabet = '?';
-            }
-        }
-
         msg = new String[2];
         latestPlayer = PlayerType.player_1;
         currentTurn = PlayerType.NoPlayer;
@@ -33,6 +24,8 @@ public class Game {
 
     // StartGame method
     public void StartGame() {
+        grid = new Grid();
+        grid.createGrid();
         gameState = 1;
         currentTurn = PlayerType.player_1;
     }
@@ -77,8 +70,8 @@ public class Game {
             currentTurn == PlayerType.player_3 ||
             currentTurn == PlayerType.player_4))
         {
-            if((buttons[0][user.button].player == user.PlayerId) &&
-                (buttons[1][user.button].player == user.PlayerId))
+            if((grid.grid[0][user.button].player == user.PlayerId) &&
+                (grid.grid[1][user.button].player == user.PlayerId))
             {
                 if(user.PlayerId == PlayerType.player_1){
                     currentTurn = PlayerType.player_2;
