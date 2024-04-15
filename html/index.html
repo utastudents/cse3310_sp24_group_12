@@ -88,7 +88,7 @@
                     id="startButton"
                     type="button"
                     class="btn btn-primary mt-2"
-                    style="width: 50%; display:'block'"
+                    style="width: 50%; display: 'block'"
                 >
                     START GAME
                 </button>
@@ -170,6 +170,9 @@
     var buttonsList;
     var scoremap = new Map();
 
+    var userStartClick = null;
+    var userEndClick = null;
+
     let colormap = {
         RED: "Tomato",
         GREEN: "MediumSeaGreen",
@@ -211,7 +214,7 @@
                 usernameError.textContent = "Username in use.";
                 return;
             }
-            if(msg.slice(1,msg.length) == "Too Short"){
+            if (msg.slice(1, msg.length) == "Too Short") {
                 nameLength.classList.add("text-danger");
                 return;
             }
@@ -336,9 +339,9 @@
 
         populateWordGrid(buttonsList);
     }
-
     function populateWordGrid(buttonsList) {
         wordGrid.innerHTML = "";
+
         for (let i = 0; i < 50; i++) {
             const Row = document.createElement("div");
             Row.classList.add("d-flex", "flex-grow-1");
@@ -357,18 +360,44 @@
                 Col.style.justifyContent = "center";
                 Col.style.alignItems = "center";
 
-                Col.addEventListener("click", ClickListener(Col, i, j));
+                Col.addEventListener(
+                    "click",
+                    ClickListener(Col, i, j)
+                );
                 Row.appendChild(Col);
             }
             wordGrid.appendChild(Row);
         }
     }
+
     function ClickListener(Col, i, j) {
         return function () {
-            Col.style.backgroundColor = 'purple'
-            console.log("Clicked - Row:", i, "Column:", j);
+            Col.style.backgroundColor = "purple";   
+            if (userStartClick === null) {
+                userStartClick = { i, j };
+                console.log("startClick: ", userStartClick);
+            } else if (userEndClick === null) {
+                userEndClick = { i, j };
+                console.log("endClick: ", userEndClick);
+                connection.send(
+                    ") " +
+                        username +
+                        " " +
+                        userStartClick.i +
+                        " " +
+                        userStartClick.j +
+                        " " +
+                        userEndClick.i +
+                        " " +
+                        userEndClick.j
+                );
+                userStartClick = null;
+                userEndClick = null;
+            }
         };
     }
+
+    
     // function GridElement(letter){
     // var Col = document.createElement("span");
     // Col.classList.add('list-group-item',"text-start")
