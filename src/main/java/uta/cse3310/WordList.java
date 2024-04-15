@@ -17,13 +17,16 @@ public class WordList {
      * @throws IOException
      */
     public void loadWords() throws IOException {
-        String path = "../../../words.txt";
+        String path = "words.txt";
         File file = new File(path);
         BufferedReader br = new BufferedReader(new FileReader(file));
 
         String line;
 
         while (((line = br.readLine()) != null)) {
+            if (line.length() < 3) {
+                continue;
+            }
             wordList.add(line.strip());
         }
 
