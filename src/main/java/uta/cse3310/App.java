@@ -97,7 +97,12 @@ public class App extends WebSocketServer {
     Game G = null;
     for (Game i : ActiveGames) {
       System.out.println(i.latestPlayer);
-      if ((i.latestPlayer == uta.cse3310.PlayerType.player_1) || (i.latestPlayer == uta.cse3310.PlayerType.player_2) || (i.latestPlayer == uta.cse3310.PlayerType.player_3) || (i.latestPlayer == uta.cse3310.PlayerType.player_4) && (i.loginManager.currentGameSize < 4)){
+      if (((i.latestPlayer == uta.cse3310.PlayerType.player_1) ||
+          (i.latestPlayer == uta.cse3310.PlayerType.player_2) ||
+          (i.latestPlayer == uta.cse3310.PlayerType.player_3) ||
+          (i.latestPlayer == uta.cse3310.PlayerType.player_4)) &&
+          ((i.loginManager.currentGameSize < 4) &&
+          (i.gameState != 1))) {
         G = i;
         System.out.println("found a match");
       }
@@ -154,22 +159,27 @@ public class App extends WebSocketServer {
 
   @Override
   public void onMessage(WebSocket conn, String message) {
-    System.out.println(message); 
+    System.out.println(message);
     GsonBuilder builder = new GsonBuilder();
     Gson gson = builder.create();
-    
+
     if (message.contains("startGame")) {
       Game G = conn.getAttachment();
+      if (G.gameState == 1) {
+        return;
+      }
       G.StartGame();
       broadcast(gson.toJson(G));
       return;
     }
     if (message.startsWith("+")) {
       Game G = conn.getAttachment();
-      if (!G.loginManager.registerUser(message.substring(1, message.length()))) {
+      var username = message.substring(1, message.length());
+      if (!G.loginManager.registerUser(username)) {
         broadcast("!Invalid Username");
         return;
       }
+      G.scores.addNewPlayer(username);
       String jsonString;
       jsonString = gson.toJson(G);
       broadcast(jsonString);
@@ -180,7 +190,7 @@ public class App extends WebSocketServer {
 
       // Bring in the data from the webpage
       // A UserEvent is all that is allowed at this point
-      
+
       UserEvent U = gson.fromJson(message, UserEvent.class);
 
       // Get our Game Object
