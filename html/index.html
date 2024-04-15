@@ -1,110 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+        />
     </head>
     <title>TWSG</title>
-    
-
-
-
-
 
     <body class="bg-dark text-white">
-        <nav class="navbar navbar-dark border-bottom border-white ">
+        <nav class="navbar navbar-dark border-bottom border-white">
             <div class="container-fluid justify-content-center">
-            <h1 id="TWSG" class="navbar-brand d-flex font-weight-bold extra-bold" title="The World Search Game" style="font-size: 2em;">TWSG</h1>
+                <h1
+                    id="TWSG"
+                    class="navbar-brand d-flex font-weight-bold extra-bold"
+                    title="The World Search Game"
+                    style="font-size: 2em"
+                >
+                    TWSG
+                </h1>
             </div>
         </nav>
-    
-                                    <!--Login Screen Here -->
-    <div id="LoginScreen" style="display: block;">
-        <div class=" container-fluid row g-3 py-2 justify-content-center">
-            <form id="usernameForm" class="col-6 text-center ">
-                <div class="row mb-2">
-                    <h3><label for="inputUsername" class="col-form-label">Enter Username</label></h3>
-                </div>
-                <div>
-                    <input type="text" id="inputUsername" class="form-control">
-                </div>
-                <div>
-                    <span class="form-text">
-                        Must be atleast 3 characters.
-                    </span>
-                </div>
-                <div>
-                    <span id="usernameError" class = "form-text text-danger">
 
-                    </span>
-                </div>
-                <button type="submit" class="btn btn-primary mt-2" style="width: 30%;"> SUBMIT </button>
-            </form>
+        <!--Login Screen Here -->
+        <div id="LoginScreen" style="display: block">
+            <div class="container-fluid row g-3 py-2 justify-content-center">
+                <form id="usernameForm" class="col-6 text-center">
+                    <div class="row mb-2">
+                        <h3>
+                            <label for="inputUsername" class="col-form-label"
+                                >Enter Username</label
+                            >
+                        </h3>
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            id="inputUsername"
+                            class="form-control"
+                        />
+                    </div>
+                    <div>
+                        <span class="form-text">
+                            Must be atleast 3 characters.
+                        </span>
+                    </div>
+                    <div>
+                        <span id="usernameError" class="form-text text-danger">
+                        </span>
+                    </div>
+                    <button
+                        type="submit"
+                        class="btn btn-primary mt-2"
+                        style="width: 30%"
+                    >
+                        SUBMIT
+                    </button>
+                </form>
+            </div>
         </div>
-    </div>
-        
-                                    <!--Lobby Screen Here -->
-        <div  id="LobbyScreen" style="display: none;">
+
+        <!--Lobby Screen Here -->
+        <div id="LobbyScreen" style="display: none">
             <div class="container text-center mt-3">
                 <h2>L O B B Y</h2>
             </div>
 
-            <div  class="d-flex  align-items-center col card bg-secondary mx-auto mt-5" style="max-height: 300px; width: 300px;">
-                <ul id="usernameList" class="list-group flex-grow-1" style="height: 100%; width: 100%;">
-
-                </ul>
-                
+            <div
+                class="d-flex align-items-center col card bg-secondary mx-auto mt-5"
+                style="max-height: 300px; width: 300px"
+            >
+                <ul
+                    id="usernameList"
+                    class="list-group flex-grow-1"
+                    style="height: 100%; width: 100%"
+                ></ul>
             </div>
-            <div class="d-flex justify-content-center align-items-center col mx-auto" style="max-height: 300px; width: 300px;">
-                <button id="startButton" type="button" class="btn btn-primary mt-2" style="width: 50%;"> START GAME </button>
-                <div id="Countdown" class="mt-4" style="display: none;">
+            <div
+                class="d-flex justify-content-center align-items-center col mx-auto"
+                style="max-height: 300px; width: 300px"
+            >
+                <button
+                    id="startButton"
+                    type="button"
+                    class="btn btn-primary mt-2"
+                    style="width: 50%"
+                >
+                    START GAME
+                </button>
+                <div id="Countdown" class="mt-4" style="display: none">
                     Game starts in
-                    <span id="Count" class="text-danger" style="font-weight: bolder;">10</span>
+                    <span
+                        id="Count"
+                        class="text-danger"
+                        style="font-weight: bolder"
+                        >10</span
+                    >
                 </div>
             </div>
         </div>
-                                    <!--Game Screen Here -->
-        <div id="GameScreen" class="container-fluid mt-5" style="display: none;">
+        <!--Game Screen Here -->
+        <div id="GameScreen" class="container-fluid mt-5" style="display: none">
             <div class="row justify-content-start">
                 <div class="col-7">
-                    <div id="WordGrid" class="d-flex card bg-secondary p-3 align-items-center justify-content-start" style="width: 100%; height:100% ; overflow-x: auto; overflow-y: auto;">
-
-                    </div>
+                    <div
+                        id="WordGrid"
+                        class="d-flex card bg-secondary p-3 align-items-center justify-content-start"
+                        style="
+                            width: 100%;
+                            height: 100%;
+                            overflow-x: auto;
+                            overflow-y: auto;
+                        "
+                    ></div>
                 </div>
                 <div class="col-1">
-                    <div class="position-fixed  d-flex card bg-secondary mx-5" style="max-height: 300px; width: 200px;">
-                        <ul id="GameuserList" class="list-group flex-grow-1" style="height: 100%; width: 100%;">
-
-                        </ul>
+                    <div
+                        class="position-fixed d-flex card bg-secondary mx-5"
+                        style="max-height: 300px; width: 200px"
+                    >
+                        <ul
+                            id="GameuserList"
+                            class="list-group flex-grow-1"
+                            style="height: 100%; width: 100%"
+                        ></ul>
                     </div>
                 </div>
-            </div>    
+            </div>
         </div>
-
-
-
-
-
-
-
     </body>
 </html>
 <script>
-    const LoginScreen = document.getElementById("LoginScreen")
-    const LobbyScreen = document.getElementById("LobbyScreen")
-    let usernameList = ['john','doe']
+    var idx = -1;
+    var gameid = -1;
+    class UserEvent {
+        Button = -1;
+        PlayerIdx = 0;
+        GameId = 0;
+    }
+    var connection = null;
+
+    var serverUrl;
+    serverUrl =
+        "ws://" +
+        window.location.hostname +
+        ":" +
+        (parseInt(location.port) + 100);
+    // Create the connection with the server
+    connection = new WebSocket(serverUrl);
+
+    connection.onopen = function (evt) {
+        console.log("open");
+    };
+    connection.onclose = function (evt) {
+        console.log("close");
+    };
+    const LoginScreen = document.getElementById("LoginScreen");
+    const LobbyScreen = document.getElementById("LobbyScreen");
     var username;
-    var form = document.getElementById("usernameForm")
-    var input = document.getElementById('inputUsername')
-    var usernameError = document.getElementById('usernameError')
-    var startButton = document.getElementById('startButton')
-    var GameScreen = document.getElementById('GameScreen')
-    var playerColor = ['Tomato','Orange','violet','DodgerBlue','MediumSeaGreen']
-    let colormap = {}
-    const gridSize = 40
-    const wordGrid = document.getElementById("WordGrid")
-    let score = 0
+    var form = document.getElementById("usernameForm");
+    var input = document.getElementById("inputUsername");
+    var usernameError = document.getElementById("usernameError");
+    var startButton = document.getElementById("startButton");
+    var GameScreen = document.getElementById("GameScreen");
+    var buttonsList;
+    var playerColor = [
+        "Tomato",
+        "Orange",
+        "violet",
+        "DodgerBlue",
+        "MediumSeaGreen",
+    ];
+    let colormap = {};
+    const gridSize = 40;
+    const wordGrid = document.getElementById("WordGrid");
+    let score = 0;
     /********************************************************************/
     // class player{//test class
     //     constructor(name,color){
@@ -116,91 +190,143 @@
     // const players = []
     /********************************************************************/
 
+    connection.onmessage = function (evt) {
+        var msg;
+        msg = evt.data;
 
-    form.addEventListener('submit',function(e){//take in user input (username)
-        e.preventDefault()
-        username = input.value
-        console.log(username)
-        if(username.length<3){//check input length
-            usernameError.textContent = "Username entered is too short"
-            return
-        }
-        usernameError.textContent = ''
-        if(usernameList.indexOf(username) != -1){ //check if username already exists
-            usernameError.textContent = "Username already taken"
-            return
-        }
-        usernameList.push(username)
-        console.log(usernameList)
-        LoginScreen.style.display = 'none'
-        LobbyScreen.style.display = 'block'
-        input.value = ''
-        AssignColors()
-        Lobby(usernameList)
-    })
+        console.log("Message received: " + msg);
 
-    function Lobby(usernameList){ //lobby screen, for each username in usernamelist create new list element and populate the lobby list.
-        usernameList.forEach(element => {
-            // var newPlayer = new Player(element,colormap[element])// testing player class
-            //     players.push(newPlayer)//testing player class
-            //     console.log(players[index].Pname)
-            let listItem = document.createElement("li")
-            listItem.classList.add('list-group-item', 'text-center')
-            listItem.style.width = '100%'
-            listItem.style.height = '60px'
-            listItem.style.fontWeight = 'bold'
-            listItem.style.backgroundColor = colormap[element]
-            listItem.textContent = element.toUpperCase()
-            document.getElementById("usernameList").appendChild(listItem)
-        })
-        if(usernameList.length >= 5){ //if there are 5 players in the game, the game starts within 10 seconds
-            startButton.style.display = 'none'
+        usernameError.textContent = "";
+
+        if (msg == "startGame") {
             startCountdown();
-        }else if(usernameList.length < 2){ //if there are less than 2 players in the game the game cannot be started (start button is invisible)
-            startButton.style.display = 'none'
+            return;
+        }
+
+        if (msg.startsWith("!")) {
+            if (msg.slice(1, msg.length) == "Invalid Username") {
+                usernameError.textContent = "Username in use.";
+                return;
+            }
+        } else {
+            const obj = JSON.parse(msg);
+
+            if ("YouAre" in obj) {
+                if (obj.YouAre == "player_1") {
+                    idx = 0;
+                } else if (obj.YouAre == "player_2") {
+                    idx = 1;
+                } else if (obj.YouAre == "player_3") {
+                    idx = 2;
+                } else if (obj.YouAre == "player_4") {
+                    idx = 3;
+                }
+                gameid = obj.GameId;
+            }
+            if ((("gameState") in obj) && (obj.gameState == 1) && (obj.GameId == gameid)){
+                console.log("gameid: " + gameid);
+                console.log("gameState: " + obj.gameState);
+                startCountdown();
+            }
+            if ("loginManager" in obj && (obj.GameId == gameid)) {
+                console.log("gameid: " + gameid);
+                console.log("usernamelist: " + usernameList);
+                usernameList = obj.loginManager.usernames;
+                if (usernameList.includes(username)) {
+                    LoginScreen.style.display = "none";
+                    LobbyScreen.style.display = "block";
+                    input.value = "";
+                    Lobby(usernameList, gameid);
+                }
+            }
+            if ("buttons" in obj && (obj.GameId == gameid)) {
+                console.log("gameid: " + gameid);
+                buttonsList = obj.buttons;
+            }
+
+            if("latestPlayer" in obj && (obj.GameId == gameid)){
+                if(obj.latestPlayer == "player_1" || obj.latestPlayer == "player_5"){
+                    startButton.style.display = "none";
+                }
+                else{
+                    startButton.style.display = "block";
+                }
+            }
+        }
+    };
+
+    form.addEventListener("submit", function (e) {
+        //take in user input (username)
+        e.preventDefault();
+        username = input.value;
+        console.log(username);
+        connection.send("+" + username);
+    });
+
+    function Lobby(usernameList) {
+        //lobby screen, for each username in usernamelist create new list element and populate the lobby list.
+        usernameList.forEach((element) => {
+            if (!document.getElementById(element)) {
+                let listItem = document.createElement("li");
+                listItem.classList.add("list-group-item", "text-center");
+                listItem.style.width = "100%";
+                listItem.style.height = "60px";
+                listItem.style.fontWeight = "bold";
+                listItem.style.backgroundColor = colormap[element];
+                listItem.textContent = element.toUpperCase();
+                listItem.id = element;
+                document.getElementById("usernameList").appendChild(listItem);
+            }
+        });
+        if (usernameList.length >= 4) {
+            startButton.style.display = "none";
+            connection.send("startGame");
+        } else if (usernameList.length < 2) {
+            //if there are less than 2 players in the game the game cannot be started (start button is invisible)
+            startButton.style.display = "none";
         }
         //otherwise a start button is visible and on click will start the game within 10 seconds
-        startButton.addEventListener('click',function(e){//when start game is clicked, makes it invisible and calls start countdown
-            startButton.style.display = 'none'
-            startCountdown();
-        })
+        startButton.addEventListener("click", function (e) {
+            //when start game is clicked, makes it invisible and calls start countdown
+            startButton.style.display = "none";
+            connection.send("startGame");
+        });
     }
-   
-    function Game(usernameList){
-        usernameList.forEach((element,index) => {
-            let listItem = document.createElement("li")
-            listItem.classList.add('list-group-item', 'text-start')
-            listItem.style.width = '100%'
-            listItem.style.height = '60px'
-            listItem.style.fontWeight = 'bold'
-            listItem.style.backgroundColor = colormap[element]
-            // listItem.style.backgroundColor = players[index].Pcolor
-            listItem.textContent = element.toUpperCase() + "'s Score: " + score
+    function Game(usernameList) {
+        const gameUserList = document.getElementById("GameuserList");
+        gameUserList.innerHTML = ""; // Clear the previous user list
+        usernameList.forEach((element, index) => {
+            let listItem = document.createElement("li");
+            listItem.classList.add("list-group-item", "text-start");
+            listItem.style.width = "100%";
+            listItem.style.height = "60px";
+            listItem.style.fontWeight = "bold";
+            listItem.style.backgroundColor = colormap[element];
+            listItem.textContent = element.toUpperCase() + "'s Score: " + score;
 
-            document.getElementById("GameuserList").appendChild(listItem)
-        })
-        populateWordGrid(gridSize)
+            gameUserList.appendChild(listItem);
+        });
+        populateWordGrid(buttonsList);
     }
 
-    function populateWordGrid(gridSize){
-        wordGrid.innerHTML = ''
-        for(let i = 0; i < gridSize;i++){
-            const Row = document.createElement("div")
-            Row.classList.add("d-flex","flex-grow-1")
+    function populateWordGrid(buttonsList) {
+        wordGrid.innerHTML = "";
+        for (let i = 0; i < 50; i++) {
+            const Row = document.createElement("div");
+            Row.classList.add("d-flex", "flex-grow-1");
 
-            for(let j = 0; j < gridSize; j++){
+            for (let j = 0; j < 50; j++) {
                 // var letter = '?'
                 // var Col = GridElement(letter)
 
                 var Col = document.createElement("span");
-                Col.classList.add('list-group-item',"text-start")
-                Col.textContent = 'A'
-                Col.style.cursor = 'pointer'
-                Col.style.width = '15px'
-                Col.style.height = '30px'
-                Col.style.margin = '1px'
-                Col.style.backgroundColor = 'light-gray'
-
+                Col.classList.add("list-group-item", "text-start");
+                Col.textContent = buttonsList[i][j].alphabet;
+                Col.style.cursor = "pointer";
+                Col.style.width = "15px";
+                Col.style.height = "30px";
+                Col.style.margin = "1px";
+                Col.style.backgroundColor = "light-gray";
 
                 /********************************************************************/
                 //cant figure out how to change the colors on click
@@ -216,77 +342,77 @@
                 //     }
                 // })
                 /********************************************************************/
-                
-                Row.appendChild(Col)
+
+                Row.appendChild(Col);
             }
-            wordGrid.appendChild(Row)
+            wordGrid.appendChild(Row);
         }
     }
 
-    
-
     // function GridElement(letter){
-        // var Col = document.createElement("span");
-        // Col.classList.add('list-group-item',"text-start")
-        // Col.textContent = 'A'
-        // Col.style.cursor = 'pointer'
-        // Col.style.width = '15px'
-        // Col.style.height = '30px'
-        // Col.style.margin = '1px'
-        // Col.style.backgroundColor = 'light-gray'
-        
-        let clicked = false
+    // var Col = document.createElement("span");
+    // Col.classList.add('list-group-item',"text-start")
+    // Col.textContent = 'A'
+    // Col.style.cursor = 'pointer'
+    // Col.style.width = '15px'
+    // Col.style.height = '30px'
+    // Col.style.margin = '1px'
+    // Col.style.backgroundColor = 'light-gray'
 
-        Col.addEventListener("click",()=>{
-                    if(clicked){
-                        Col.style.backgroundColor = 'light-gray'
-                        clicked = false
-                    }else{
-                        Col.style.backgroundColor = 'Orange';
-                        clicked = true
-                    }
-                })
+    //let clicked = false
+
+    //Col.addEventListener("click",()=>{
+    //            if(clicked){
+    //                Col.style.backgroundColor = 'light-gray'
+    //                clicked = false
+    //            }else{
+    //                Col.style.backgroundColor = 'Orange';
+    //                clicked = true
+    //            }
+    //        })
     // }
-    function startCountdown(){// 10 second countdown, displays the coundown timer
+    function startCountdown() {
+        // 10 second countdown, displays the coundown timer
         //changes the text content of the Count span (so it displayes like 10, 9 , 8 ...)
         //when timer reaches 0 the countdown display and lobby become invisible, game screen becomes visible
 
-        const Countdown = document.getElementById('Countdown')
-        const Count = document.getElementById('Count')
-        var timer = 10
-        Countdown.style.display = 'block'
+        const Countdown = document.getElementById("Countdown");
+        const Count = document.getElementById("Count");
+        var timer = 10;
+        Countdown.style.display = "block";
 
-        const interval = setInterval(()=>{
-            timer--
+        const interval = setInterval(() => {
+            timer--;
             Count.textContent = timer;
 
-            if(timer <=0){
-                clearInterval(interval)
-                Countdown.style.display = 'none'
-                LobbyScreen.style.display = 'none'
-                GameScreen.style.display = 'block'
-                Game(usernameList)
+            if (timer <= 0) {
+                clearInterval(interval);
+                Countdown.style.display = "none";
+                LobbyScreen.style.display = "none";
+                GameScreen.style.display = "block";
+                Game(usernameList);
             }
-        },1000)
+        }, 1000);
     }
-    function AssignColors(){//assigns a color to each username
-        usernameList.forEach((element,index)=>{
-            if(index <= playerColor.length){
-                colormap[element] = playerColor[index]
-                
-            }else{
-                colormap[element] = 'gray'
+    function AssignColors() {
+        //assigns a color to each username
+        usernameList.forEach((element, index) => {
+            if (index <= playerColor.length) {
+                colormap[element] = playerColor[index];
+            } else {
+                colormap[element] = "gray";
             }
-        })
+        });
     }
 </script>
 
+<script></script>
 
-<script>
-    
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+></script>
 
 <style>
     @keyframes gradientAnimation {
