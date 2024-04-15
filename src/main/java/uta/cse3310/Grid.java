@@ -1,16 +1,112 @@
 package uta.cse3310;
 
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.Random;
 
 public class Grid {
   // class atributes
-  public char[][] grid;
+  public Alphabet[][] grid;
   private HashSet<Word> wordsInGrid;
   private HashSet<Word> foundWords;
 
   // methods
   public void createGrid() {
-    // code to be implemented later
+    WordList wordList = new WordList();
+    try {
+      wordList.loadWords();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    wordsInGrid = new HashSet<>();
+    foundWords = new HashSet<>();
+
+    populateGrid(50);
+  }
+  public void populateGrid(int size) {
+    grid = new Alphabet[size][size];
+    Random random = new Random();
+
+    // Fill the grid with random characters
+    for (int i = 0; i < size; i++) {
+      for (int j = 0; j < size; j++) {
+        grid[i][j] = new Alphabet();
+        grid[i][j].player = PlayerType.NoPlayer;
+        grid[i][j].alphabet = (char) (random.nextInt(26) + 'a');
+      }
+    }
+
+    // Sprinkle words randomly in the grid
+    WordList wordList = new WordList();
+    try {
+      wordList.loadWords();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    wordsInGrid = new HashSet<>();
+    foundWords = new HashSet<>();
+
+    for (String word : wordList.wordList) {
+      int wordLength = word.length();
+      int startX = random.nextInt(size - wordLength + 1);
+      int startY = random.nextInt(size - wordLength + 1);
+      int endX = startX + wordLength - 1;
+      int endY = startY + wordLength - 1;
+
+      // Check if the word overlaps with any existing words
+      boolean overlaps = false;
+      for (Word existingWord : wordsInGrid) {
+        if (startX <= existingWord.endx && endX >= existingWord.startx &&
+            startY <= existingWord.endy && endY >= existingWord.starty) {
+          overlaps = true;
+          break;
+        }
+      }
+
+      // If the word doesn't overlap, add it to the grid
+      if (!overlaps) {
+        // Determine the orientation of the word
+        int orientation = random.nextInt(5);
+        switch (orientation) {
+          case 0: // Horizontal
+            for (int i = startX; i <= endX; i++) {
+              grid[i][startY].alphabet = word.charAt(i - startX);
+            }
+            break;
+          case 1: // Vertical upward
+            for (int i = startY; i <= endY; i++) {
+              grid[startX][i].alphabet = word.charAt(i - startY);
+            }
+            break;
+          case 2: // Vertical downward
+            for (int i = startY; i <= endY; i++) {
+              grid[startX][i].alphabet = word.charAt(endY - i);
+            }
+            break;
+          case 3: // Diagonal upward
+            for (int i = startX, j = startY; i <= endX && j <= endY; i++, j++) {
+              grid[i][j].alphabet = word.charAt(i - startX);
+            }
+            break;
+          case 4: // Diagonal downward
+            for (int i = startX, j = startY; i <= endX && j <= endY; i++, j++) {
+              grid[i][j].alphabet = word.charAt(endX - i);
+            }
+            break;
+        }
+
+        // Create a Word object and add it to the wordsInGrid set
+        Word wordObject = new Word(word, startX, endX, startY, endY, wordLength);
+        wordsInGrid.add(wordObject);
+
+        // Check if 80% of the grid is filled with valid words
+        if (wordsInGrid.size() >= (size * size) * 0.8) {
+          break;
+        }
+      }
+    }
   }
 
   public void highlightWord(Word word) {
