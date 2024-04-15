@@ -183,7 +183,27 @@ public class App extends WebSocketServer {
       String jsonString;
       jsonString = gson.toJson(G);
       broadcast(jsonString);
-    } else {
+    } else if (message.startsWith(")")) {
+      Game G = conn.getAttachment();
+      String[] parts = message.split(" ");
+      String name = parts[1];
+      int startx = Integer.parseInt(parts[2]);
+      int starty = Integer.parseInt(parts[3]);
+      int endx = Integer.parseInt(parts[4]);
+      int endy = Integer.parseInt(parts[5]);
+      
+
+      // TODO: Get player from username. Send to checkWord. checkWord sends to highlight. After that, broadcast updated game.
+      if (G.grid.checkWord(startx, starty, endx, endy)) {
+        G.scores.updateScore(name, 1);
+        broadcast(gson.toJson(G));
+      } else {
+        broadcast("!Invalid Word");
+      }
+      
+    }
+    
+    else {
       // System.out
       // .println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " +
       // "-" + " " + escape(message));
