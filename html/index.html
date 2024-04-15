@@ -103,7 +103,6 @@
                 </div>
             </div>
         </div>
-        <!--Game Screen Here -->
         <div id="GameScreen" class="container-fluid mt-5" style="display: none">
             <div class="row justify-content-start">
                 <div class="col-7">
@@ -168,17 +167,20 @@
     var startButton = document.getElementById("startButton");
     var GameScreen = document.getElementById("GameScreen");
     var buttonsList;
-    var playerColor = [
-        "Tomato",
-        "Orange",
-        "violet",
-        "DodgerBlue",
-        "MediumSeaGreen",
-    ];
-    let colormap = {};
+    var scoremap = new Map();
+
+    let colormap = {
+        RED: "Tomato",
+        GREEN: "MediumSeaGreen",
+        BLUE: "DodgerBlue",
+        ORANGE: "Orange",
+        YELLOW: "yellow",
+        PURPLE: "purple",
+        WHITE: "white",
+    };
     const gridSize = 40;
     const wordGrid = document.getElementById("WordGrid");
-    let score = 0;
+
     /********************************************************************/
     // class player{//test class
     //     constructor(name,color){
@@ -223,32 +225,43 @@
                 }
                 gameid = obj.GameId;
             }
-            if ((("gameState") in obj) && (obj.gameState == 1) && (obj.GameId == gameid)){
+            if (
+                "gameState" in obj &&
+                obj.gameState == 1 &&
+                obj.GameId == gameid
+            ) {
+                startButton.style.display = "none";
                 console.log("gameid: " + gameid);
                 console.log("gameState: " + obj.gameState);
                 startCountdown();
             }
-            if ("loginManager" in obj && (obj.GameId == gameid)) {
+            if ("loginManager" in obj && obj.GameId == gameid) {
+                usernameList = obj.loginManager.usernames;
+                usernameList = new Map(Object.entries(usernameList));
                 console.log("gameid: " + gameid);
                 console.log("usernamelist: " + usernameList);
-                usernameList = obj.loginManager.usernames;
-                if (usernameList.includes(username)) {
+                if (usernameList.has(username)) {
                     LoginScreen.style.display = "none";
                     LobbyScreen.style.display = "block";
                     input.value = "";
-                    Lobby(usernameList, gameid);
+                    Lobby(usernameList);
                 }
             }
-            if ("buttons" in obj && (obj.GameId == gameid)) {
+            if ("grid" in obj && obj.GameId == gameid) {
                 console.log("gameid: " + gameid);
-                buttonsList = obj.buttons;
+                buttonsList = obj.grid.grid;
+            }
+            if ("scores" in obj && obj.GameId == gameid) {
+                scoremap = obj.scores.score;
             }
 
-            if("latestPlayer" in obj && (obj.GameId == gameid)){
-                if(obj.latestPlayer == "player_1" || obj.latestPlayer == "player_5"){
+            if ("latestPlayer" in obj && obj.GameId == gameid) {
+                if (
+                    obj.latestPlayer == "player_1" ||
+                    obj.latestPlayer == "player_5"
+                ) {
                     startButton.style.display = "none";
-                }
-                else{
+                } else {
                     startButton.style.display = "block";
                 }
             }
@@ -259,29 +272,35 @@
         //take in user input (username)
         e.preventDefault();
         username = input.value;
-        console.log(username);
         connection.send("+" + username);
     });
 
     function Lobby(usernameList) {
         //lobby screen, for each username in usernamelist create new list element and populate the lobby list.
-        usernameList.forEach((element) => {
-            if (!document.getElementById(element)) {
-                let listItem = document.createElement("li");
-                listItem.classList.add("list-group-item", "text-center");
-                listItem.style.width = "100%";
-                listItem.style.height = "60px";
-                listItem.style.fontWeight = "bold";
-                listItem.style.backgroundColor = colormap[element];
-                listItem.textContent = element.toUpperCase();
-                listItem.id = element;
-                document.getElementById("usernameList").appendChild(listItem);
+
+        if (usernameList) {
+            for (let [key, value] of usernameList) {
+                if (!document.getElementById(key)) {
+                    let listItem = document.createElement("li");
+                    listItem.classList.add("list-group-item", "text-center");
+                    listItem.style.width = "100%";
+                    listItem.style.height = "60px";
+                    listItem.style.fontWeight = "bold";
+                    listItem.style.backgroundColor = colormap[value];
+                    listItem.textContent = key.toUpperCase();
+                    listItem.id = key;
+                    document
+                        .getElementById("usernameList")
+                        .appendChild(listItem);
+                }
             }
-        });
-        if (usernameList.length >= 4) {
+        }
+
+        if (usernameList.size >= 4) {
             startButton.style.display = "none";
             connection.send("startGame");
-        } else if (usernameList.length < 2) {
+            return;
+        } else if (usernameList.size < 2) {
             //if there are less than 2 players in the game the game cannot be started (start button is invisible)
             startButton.style.display = "none";
         }
@@ -295,17 +314,22 @@
     function Game(usernameList) {
         const gameUserList = document.getElementById("GameuserList");
         gameUserList.innerHTML = ""; // Clear the previous user list
-        usernameList.forEach((element, index) => {
-            let listItem = document.createElement("li");
-            listItem.classList.add("list-group-item", "text-start");
-            listItem.style.width = "100%";
-            listItem.style.height = "60px";
-            listItem.style.fontWeight = "bold";
-            listItem.style.backgroundColor = colormap[element];
-            listItem.textContent = element.toUpperCase() + "'s Score: " + score;
 
-            gameUserList.appendChild(listItem);
-        });
+        if (usernameList) {
+            for (let [key, value] of usernameList) {
+                let listItem = document.createElement("li");
+                listItem.classList.add("list-group-item", "text-start");
+                listItem.style.width = "100%";
+                listItem.style.height = "60px";
+                listItem.style.fontWeight = "bold";
+                listItem.style.backgroundColor = colormap[value];
+                listItem.textContent =
+                    key.toUpperCase() + "'s Score: " + scoremap[key];
+
+                gameUserList.appendChild(listItem);
+            }
+        }
+
         populateWordGrid(buttonsList);
     }
 
@@ -316,39 +340,31 @@
             Row.classList.add("d-flex", "flex-grow-1");
 
             for (let j = 0; j < 50; j++) {
-                // var letter = '?'
-                // var Col = GridElement(letter)
-
                 var Col = document.createElement("span");
                 Col.classList.add("list-group-item", "text-start");
                 Col.textContent = buttonsList[i][j].alphabet;
+                Col.id = i + "," + j;
                 Col.style.cursor = "pointer";
-                Col.style.width = "15px";
-                Col.style.height = "30px";
-                Col.style.margin = "1px";
+                Col.style.width = "2px";
+                Col.style.height = "10px";
+                Col.style.margin = "3px";
                 Col.style.backgroundColor = "light-gray";
+                Col.style.display = "flex";
+                Col.style.justifyContent = "center";
+                Col.style.alignItems = "center";
 
-                /********************************************************************/
-                //cant figure out how to change the colors on click
-                // let clicked = false
-
-                // Col.addEventListener("click",()=>{
-                //     if(clicked){
-                //         Col.style.backgroundColor = 'light-gray'
-                //         clicked = false
-                //     }else{
-                //         Col.style.backgroundColor = 'Orange';
-                //         clicked = true
-                //     }
-                // })
-                /********************************************************************/
-
+                Col.addEventListener("click", ClickListener(Col, i, j));
                 Row.appendChild(Col);
             }
             wordGrid.appendChild(Row);
         }
     }
-
+    function ClickListener(Col, i, j) {
+        return function () {
+            Col.style.backgroundColor = 'purple'
+            console.log("Clicked - Row:", i, "Column:", j);
+        };
+    }
     // function GridElement(letter){
     // var Col = document.createElement("span");
     // Col.classList.add('list-group-item',"text-start")
@@ -361,16 +377,6 @@
 
     //let clicked = false
 
-    //Col.addEventListener("click",()=>{
-    //            if(clicked){
-    //                Col.style.backgroundColor = 'light-gray'
-    //                clicked = false
-    //            }else{
-    //                Col.style.backgroundColor = 'Orange';
-    //                clicked = true
-    //            }
-    //        })
-    // }
     function startCountdown() {
         // 10 second countdown, displays the coundown timer
         //changes the text content of the Count span (so it displayes like 10, 9 , 8 ...)
@@ -393,16 +399,6 @@
                 Game(usernameList);
             }
         }, 1000);
-    }
-    function AssignColors() {
-        //assigns a color to each username
-        usernameList.forEach((element, index) => {
-            if (index <= playerColor.length) {
-                colormap[element] = playerColor[index];
-            } else {
-                colormap[element] = "gray";
-            }
-        });
     }
 </script>
 
