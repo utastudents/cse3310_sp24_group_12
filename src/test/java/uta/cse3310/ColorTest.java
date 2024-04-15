@@ -1,11 +1,11 @@
 package uta.cse3310;
 
-import org.junit.Assert;
-import org.junit.Test;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-public class ColorTest {
+public class ColorTest extends TestCase{
 
-    @Test
     public void testEnumValues(){
         //Check if expected values are present
         Assert.assertTrue(Color.RED != null);
@@ -17,7 +17,6 @@ public class ColorTest {
         Assert.assertTrue(Color.WHITE != null);
     }
 
-    @Test
     public void testEnumOrder(){
         //Check order of colors 
         Color[] colors = Color.values();
