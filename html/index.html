@@ -32,9 +32,9 @@
                 <form id="usernameForm" class="col-6 text-center">
                     <div class="row mb-2">
                         <h3>
-                            <label for="inputUsername" class="col-form-label"
-                                >Enter Username</label
-                            >
+                            <label for="inputUsername" class="col-form-label">
+                                Enter Username
+                            </label>
                         </h3>
                     </div>
                     <div>
@@ -45,7 +45,7 @@
                         />
                     </div>
                     <div>
-                        <span class="form-text">
+                        <span id="nameLength" class="form-text">
                             Must be atleast 3 characters.
                         </span>
                     </div>
@@ -88,7 +88,7 @@
                     id="startButton"
                     type="button"
                     class="btn btn-primary mt-2"
-                    style="width: 50%"
+                    style="width: 50%; display:'block'"
                 >
                     START GAME
                 </button>
@@ -164,6 +164,7 @@
     var form = document.getElementById("usernameForm");
     var input = document.getElementById("inputUsername");
     var usernameError = document.getElementById("usernameError");
+    var nameLength = document.getElementById("nameLength");
     var startButton = document.getElementById("startButton");
     var GameScreen = document.getElementById("GameScreen");
     var buttonsList;
@@ -208,6 +209,10 @@
         if (msg.startsWith("!")) {
             if (msg.slice(1, msg.length) == "Invalid Username") {
                 usernameError.textContent = "Username in use.";
+                return;
+            }
+            if(msg.slice(1,msg.length) == "Too Short"){
+                nameLength.classList.add("text-danger");
                 return;
             }
         } else {
@@ -307,7 +312,6 @@
         //otherwise a start button is visible and on click will start the game within 10 seconds
         startButton.addEventListener("click", function (e) {
             //when start game is clicked, makes it invisible and calls start countdown
-            startButton.style.display = "none";
             connection.send("startGame");
         });
     }
@@ -385,6 +389,7 @@
         const Countdown = document.getElementById("Countdown");
         const Count = document.getElementById("Count");
         var timer = 10;
+        startButton.style.display = "none";
         Countdown.style.display = "block";
 
         const interval = setInterval(() => {
