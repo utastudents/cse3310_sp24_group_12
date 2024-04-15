@@ -5,4 +5,5 @@ import java.util.Objects;
 public class Alphabet {
     char alphabet;
     PlayerType player;
+    
 }
