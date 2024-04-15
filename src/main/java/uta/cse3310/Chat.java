@@ -9,15 +9,16 @@ public class Chat {
 
     Scanner input = new Scanner(System.in);
     System.out.println("<Type a message. Press enter to send.>");
+    
 
     public void sendMessage() {
         while (true){
             String message = input.nextLine();
             message = message + "\n";
             messages.add(message);
-        
+
             for (String element : arrayList) {
-                broadcast(element);
+                broadcast(game);
             }
             messages.clear();
         }
