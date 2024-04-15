@@ -32,9 +32,9 @@
                 <form id="usernameForm" class="col-6 text-center">
                     <div class="row mb-2">
                         <h3>
-                            <label for="inputUsername" class="col-form-label"
-                                >Enter Username</label
-                            >
+                            <label for="inputUsername" class="col-form-label">
+                                Enter Username
+                            </label>
                         </h3>
                     </div>
                     <div>
@@ -45,7 +45,7 @@
                         />
                     </div>
                     <div>
-                        <span class="form-text">
+                        <span id="nameLength" class="form-text">
                             Must be atleast 3 characters.
                         </span>
                     </div>
@@ -88,7 +88,7 @@
                     id="startButton"
                     type="button"
                     class="btn btn-primary mt-2"
-                    style="width: 50%"
+                    style="width: 50%; display:'block'"
                 >
                     START GAME
                 </button>
@@ -165,6 +165,7 @@
     var form = document.getElementById("usernameForm");
     var input = document.getElementById("inputUsername");
     var usernameError = document.getElementById("usernameError");
+    var nameLength = document.getElementById("nameLength");
     var startButton = document.getElementById("startButton");
     var GameScreen = document.getElementById("GameScreen");
     var buttonsList;
@@ -179,16 +180,6 @@
     const gridSize = 40;
     const wordGrid = document.getElementById("WordGrid");
     let score = 0;
-    /********************************************************************/
-    // class player{//test class
-    //     constructor(name,color){
-    //         this.Pname = name
-    //         this.Pcolor = color
-    //         this.Pscore = 0
-    //     }
-    // }
-    // const players = []
-    /********************************************************************/
 
     connection.onmessage = function (evt) {
         var msg;
@@ -208,6 +199,10 @@
                 usernameError.textContent = "Username in use.";
                 return;
             }
+            if(msg.slice(1,msg.length) == "Too Short"){
+                nameLength.classList.add("text-danger");
+                return;
+            }
         } else {
             const obj = JSON.parse(msg);
 
@@ -223,6 +218,13 @@
                 }
                 gameid = obj.GameId;
             }
+            if("latestPlayer" in obj && (obj.GameId == gameid)){
+                if(obj.latestPlayer == "player_1" || obj.latestPlayer == "player_5"){
+                    startButton.style.display = "none"
+                }else{
+                    startButton.style.display = "block"
+                }
+            }
             if ((("gameState") in obj) && (obj.gameState == 1) && (obj.GameId == gameid)){
                 console.log("gameid: " + gameid);
                 console.log("gameState: " + obj.gameState);
@@ -232,6 +234,7 @@
                 console.log("gameid: " + gameid);
                 console.log("usernamelist: " + usernameList);
                 usernameList = obj.loginManager.usernames;
+                console.log("UsernameList: " + usernameList)
                 if (usernameList.includes(username)) {
                     LoginScreen.style.display = "none";
                     LobbyScreen.style.display = "block";
@@ -244,14 +247,7 @@
                 buttonsList = obj.buttons;
             }
 
-            if("latestPlayer" in obj && (obj.GameId == gameid)){
-                if(obj.latestPlayer == "player_1" || obj.latestPlayer == "player_5"){
-                    startButton.style.display = "none";
-                }
-                else{
-                    startButton.style.display = "block";
-                }
-            }
+            
         }
     };
 
@@ -278,17 +274,9 @@
                 document.getElementById("usernameList").appendChild(listItem);
             }
         });
-        if (usernameList.length >= 4) {
-            startButton.style.display = "none";
-            connection.send("startGame");
-        } else if (usernameList.length < 2) {
-            //if there are less than 2 players in the game the game cannot be started (start button is invisible)
-            startButton.style.display = "none";
-        }
-        //otherwise a start button is visible and on click will start the game within 10 seconds
+        //start button is visible and on click will start the game within 10 seconds
         startButton.addEventListener("click", function (e) {
             //when start game is clicked, makes it invisible and calls start countdown
-            startButton.style.display = "none";
             connection.send("startGame");
         });
     }
@@ -379,6 +367,7 @@
         const Countdown = document.getElementById("Countdown");
         const Count = document.getElementById("Count");
         var timer = 10;
+        startButton.style.display = "none";
         Countdown.style.display = "block";
 
         const interval = setInterval(() => {

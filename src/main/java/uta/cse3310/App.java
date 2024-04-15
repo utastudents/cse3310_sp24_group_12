@@ -97,7 +97,7 @@ public class App extends WebSocketServer {
     Game G = null;
     for (Game i : ActiveGames) {
       System.out.println(i.latestPlayer);
-      if ((i.latestPlayer == uta.cse3310.PlayerType.player_1) || (i.latestPlayer == uta.cse3310.PlayerType.player_2) || (i.latestPlayer == uta.cse3310.PlayerType.player_3) || (i.latestPlayer == uta.cse3310.PlayerType.player_4) && (i.loginManager.currentGameSize < 4)){
+      if ((i.latestPlayer == uta.cse3310.PlayerType.player_1) || (i.latestPlayer == uta.cse3310.PlayerType.player_2) || (i.latestPlayer == uta.cse3310.PlayerType.player_3) || (i.latestPlayer == uta.cse3310.PlayerType.player_4) && (i.loginManager.currentGameSize < 4)&&(i.getGameState() == 0)){
         G = i;
         System.out.println("found a match");
       }
@@ -166,10 +166,14 @@ public class App extends WebSocketServer {
     }
     if (message.startsWith("+")) {
       Game G = conn.getAttachment();
-      if (!G.loginManager.registerUser(message.substring(1, message.length()))) {
+      if(message.substring(1,message.length()).length() < 3){
+        broadcast("!Too Short");
+        return;
+      }else if (!G.loginManager.registerUser(message.substring(1, message.length()))) {
         broadcast("!Invalid Username");
         return;
       }
+      
       String jsonString;
       jsonString = gson.toJson(G);
       broadcast(jsonString);
