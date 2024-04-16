@@ -7,8 +7,8 @@ import java.util.Random;
 public class Grid {
   // class atributes
   public Alphabet[][] grid;
-  private HashSet<Word> wordsInGrid;
-  private HashSet<Word> foundWords;
+  HashSet<Word> wordsInGrid;
+  HashSet<Word> foundWords;
 
   // methods
   public void createGrid() {
@@ -109,9 +109,8 @@ public class Grid {
       }
     }
   }
-
   public void highlightWord(int startx, int starty, int endx, int endy) {
-    // Set playertype to player
+    System.out.println("Word highlighted.");
   }
 
   public boolean checkWord(int startx, int starty, int endx, int endy) {
@@ -123,63 +122,16 @@ public class Grid {
     return false;
   }
 
-  // In the case of horizontal, y value will remain the same.
+  // In the case of horizontal, x value will remain the same.
   public boolean horizontal(int startx, int endx, int starty, int endy) {
-    if (starty != endy) {
-      return false;
-    }
-    int y = starty;
-    StringBuilder currentWord = new StringBuilder();
-
-    for (int i = startx; i <= endx; i++) {
-      currentWord.append(grid[i][y]);
-    }
-
-    Word wordObject = new Word(currentWord.toString(), startx, endx, y, y, currentWord.toString().length());
-
-    if (wordsInGrid.contains(wordObject) && !foundWords.contains(wordObject)) {
-      foundWords.add(wordObject);
-      highlightWord(startx, y, endx, y);
-      return true;
-    }
-
-    return false;
-  }
-
-  // Vertical upward, x will remain the same.
-  public boolean verticalUpward(int startx, int endx, int starty, int endy) {
     if (startx != endx) {
       return false;
     }
     int x = startx;
-    StringBuilder currentWord = new StringBuilder();
-
-    // Used endy as the starting point because it's going from down to up.
-    for (int i = endy; i >= starty; i--) {
-      currentWord.append(grid[x][i]);
-    }
-
-    Word wordObject = new Word(currentWord.toString(), x, x, endy, starty, currentWord.toString().length());
-
-    if (wordsInGrid.contains(wordObject) && !foundWords.contains(wordObject)) {
-      foundWords.add(wordObject);
-      highlightWord(x, endy, x, starty);
-      return true;
-    }
-
-    return false;
-  }
-
-  public boolean verticalDownward(int startx, int endx, int starty, int endy) {
-    if (startx != endx) {
-      return false;
-    }
-    int x = startx;
-
     StringBuilder currentWord = new StringBuilder();
 
     for (int i = starty; i <= endy; i++) {
-      currentWord.append(grid[x][i]);
+      currentWord.append(grid[x][i].alphabet);
     }
 
     Word wordObject = new Word(currentWord.toString(), x, x, starty, endy, currentWord.toString().length());
@@ -193,11 +145,58 @@ public class Grid {
     return false;
   }
 
+  // Vertical upward, y will remain the same.
+  public boolean verticalUpward(int startx, int endx, int starty, int endy) {
+    if (starty != endy) {
+      return false;
+    }
+    int y = starty;
+    StringBuilder currentWord = new StringBuilder();
+
+    // Used endy as the starting point because it's going from down to up.
+    for (int i = startx; i >= endx; i--) {
+      currentWord.append(grid[i][y].alphabet);
+    }
+
+    Word wordObject = new Word(currentWord.toString(), startx, endx, y, y, currentWord.toString().length());
+
+    if (wordsInGrid.contains(wordObject) && !foundWords.contains(wordObject)) {
+      foundWords.add(wordObject);
+      highlightWord(startx, y, endx, y);
+      return true;
+    }
+
+    return false;
+  }
+
+  public boolean verticalDownward(int startx, int endx, int starty, int endy) {
+    if (starty != endy) {
+      return false;
+    }
+    int y = starty;
+
+    StringBuilder currentWord = new StringBuilder();
+
+    for (int i = startx; i <= endx; i++) {
+      currentWord.append(grid[i][y].alphabet);
+    }
+
+    Word wordObject = new Word(currentWord.toString(), startx, endx, y, y, currentWord.toString().length());
+
+    if (wordsInGrid.contains(wordObject) && !foundWords.contains(wordObject)) {
+      foundWords.add(wordObject);
+      highlightWord(startx, y, endx, y);
+      return true;
+    }
+
+    return false;
+  }
+
   public boolean diagonalDownward(int startx, int starty, int endx, int endy) {
     StringBuilder currentWord = new StringBuilder();
 
     for (int i = startx, j = starty; i <= endx && j <= endy; i++, j++) {
-      currentWord.append(grid[i][j]);
+      currentWord.append(grid[i][j].alphabet);
     }
 
     Word wordObject = new Word(currentWord.toString(), startx, endx, starty, endy, currentWord.toString().length());
@@ -214,15 +213,15 @@ public class Grid {
   public boolean diagonalUpward(int startx, int starty, int endx, int endy) {
     StringBuilder currentWord = new StringBuilder();
 
-    for (int i = endx, j = endy; i >= startx && i >= starty; i--, j--) {
-      currentWord.append(grid[i][j]);
+    for (int i = startx, j = starty; i >= endx && i >= endy; i--, j--) {
+      currentWord.append(grid[i][j].alphabet);
     }
 
-    Word wordObject = new Word(currentWord.toString(), endx, startx, endy, starty, currentWord.toString().length());
+    Word wordObject = new Word(currentWord.toString(), startx, endx, starty, endy, currentWord.toString().length());
 
     if (wordsInGrid.contains(wordObject) && !foundWords.contains(wordObject)) {
       foundWords.add(wordObject);
-      highlightWord(endx, endy, startx, starty);
+      highlightWord(startx, starty, endx, endy);
       return true;
     }
 
