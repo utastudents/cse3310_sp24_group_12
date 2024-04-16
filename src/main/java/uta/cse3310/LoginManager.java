@@ -53,8 +53,7 @@ public class LoginManager{
         
         // Remove the username from the list of registered users
         usernames.remove(username);
-        
-        
+        currentGameSize--;
         return true; // Successful removal
     }
 
