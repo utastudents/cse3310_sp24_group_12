@@ -175,6 +175,10 @@ public class App extends WebSocketServer {
     if (message.startsWith("+")) {
       Game G = conn.getAttachment();
       var username = message.substring(1, message.length());
+      if(username.length() < 3){
+        broadcast("!Too Short");
+        return;
+      }
       if (!G.loginManager.registerUser(username)) {
         broadcast("!Invalid Username");
         return;
@@ -191,13 +195,18 @@ public class App extends WebSocketServer {
       int starty = Integer.parseInt(parts[3]);
       int endx = Integer.parseInt(parts[4]);
       int endy = Integer.parseInt(parts[5]);
-      
-
+      String colorChange = parts[6];
+      G.grid.colorIn(startx, starty, colorChange,G.grid.grid);
+      G.grid.colorIn(endx, endy, colorChange, G.grid.grid);
+      broadcast(gson.toJson(G));
       // TODO: Get player from username. Send to checkWord. checkWord sends to highlight. After that, broadcast updated game.
       if (G.grid.checkWord(startx, starty, endx, endy)) {
         G.scores.updateScore(name, 1);
-        broadcast(gson.toJson(G));
+        broadcast(gson.toJson(G));// to set grid colors for all players in a game
       } else {
+        G.grid.resetColor(endx, endy, G.grid.grid);
+        G.grid.resetColor(startx, starty, G.grid.grid);
+        broadcast(gson.toJson(G));// to reset color on grid
         broadcast("!Invalid Word");
       }
       

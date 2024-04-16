@@ -169,7 +169,7 @@
     var GameScreen = document.getElementById("GameScreen");
     var buttonsList;
     var scoremap = new Map();
-
+    var started = false;
     var userStartClick = null;
     var userEndClick = null;
 
@@ -193,11 +193,12 @@
         console.log("Message received: " + msg);
 
         usernameError.textContent = "";
-
+        
         if (msg == "startGame") {
             startCountdown();
             return;
         }
+
 
         if (msg.startsWith("!")) {
             if (msg.slice(1, msg.length) == "Invalid Username") {
@@ -226,14 +227,17 @@
             if (
                 "gameState" in obj &&
                 obj.gameState == 1 &&
-                obj.GameId == gameid
+                obj.GameId == gameid &&
+                !started
+
             ) {
+                
                 startButton.style.display = "none";
                 console.log("gameid: " + gameid);
                 console.log("gameState: " + obj.gameState);
                 startCountdown();
             }
-            if ("loginManager" in obj && obj.GameId == gameid) {
+            if ("loginManager" in obj && obj.GameId == gameid && !started) {
                 usernameList = obj.loginManager.usernames;
                 usernameList = new Map(Object.entries(usernameList));
                 console.log("gameid: " + gameid);
@@ -248,12 +252,14 @@
             if ("grid" in obj && obj.GameId == gameid) {
                 console.log("gameid: " + gameid);
                 buttonsList = obj.grid.grid;
+                colorIn();
+
             }
             if ("scores" in obj && obj.GameId == gameid) {
                 scoremap = obj.scores.score;
             }
-
-            if ("latestPlayer" in obj && obj.GameId == gameid) {
+            
+            if ("latestPlayer" in obj && obj.GameId == gameid && obj.gameState !=1) {
                 if (
                     obj.latestPlayer == "player_1" ||
                     obj.latestPlayer == "player_5"
@@ -263,6 +269,10 @@
                     startButton.style.display = "block";
                 }
             }
+            
+
+            
+            
         }
     };
 
@@ -284,7 +294,7 @@
                     listItem.style.width = "100%";
                     listItem.style.height = "60px";
                     listItem.style.fontWeight = "bold";
-                    listItem.style.backgroundColor = colormap[value];
+                    // listItem.style.backgroundColor = colormap[value];
                     listItem.textContent = key.toUpperCase();
                     listItem.id = key;
                     document
@@ -327,6 +337,7 @@
         }
 
         populateWordGrid(buttonsList);
+        started = true;
     }
     function populateWordGrid(buttonsList) {
         wordGrid.innerHTML = "";
@@ -344,7 +355,6 @@
                 Col.style.width = "2px";
                 Col.style.height = "10px";
                 Col.style.margin = "3px";
-                Col.style.backgroundColor = "light-gray";
                 Col.style.display = "flex";
                 Col.style.justifyContent = "center";
                 Col.style.alignItems = "center";
@@ -361,7 +371,7 @@
 
     function ClickListener(Col, i, j) {
         return function () {
-            Col.style.backgroundColor = "purple";   
+            Col.style.backgroundColor = usernameList.get(username);   
             if (userStartClick === null) {
                 userStartClick = { i, j };
                 console.log("startClick: ", userStartClick);
@@ -378,19 +388,38 @@
                         " " +
                         userEndClick.i +
                         " " +
-                        userEndClick.j
+                        userEndClick.j +
+                        " "+
+                        usernameList.get(username)
                 );
                 userStartClick = null;
                 userEndClick = null;
             }
         };
     }
+    function colorIn(){
+        console.log("colorIn called!!!")
+        console.log(buttonsList)
+        for(let i = 0; i < 50; i++){
+            for(let j=0; j < 50; j++){
+                var spanId = `${i},${j}`
+                var getSpan = document.getElementById(spanId)
+                if(getSpan === null){
+                    return;
+                }else{
+                        getSpan.style.backgroundColor = buttonsList[i][j].color;
+                   }
+                
+            }
+        }
+    }
+
 
     function startCountdown() {
         // 10 second countdown, displays the coundown timer
         //changes the text content of the Count span (so it displayes like 10, 9 , 8 ...)
         //when timer reaches 0 the countdown display and lobby become invisible, game screen becomes visible
-
+        
         const Countdown = document.getElementById("Countdown");
         const Count = document.getElementById("Count");
         var timer = 10;

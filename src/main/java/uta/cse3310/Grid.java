@@ -109,6 +109,13 @@ public class Grid {
       }
     }
   }
+
+  public void colorIn(int x, int y, String color, Alphabet[][] grid){
+    grid[x][y].color = color;
+  }
+  public void resetColor(int x, int y, Alphabet[][] grid){
+    grid[x][y].color = "light-gray";
+  }
   public void highlightWord(int startx, int starty, int endx, int endy) {
     System.out.println("Word highlighted.");
   }
