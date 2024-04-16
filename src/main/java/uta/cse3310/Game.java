@@ -72,7 +72,7 @@ public class Game {
             currentTurn == PlayerType.player_3 ||
             currentTurn == PlayerType.player_4))
         {
-            if((grid.grid[0][user.button].player == user.PlayerId) &&
+            if((grid.grid[0][user.button].player == user.PlayerId) ||
                 (grid.grid[1][user.button].player == user.PlayerId))
             {
                 if(user.PlayerId == PlayerType.player_1){
@@ -98,7 +98,7 @@ public class Game {
                 }
             }
             else{
-                msg[playerToId(user.PlayerId)] = "Not a legal move";
+                msg[0] = "Not a legal move";
             }
 
             //Possibly implement way to check if a player has won
