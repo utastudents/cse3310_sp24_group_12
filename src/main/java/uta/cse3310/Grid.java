@@ -34,7 +34,7 @@ public class Grid {
         grid[i][j] = new Alphabet();
         grid[i][j].player = PlayerType.NoPlayer;
         grid[i][j].alphabet = (char) (random.nextInt(26) + 'a');
-        grid[i][j].color = "light-gray";
+        grid[i][j].color = "white";
       }
     }
 
@@ -114,7 +114,7 @@ public class Grid {
     grid[x][y].color = color;
   }
   public void resetColor(int x, int y, Alphabet[][] grid){
-    grid[x][y].color = "light-gray";
+    grid[x][y].color = "white";
   }
   public void highlightWord(int startx, int starty, int endx, int endy) {
     System.out.println("Word highlighted.");

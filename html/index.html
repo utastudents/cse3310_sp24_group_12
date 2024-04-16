@@ -358,7 +358,8 @@
                 Col.style.display = "flex";
                 Col.style.justifyContent = "center";
                 Col.style.alignItems = "center";
-
+                Col.style.backgroundColor = buttonsList[i][j].color;
+                console.log(Col.style.backgroundColor)
                 Col.addEventListener(
                     "click",
                     ClickListener(Col, i, j)
@@ -371,7 +372,9 @@
 
     function ClickListener(Col, i, j) {
         return function () {
-            Col.style.backgroundColor = usernameList.get(username);   
+            if(Col.style.backgroundColor !== "white")return;
+            Col.style.backgroundColor = usernameList.get(username);
+            connection.send("< " + username + " " + i + " " + j +" "+ usernameList.get(username))   
             if (userStartClick === null) {
                 userStartClick = { i, j };
                 console.log("startClick: ", userStartClick);
@@ -388,9 +391,7 @@
                         " " +
                         userEndClick.i +
                         " " +
-                        userEndClick.j +
-                        " "+
-                        usernameList.get(username)
+                        userEndClick.j
                 );
                 userStartClick = null;
                 userEndClick = null;
@@ -398,22 +399,20 @@
         };
     }
     function colorIn(){
-        console.log("colorIn called!!!")
-        console.log(buttonsList)
         for(let i = 0; i < 50; i++){
             for(let j=0; j < 50; j++){
-                var spanId = `${i},${j}`
-                var getSpan = document.getElementById(spanId)
+                const spanId = `${i},${j}`
+                const getSpan = document.getElementById(spanId)
                 if(getSpan === null){
                     return;
                 }else{
-                        getSpan.style.backgroundColor = buttonsList[i][j].color;
+                        const color = buttonsList[i][j].color
+                        getSpan.style.backgroundColor = color;
                    }
                 
             }
         }
     }
-
 
     function startCountdown() {
         // 10 second countdown, displays the coundown timer
