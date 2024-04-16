@@ -27,7 +27,7 @@ public class Word {
             return false;
         Word wordObj = (Word) word;
 
-        return (word.equals(wordObj.word) &&
+        return (this.word.equals(wordObj.word) &&
                 startx == wordObj.startx &&
                 endx == wordObj.endx &&
                 starty == wordObj.starty &&
