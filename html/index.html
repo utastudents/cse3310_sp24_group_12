@@ -13,18 +13,52 @@
     <title>TWSG</title>
 
     <body class="bg-dark text-white">
-        <nav class="navbar navbar-dark border-bottom border-white">
-            <div class="container-fluid justify-content-center">
+        <nav class="navbar navbar-dark  d-flex border-bottom border-white">
+            <div class="container-fluid justify-content-evenly position-relative pt-3 pb-3">
                 <h1
                     id="TWSG"
-                    class="navbar-brand d-flex font-weight-bold extra-bold"
+                    class="navbar-brand font-weight-bold extra-bold position-absolute start-50 translate-middle-x "
                     title="The World Search Game"
                     style="font-size: 2em"
                 >
                     TWSG
                 </h1>
+                <button id="Chat" class="btn btn-primary ms-auto mx-5" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" style="display: none;">OPEN CHAT</button>
             </div>
         </nav>
+
+        <div class="offcanvas offcanvas-bottom bg-dark mx-auto" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel" style="width: 1000px; height: 700px; overflow: hidden">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasBottomLabel">CHAT</h5>
+              <button type="button" class="btn-close bg-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body small position-relative">
+                <div class="bg-secondary position-relative" style="overflow-x: hidden; overflow-y: auto; max-height: 500px; height: 500px; width: 950px; border-radius: 5px;">
+                    <ul class="list-group pt-2 mx-2 position-absolute bottom-0 start-0 ">
+                        <div class= "list-group-item justify-content-between bg-dark mb-2 text-white fs-5 text-bold" style="width: 450px; height: 100px; max-width: 450px; max-height: 100; border-radius: 5px; translate: 0px; overflow-y: hidden;">
+                            <span class="">Player y:</span>
+                            <p class="text-break">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+                        </div>
+                        <div class= "list-group-item justify-content-between bg-dark mb-2 text-white fs-5 text-bold" style="width: 450px; height: 100px; max-width: 450px; max-height: 100; border-radius: 5px; translate: 0px; overflow-y: hidden;">
+                            <span class="">Player x:</span>
+                            <p class="text-break">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+                        </div>
+                        <div class= "list-group-item justify-content-between bg-dark mb-2 text-white fs-5 text-bold" style="width: 450px; height: 100px; max-width: 450px; max-height: 100; border-radius: 5px; translate: 480px; overflow-y: hidden;">
+                            <span class="">ME:</span>
+                            <p class="text-break">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+                        </div>
+                    </ul>
+                </div>
+                <span class="position-absolute start-50 translate-middle-x fs-3 "> Enter Message</span>
+                <input class="position-absolute my-5 start-50 translate-middle-x w-50 text-break" type="text"  id="MessageInput" class="form-control"/>
+            </div>
+        </div>
+       
+
+
+
+
+
 
         <!--Login Screen Here -->
         <div id="LoginScreen" style="display: block">
@@ -160,6 +194,7 @@
     };
     const LoginScreen = document.getElementById("LoginScreen");
     const LobbyScreen = document.getElementById("LobbyScreen");
+    const chat = document.getElementById("Chat")
     var username;
     var form = document.getElementById("usernameForm");
     var input = document.getElementById("inputUsername");
@@ -172,7 +207,6 @@
     var started = false;
     var userStartClick = null;
     var userEndClick = null;
-
     let colormap = {
         RED: "Tomato",
         GREEN: "MediumSeaGreen",
@@ -245,6 +279,7 @@
                 if (usernameList.has(username)) {
                     LoginScreen.style.display = "none";
                     LobbyScreen.style.display = "block";
+                    chat.style.display = "block";
                     input.value = "";
                     Lobby(usernameList);
                 }
