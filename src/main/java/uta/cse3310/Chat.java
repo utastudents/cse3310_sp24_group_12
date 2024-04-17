@@ -18,7 +18,7 @@ public class Chat {
 
     public void addToChat(String send){
         newMessage = new Message();
-        String[] message = send.split(" ");
+        String[] message = send.split("`");
         newMessage.sender = message[1];
         newMessage.message = message[2];
         chatLog.add(newMessage);

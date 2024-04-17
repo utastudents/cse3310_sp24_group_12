@@ -327,8 +327,9 @@
     Send.addEventListener("submit", function(e){
         e.preventDefault();
         if(MessageIn.value !== " "){
-            connection.send("~ " + username + " " + MessageIn.value)
+            connection.send("~`" + username + "`" + MessageIn.value)
         } 
+        MessageIn.value = ""
     })
 
 
