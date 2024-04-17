@@ -13,6 +13,7 @@ public class Game {
     public Scores scores = new Scores();
     public Grid grid;
     public Chat chatLog = new Chat();
+    public Leaderboard leaderboard = new Leaderboard(scores.score);
 
     // class constructor
     Game() {
