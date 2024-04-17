@@ -215,6 +215,10 @@ public class App extends WebSocketServer {
       String colorChange = parts[4];
       G.grid.colorIn(startx, starty, colorChange,G.grid.grid);
       broadcast(gson.toJson(G));
+    }else if(message.startsWith("~")){
+      Game G = conn.getAttachment();
+      G.chatLog.addToChat(message);
+      broadcast(gson.toJson(G));
     }
     
     else {

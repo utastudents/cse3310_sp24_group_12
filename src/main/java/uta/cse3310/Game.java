@@ -12,6 +12,7 @@ public class Game {
     public LoginManager loginManager = new LoginManager();
     public Scores scores = new Scores();
     public Grid grid;
+    public Chat chatLog = new Chat();
 
     // class constructor
     Game() {

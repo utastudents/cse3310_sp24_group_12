@@ -2,7 +2,8 @@ package uta.cse3310;
 
 public class Message{
     
-    int senderID;
+    // int senderID;
+    String sender;
     String message;
-    private int receivers;
+    // private int receivers;
 }
