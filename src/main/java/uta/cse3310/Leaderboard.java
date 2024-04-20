@@ -19,9 +19,18 @@ public class Leaderboard {
     }
 
     public String generateLeaderboard() {
-        // Go through each map (players username and their respective scores), sort it, generate a readable string and return it. 
-        
-        return "";
+        // Go through each map (players username and their respective scores), sort it, generate a readable string and return it.
+
+        //Define a stringbuilder to fill up
+        StringBuilder formatScores = new StringBuilder();
+
+        //Fill up the stringbuilder with the players and their scores
+        for(Map.Entry<String, Integer> entry : scores.entrySet()){
+            formatScores.append("Player: ").append(entry.getKey()).append("   Score: ").append(entry.getValue()).append("\n");
+        }
+
+        //return the formatted stringbuilder
+        return formatScores.toString();
     }
 
     // Reset leaderboard not required since we will initiate a new leaderboard every time a new game is created. 
