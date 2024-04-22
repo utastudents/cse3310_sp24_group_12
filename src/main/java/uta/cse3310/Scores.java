@@ -37,4 +37,5 @@ public class Scores {
     public int getScore(String username) {
         return score.get(username);
     }
+    
 }
