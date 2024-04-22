@@ -54,11 +54,32 @@ public class Grid {
 
       int endX, endY;
 
-      
-      int startX = random.nextInt(size - wordLength + 1);
-      int startY = random.nextInt(size - wordLength + 1);
-      int endX = startX + wordLength - 1;
-      int endY = startY + wordLength - 1;
+      switch (orientation) {
+        case 0: // Horizontal
+          endX = startX + wordLength - 1;
+          endY = startY;
+          break;
+        case 1: // Vertical upward
+          endX = startX;
+          endY = startY - wordLength + 1;
+          break;
+        case 2: // Vertical downward
+          endX = startX;
+          endY = startY + wordLength - 1;
+          break;
+        case 3: // Diagonal upward
+          endX = startX - wordLength + 1;
+          endY = startY - wordLength + 1;
+          break;
+        case 4: // Diagonal downward
+          endX = startX + wordLength - 1;
+          endY = startY + wordLength - 1;
+          break;
+        default:
+          endX = startX;
+          endY = startY;
+          break;
+      }
 
       // Check if the word overlaps with any existing words
       boolean overlaps = false;
