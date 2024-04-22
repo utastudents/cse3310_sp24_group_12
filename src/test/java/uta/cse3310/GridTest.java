@@ -28,6 +28,11 @@ public class GridTest {
     public void testCheckWordVerticalUpward() {
         Grid grid = new Grid();
         grid.createGrid();
+        grid.grid[3][3] = new Alphabet();
+        grid.grid[2][3] = new Alphabet();
+        grid.grid[1][3] = new Alphabet();
+        grid.grid[0][3] = new Alphabet();
+        
         grid.grid[3][3].alphabet = 't';
         grid.grid[2][3].alphabet = 'e';
         grid.grid[1][3].alphabet = 's';
@@ -42,6 +47,11 @@ public class GridTest {
     public void testCheckWordVerticalDownward() {
         Grid grid = new Grid();
         grid.createGrid();
+        grid.grid[0][0] = new Alphabet();
+        grid.grid[1][0] = new Alphabet();
+        grid.grid[2][0] = new Alphabet();
+        grid.grid[3][0] = new Alphabet();
+        
         grid.grid[0][0].alphabet = 't';
         grid.grid[1][0].alphabet = 'e';
         grid.grid[2][0].alphabet = 's';
@@ -56,6 +66,12 @@ public class GridTest {
     public void testCheckWordDiagonalDownward() {
         Grid grid = new Grid();
         grid.createGrid();
+
+        grid.grid[0][0] = new Alphabet();
+        grid.grid[1][1] = new Alphabet();
+        grid.grid[2][2] = new Alphabet();
+        grid.grid[3][3] = new Alphabet();
+
         grid.grid[0][0].alphabet = 't';
         grid.grid[1][1].alphabet = 'e';
         grid.grid[2][2].alphabet = 's';
@@ -70,6 +86,11 @@ public class GridTest {
     public void testCheckWordDiagonalUpward() {
         Grid grid = new Grid();
         grid.createGrid();
+        grid.grid[3][3] = new Alphabet();
+        grid.grid[2][2] = new Alphabet();
+        grid.grid[1][1] = new Alphabet();
+        grid.grid[0][0] = new Alphabet();
+
         grid.grid[3][3].alphabet = 't';
         grid.grid[2][2].alphabet = 'e';
         grid.grid[1][1].alphabet = 's';
