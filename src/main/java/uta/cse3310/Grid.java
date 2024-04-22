@@ -27,18 +27,8 @@ public class Grid {
   public void populateGrid(int size) {
     grid = new Alphabet[size][size];
     Random random = new Random();
+    
 
-    // Fill the grid with random characters
-    for (int i = 0; i < size; i++) {
-      for (int j = 0; j < size; j++) {
-        grid[i][j] = new Alphabet();
-        grid[i][j].player = PlayerType.NoPlayer;
-        grid[i][j].alphabet = (char) (random.nextInt(26) + 'a');
-        grid[i][j].color = "white";
-      }
-    }
-
-    // Sprinkle words randomly in the grid
     WordList wordList = new WordList();
     try {
       wordList.loadWords();
