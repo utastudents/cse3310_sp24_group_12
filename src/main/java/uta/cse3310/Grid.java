@@ -39,8 +39,12 @@ public class Grid {
     wordsInGrid = new HashSet<>();
     foundWords = new HashSet<>();
 
-    for (String word : wordList.wordList) {
+   int wordCount = 0;
+
+    while (wordCount < (size * size) * 0.8) {
+      String word = wordList.getRandomWord(); // Get a random word from the word list
       int wordLength = word.length();
+      
       int startX = random.nextInt(size - wordLength + 1);
       int startY = random.nextInt(size - wordLength + 1);
       int endX = startX + wordLength - 1;
