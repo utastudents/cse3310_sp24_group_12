@@ -18,6 +18,7 @@ public class GameTest {
         userEvent.PlayerId = PlayerType.player_1;
         userEvent.button = 0;
         userEvent.GameId = 1;
+        game.grid.grid[0][userEvent.button] = new Alphabet();
         game.grid.grid[0][userEvent.button].player = userEvent.PlayerId;
 
         
@@ -32,6 +33,7 @@ public class GameTest {
         game.StartGame();
         // Assuming player 1 tries to make an illegal move at index 0
         UserEvent userEvent = new UserEvent();
+        Grid grid = new Grid();
         userEvent.PlayerId = PlayerType.player_1;
         userEvent.button = 0;
         userEvent.GameId = 1;
