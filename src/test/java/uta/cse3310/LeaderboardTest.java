@@ -1,5 +1,8 @@
 package uta.cse3310;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -27,7 +30,7 @@ public class LeaderboardTest extends TestCase{
         
         //Define and call instance of method with test data
         Leaderboard leaderboard = new Leaderboard(scores);
-        String generated = Leaderboard.generateLeaderboard();
+        String generated = leaderboard.generateLeaderboard();
         
         //Check if outputs match
         assertTrue(generated.contains("Player: Jimi   Score: 1"));
