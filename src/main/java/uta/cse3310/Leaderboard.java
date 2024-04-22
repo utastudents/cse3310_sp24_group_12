@@ -3,32 +3,6 @@ package uta.cse3310;
 import java.util.HashMap;
 import java.util.Map;
 
-<<<<<<< HEAD
-    ArrayList<playerScore> Leaderboard = new ArrayList<playerScore>;
-    playerScore player
-    public Leaderboard(){
-        this.chatLog = new ArrayList<Message>();
-    }
-    
-    /* public void updateLeaderboard(PlayerType player, int score){
-        newMessage = new Message();
-        PlayerType player = player;
-        int score = score;
-        newMessage.player = player;
-        newMessage.score = score;
-        Leaderboard.add(newMessage);
-
-    }
-    */
-
-    public string getLeaderboard(){
-        //code to be implemented later
-    }
-
-    public void resetLeaderboard(){
-        //code to be implemented later
-        Leaderboard.clear();
-=======
 public class Leaderboard {
     private Map<String, Integer> score = new HashMap<>();
 
@@ -51,13 +25,12 @@ public class Leaderboard {
         StringBuilder formatScores = new StringBuilder();
 
         //Fill up the stringbuilder with the players and their scores
-        for(Map.Entry<String, Integer> entry : scores.entrySet()){
+        for(Map.Entry<String, Integer> entry : score.entrySet()){
             formatScores.append("Player: ").append(entry.getKey()).append("   Score: ").append(entry.getValue()).append("\n");
         }
 
         //return the formatted stringbuilder
         return formatScores.toString();
->>>>>>> refs/remotes/origin/main
     }
 
     // Reset leaderboard not required since we will initiate a new leaderboard every time a new game is created. 
