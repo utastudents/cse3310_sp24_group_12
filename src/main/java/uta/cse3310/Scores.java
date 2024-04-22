@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class Scores {
 
     // username, score
-    private Map<String, Integer> score = new HashMap<>();
+    Map<String, Integer> score = new HashMap<>();
 
 
     public void addNewPlayer(String username) {

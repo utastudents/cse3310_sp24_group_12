@@ -22,7 +22,8 @@ public class ChatTest
         newMessage.sender = "Test";
         newMessage.message = "This is a test String";
         chatLog.add(newMessage)
-        assertTrue( newMessage.sender.equals(chatLog[0]) && newMessage.message.equals(chatLog[1]) );
+        assertTrue( newMessage.sender.equals(chatLog[0]));
+        assertTrue( newMessage.message.equals(chatLog[1]) );
     }
 }
 */
