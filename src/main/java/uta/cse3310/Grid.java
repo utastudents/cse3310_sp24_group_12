@@ -93,33 +93,25 @@ public class Grid {
 
       // If the word doesn't overlap, add it to the grid
       if (!overlaps) {
-        // Determine the orientation of the word
-        int orientation = random.nextInt(5);
+        for (int i = 0; i < wordLength; i++) {
+            int x = startX, y = startY;
         switch (orientation) {
           case 0: // Horizontal
-            for (int i = startX; i <= endX; i++) {
-              grid[i][startY].alphabet = word.charAt(i - startX);
-            }
+            x = startX + i;
             break;
           case 1: // Vertical upward
-            for (int i = startY; i <= endY; i++) {
-              grid[startX][i].alphabet = word.charAt(i - startY);
-            }
+            y = startY - i;
             break;
           case 2: // Vertical downward
-            for (int i = startY; i <= endY; i++) {
-              grid[startX][i].alphabet = word.charAt(endY - i);
-            }
+            y = startY + i;
             break;
           case 3: // Diagonal upward
-            for (int i = startX, j = startY; i <= endX && j <= endY; i++, j++) {
-              grid[i][j].alphabet = word.charAt(i - startX);
-            }
+            x = startX - i;
+            y = startY - i;
             break;
           case 4: // Diagonal downward
-            for (int i = startX, j = startY; i <= endX && j <= endY; i++, j++) {
-              grid[i][j].alphabet = word.charAt(endX - i);
-            }
+            x = startX + i;
+            y = startY + i;
             break;
         }
 
