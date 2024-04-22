@@ -15,6 +15,11 @@ public class GridTest {
     public void testCheckWordHorizontal() {
         Grid grid = new Grid();
         grid.createGrid();
+        grid.grid[0][0] = new Alphabet();
+        grid.grid[0][1] = new Alphabet();
+        grid.grid[0][2] = new Alphabet();
+        grid.grid[0][3] = new Alphabet();
+
         grid.grid[0][0].alphabet = 't';
         grid.grid[0][1].alphabet = 'e';
         grid.grid[0][2].alphabet = 's';
@@ -32,7 +37,7 @@ public class GridTest {
         grid.grid[2][3] = new Alphabet();
         grid.grid[1][3] = new Alphabet();
         grid.grid[0][3] = new Alphabet();
-        
+
         grid.grid[3][3].alphabet = 't';
         grid.grid[2][3].alphabet = 'e';
         grid.grid[1][3].alphabet = 's';
