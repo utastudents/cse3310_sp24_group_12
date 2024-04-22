@@ -80,12 +80,8 @@ public class Grid {
           endY = startY;
           break;
       }
-      grid[x][y] = new Alphabet();
-            grid[x][y].alphabet = word.charAt(i);
-            grid[x][y].player = PlayerType.NoPlayer;
-            grid[x][y].color = "white";
-          }
 
+      if (endX >= 0 && endX < size && endY >= 0 && endY < size) {
       // Check if the word overlaps with any existing words
       boolean overlaps = false;
       for (Word existingWord : wordsInGrid) {
@@ -119,18 +115,25 @@ public class Grid {
             y = startY + i;
             break;
         }
+        grid[x][y] = new Alphabet();
+            grid[x][y].alphabet = word.charAt(i);
+            grid[x][y].player = PlayerType.NoPlayer;
+            grid[x][y].color = "white";
+          }
 
         // Create a Word object and add it to the wordsInGrid set
         Word wordObject = new Word(word, startX, endX, startY, endY, wordLength);
         wordsInGrid.add(wordObject);
+        wordCount++;
 
         // Check if 80% of the grid is filled with valid words
-        if (wordsInGrid.size() >= (size * size) * 0.8) {
-          break;
+        if (wordCount >= (size * size) * 0.8) {
+            break;
         }
       }
     }
   }
+}
 
   public void colorIn(int x, int y, String color, Alphabet[][] grid){
     grid[x][y].color = color;
