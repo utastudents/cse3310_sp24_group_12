@@ -44,6 +44,16 @@ public class Grid {
     while (wordCount < (size * size) * 0.8) {
       String word = wordList.getRandomWord(); // Get a random word from the word list
       int wordLength = word.length();
+
+      // Determine random start coordinates within the grid bounds
+      int startX = random.nextInt(size);
+      int startY = random.nextInt(size);
+
+      // Determine random orientation (0: horizontal, 1: vertical upward, 2: vertical downward, 3: diagonal upward, 4: diagonal downward)
+      int orientation = random.nextInt(5);
+
+      int endX, endY;
+
       
       int startX = random.nextInt(size - wordLength + 1);
       int startY = random.nextInt(size - wordLength + 1);
