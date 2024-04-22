@@ -80,6 +80,11 @@ public class Grid {
           endY = startY;
           break;
       }
+      grid[x][y] = new Alphabet();
+            grid[x][y].alphabet = word.charAt(i);
+            grid[x][y].player = PlayerType.NoPlayer;
+            grid[x][y].color = "white";
+          }
 
       // Check if the word overlaps with any existing words
       boolean overlaps = false;
