@@ -116,9 +116,9 @@ public class Grid {
             break;
         }
         grid[x][y] = new Alphabet();
-            grid[x][y].alphabet = word.charAt(i);
-            grid[x][y].player = PlayerType.NoPlayer;
-            grid[x][y].color = "white";
+        grid[x][y].alphabet = word.charAt(i);
+        grid[x][y].player = PlayerType.NoPlayer;
+        grid[x][y].color = "white";
           }
 
         // Create a Word object and add it to the wordsInGrid set
