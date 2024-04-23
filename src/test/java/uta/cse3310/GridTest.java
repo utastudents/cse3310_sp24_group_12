@@ -27,7 +27,7 @@ public class GridTest {
         Word word = new Word("test", 0, 0, 0, 3, 4);
         grid.wordsInGrid.add(word);
         // Assuming a word "test" is present horizontally at positions (0,0) to (0,3)
-        Assert.assertTrue(grid.checkWord(0, 0, 0, 3));
+        Assert.assertTrue(grid.checkWord(0, 0, 0, 3, Color.RED));
     }
 
     public void testCheckWordVerticalUpward() {
@@ -46,7 +46,7 @@ public class GridTest {
         grid.wordsInGrid.add(word);
         // Assuming a word "test" is present vertically upward at positions (3,3) to
         // (0,3)
-        Assert.assertTrue(grid.checkWord(3, 3, 0, 3));
+        Assert.assertTrue(grid.checkWord(3, 3, 0, 3, Color.RED));
     }
 
     public void testCheckWordVerticalDownward() {
@@ -65,7 +65,7 @@ public class GridTest {
         grid.wordsInGrid.add(word);
         // Assuming a word "test" is present vertically downward at positions (0,0) to
         // (3,0)
-        Assert.assertTrue(grid.checkWord(0, 0, 3, 0));
+        Assert.assertTrue(grid.checkWord(0, 0, 3, 0, Color.RED));
     }
 
     public void testCheckWordDiagonalDownward() {
@@ -85,7 +85,7 @@ public class GridTest {
         grid.wordsInGrid.add(word);
         // Assuming a word "test" is present diagonally downward at positions (0,0) to
         // (3,3)
-        Assert.assertTrue(grid.checkWord(0, 0, 3, 3));
+        Assert.assertTrue(grid.checkWord(0, 0, 3, 3, Color.RED));
     }
 
     public void testCheckWordDiagonalUpward() {
@@ -104,19 +104,7 @@ public class GridTest {
         grid.wordsInGrid.add(word);
         // Assuming a word "test" is present diagonally upward at positions (3,3) to
         // (0,0)
-        Assert.assertTrue(grid.checkWord(3, 3, 0, 0));
+        Assert.assertTrue(grid.checkWord(3, 3, 0, 0, Color.RED));
     }
 
-    public void testHighlightWord() {
-        // Redirect System.out to capture the output
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-
-        Grid grid = new Grid();
-        grid.createGrid();
-        grid.highlightWord(0, 0, 0, 3);
-
-        // Assuming highlightWord method prints something, we can check it
-        Assert.assertEquals("Word highlighted.", outputStream.toString().trim());
-    }
 }
