@@ -196,15 +196,15 @@ public class App extends WebSocketServer {
       int endx = Integer.parseInt(parts[4]);
       int endy = Integer.parseInt(parts[5]);
       // TODO: Get player from username. Send to checkWord. checkWord sends to highlight. After that, broadcast updated game.
-      if (G.grid.checkWord(startx, starty, endx, endy)) {
+      if (G.grid.checkWord(startx, starty, endx, endy, G.loginManager.usernames.get(name))) {
         G.scores.updateScore(name, 1);
-        // broadcast(gson.toJson(G));// to set grid colors for all players in a game
+        broadcast(gson.toJson(G));
       } else {
-        G.grid.resetColor(endx, endy, G.grid.grid);
-        G.grid.resetColor(startx, starty, G.grid.grid);
+        G.grid.resetColor(endx, endy);
+        G.grid.resetColor(startx, starty);
         broadcast(gson.toJson(G));// to reset color on grid
         broadcast("!Invalid Word");
-      }
+      } 
       
     }else if(message.startsWith("<")){
       Game G = conn.getAttachment();
@@ -213,7 +213,7 @@ public class App extends WebSocketServer {
       int startx = Integer.parseInt(parts[2]);
       int starty = Integer.parseInt(parts[3]);
       String colorChange = parts[4];
-      G.grid.colorIn(startx, starty, colorChange,G.grid.grid);
+      G.grid.colorIn(startx, starty, -1, -1, G.loginManager.usernames.get(name));
       broadcast(gson.toJson(G));
     }else if(message.startsWith("~")){
       Game G = conn.getAttachment();
