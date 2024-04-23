@@ -1,5 +1,7 @@
 package uta.cse3310;
 
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Word {
@@ -38,5 +40,27 @@ public class Word {
     @Override
     public int hashCode() {
         return Objects.hash(word, startx, endx, starty, endy, length);
+    }
+
+    public ArrayList<Point> getPoints() {
+        ArrayList<Point> points = new ArrayList<Point>();
+        if (startx == endx) {
+            for (int i = starty; i <= endy; i++) {
+                points.add(new Point(startx, i));
+            }
+        } else if (starty == endy) {
+            for (int i = startx; i <= endx; i++) {
+                points.add(new Point(i, starty));
+            }
+        } else {
+            int x = startx;
+            int y = starty;
+            while (x <= endx && y <= endy) {
+                points.add(new Point(x, y));
+                x++;
+                y++;
+            }
+        }
+        return points;
     }
 }
