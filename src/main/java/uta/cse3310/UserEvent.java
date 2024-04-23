@@ -1,4 +1,5 @@
 package uta.cse3310;
+
 // User events are sent from the webpage to the server
 
 public class UserEvent {
@@ -6,16 +7,19 @@ public class UserEvent {
     PlayerType PlayerId;
     int button;
 
-    public Object getYouAre() {
-        throw new UnsupportedOperationException("Unimplemented method 'getYouAre'");
+    public PlayerType getYouAre() {
+        return PlayerId;
     }
-    public Object getGameId() {
-        throw new UnsupportedOperationException("Unimplemented method 'getGameId'");
+    
+    public int getGameId() {
+        return GameId;
     }
+
     public void setYouAre(PlayerType player1) {
-        throw new UnsupportedOperationException("Unimplemented method 'setYouAre'");
+        this.PlayerId = player1;
     }
+
     public void setGameId(int i) {
-        throw new UnsupportedOperationException("Unimplemented method 'setGameId'");
+        this.GameId = i;
     }
 }
