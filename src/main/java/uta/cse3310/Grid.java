@@ -135,7 +135,7 @@ public class Grid {
           // Create a Word object and add it to the wordsInGrid set
           Word wordObject = new Word(word, startX, endX, startY, endY, wordLength);
           wordsInGrid.add(wordObject);
-          wordCount+= wordLength;
+          wordCount += wordLength;
 
           // Check if 80% of the grid is filled with valid words
           if (wordCount >= (size * size) * 0.8) {
@@ -146,22 +146,58 @@ public class Grid {
     }
   }
 
-  public void colorIn(int x, int y, String color, Alphabet[][] grid) {
-    grid[x][y].color = color;
+  public void colorIn(int startx, int starty, int endx, int endy, Color color) {
+    if (endx == -1) {
+      grid[startx][starty].color = color.name();
+      return;
+    }
+    System.out.printf("startx%d\nstarty%d\nendx%d\nendy%d\n\nhorizontal %s", startx, starty, endx, endy, horizontal(startx, endx, starty, endy));
+    // If it is horizontal, x coordinate remains the same
+    if (horizontal(startx, endx, starty, endy)) {
+      for (int i = starty; i <= endy; i++)
+        grid[startx][i].color = color.name();
+      System.out.println("Updated horizontal");
+      return;
+    }
+
+    if (verticalUpward(startx, endx, starty, endy)) {
+      for (int i = startx; i >= endx; i--)
+        grid[i][starty].color = color.name();
+      System.out.println("Updated vertical up");
+      return;
+    }
+
+    if (verticalDownward(startx, endx, starty, endy)) {
+      for (int i = startx; i <= endx; i++)
+        grid[i][starty].color = color.name();
+      System.out.println("Updated vertical down");
+      return;
+    }
+
+    if (diagonalDownward(startx, starty, endx, endy)) {
+      for (int i = startx, j = starty; i <= endx && j <= endy; i++, j++)
+        grid[i][j].color = color.name();
+      return;
+    }
+
+    if (diagonalUpward(startx, starty, endx, endy)) {
+      for (int i = startx, j = starty; i >= endx && j >= endy; i--, j--)
+        grid[i][j].color = color.name();
+      return;
+    }
   }
 
-  public void resetColor(int x, int y, Alphabet[][] grid) {
+  public void resetColor(int x, int y) {
     grid[x][y].color = "white";
   }
 
-  public void highlightWord(int startx, int starty, int endx, int endy) {
-    System.out.println("Word highlighted.");
-  }
 
-  public boolean checkWord(int startx, int starty, int endx, int endy) {
+
+  public boolean checkWord(int startx, int starty, int endx, int endy, Color color) {
     if (horizontal(startx, endx, starty, endy) || verticalUpward(startx, endx, starty, endy) ||
         verticalDownward(startx, endx, starty, endy) || diagonalDownward(startx, starty, endx, endy) ||
         diagonalUpward(startx, starty, endx, endy)) {
+      colorIn(startx, starty, endx, endy, color);
       return true;
     }
     return false;
@@ -183,10 +219,9 @@ public class Grid {
 
     if (wordsInGrid.contains(wordObject) && !foundWords.contains(wordObject)) {
       foundWords.add(wordObject);
-      highlightWord(x, starty, x, endy);
       return true;
     }
-
+''
     return false;
   }
 
@@ -207,7 +242,6 @@ public class Grid {
 
     if (wordsInGrid.contains(wordObject) && !foundWords.contains(wordObject)) {
       foundWords.add(wordObject);
-      highlightWord(startx, y, endx, y);
       return true;
     }
 
@@ -230,7 +264,6 @@ public class Grid {
 
     if (wordsInGrid.contains(wordObject) && !foundWords.contains(wordObject)) {
       foundWords.add(wordObject);
-      highlightWord(startx, y, endx, y);
       return true;
     }
 
@@ -248,7 +281,6 @@ public class Grid {
 
     if (wordsInGrid.contains(wordObject) && !foundWords.contains(wordObject)) {
       foundWords.add(wordObject);
-      highlightWord(startx, starty, endx, endy);
       return true;
     }
 
@@ -266,7 +298,6 @@ public class Grid {
 
     if (wordsInGrid.contains(wordObject) && !foundWords.contains(wordObject)) {
       foundWords.add(wordObject);
-      highlightWord(startx, starty, endx, endy);
       return true;
     }
 
