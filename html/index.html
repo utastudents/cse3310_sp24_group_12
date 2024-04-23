@@ -133,7 +133,7 @@
         <!-- Game Screen Here -->
         <div id="GameScreen" class="container-fluid mt-5" style="display: none">
             <div class="row justify-content-start">
-                <div class="col-8">
+                <div class="col-9">
                     <div id="WordGrid" class="d-flex card bg-secondary align-items-between justify-content-between" style="width: 100%; height: 100%; overflow-x: auto; overflow-y: auto;">
                 
                     </div>
@@ -215,17 +215,15 @@
     var userStartClick = null;
     var userEndClick = null;
     let colormap = {
-        RED: "Tomato",
-        GREEN: "MediumSeaGreen",
-        BLUE: "DodgerBlue",
+        RED: "Red",
+        GREEN: "Green",
+        BLUE: "Blue",
         ORANGE: "Orange",
-        YELLOW: "yellow",
-        PURPLE: "purple",
-        WHITE: "white",
+        YELLOW: "Yellow",
+        PURPLE: "Purple",
+        WHITE: "White",
     };
-    const gridSize = 40;
     const wordGrid = document.getElementById("WordGrid");
-
 
     connection.onmessage = function (evt) {
         var msg;
@@ -485,10 +483,10 @@
 
     function createChildElement(element){
         const Div = document.createElement("div")
-        Div.style.width = "450px"
+        Div.style.width = "420px"
         Div.style.height = "100px"
         Div.style.overflowY = "hidden"
-        Div.style.maxWidth = "450px"
+        Div.style.maxWidth = "420px"
         Div.style.maxHeight = "100px"
         Div.style.borderRadius = "5px"
         Div.classList.add("list-group-item", "justify-content-between", "bg-dark","mb-2" ,"text-white" ,"fs-5", "text-bold")
@@ -499,7 +497,7 @@
         paragraph.textContent = element.message
         if(element.sender === username){
             Span.textContent = "ME:"
-            Div.style.translate = "480px"
+            Div.style.translate = "295px"
         }else{
             Span.textContent = element.sender + ":"
             Div.style.translate = "0px"
