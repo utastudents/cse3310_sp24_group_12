@@ -213,7 +213,7 @@ public class App extends WebSocketServer {
       int startx = Integer.parseInt(parts[2]);
       int starty = Integer.parseInt(parts[3]);
       String colorChange = parts[4];
-      G.grid.colorIn(startx, starty, -1, -1, G.loginManager.usernames.get(name));
+      G.grid.colorIn(startx, starty, Color.valueOf(colorChange));
       broadcast(gson.toJson(G));
     }else if(message.startsWith("~")){
       Game G = conn.getAttachment();
