@@ -1,4 +1,6 @@
 # Derived from an example provided by https://blog.benoitblanchon.fr/github-action-run-ssh-commands/
+#                                     https://github.blog/2015-06-16-read-only-deploy-keys/
+#
 #
 #
 #
@@ -7,46 +9,66 @@ name: Deploy
 on: [push]
 jobs:
   deploy:
-    name: "Deploy to staging"
+    name: "Deploy to server"
     runs-on: ubuntu-latest
     steps:
-      - name: Configure SSH
+      - name: configure SSH
         run: |
+          # These are very useful for debugging
+          echo "Repository = ${{ github.repository }}"
+          echo "github url = ${{ github.server_url }}"
+          echo "Owner =  ${{ github.repository_owner }}"
+          echo "Repository name = ${{ github.event.repository.name }}"
+          echo "Service name = ${{ vars.service_name }}"
+          echo "http port = ${{ vars.http_port }}"
+          echo "websocket port = ${{ vars.websocket_port }}"
+          echo "version = $${ github.sha }}"
+          # On to the work at hand.
           mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/staging.key
-          chmod 600 ~/.ssh/staging.key
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/production.key
+          chmod 600 ~/.ssh/production.key
           cat >>~/.ssh/config <<END
-          Host staging
-            HostName $SSH_HOST
-            User $SSH_USER
-            IdentityFile ~/.ssh/staging.key
+          Host production
+            HostName ${{ secrets.SSH_HOST }}
+            User ${{ secrets.SSH_USER }}
+            IdentityFile ~/.ssh/production.key
             StrictHostKeyChecking no
           END
-        env:
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-
-      - name: Check out the source, compile, and test
+                         
+      - name: get source code and compile
         run: |
-           java --version
-           mvn --version
-           git  --version
-           git clone https://github.com/BudDavis/${{github.event.repository.name}}
-           cd TicTacToe
-           mvn  --no-transfer-progress package
-           
-      - name: Stop the server
+          echo "deleting the directory ${{ github.event.repository.name }} "
+          ssh production "rm -rf  ${{ github.event.repository.name }}"
+          echo "cloning  ${{ github.server_url }}/${{ github.repository }}"
+          ssh production "git clone ${{ github.server_url }}/${{ github.repository }}"
+          ssh production "cd  ${{ github.event.repository.name }};mvn clean compile package"
+        
+      - name: create systemd unit file
         run: |
-           #ssh staging "find /usr -print"
-           ssh staging "systemctl --user status"
-           # % git clone https://github.com/utastudents/cse3310_su23_group_3 
-           # % ssh su23_group3@cse3310.org "systemctl --user stop webchat.service" 
-           # scp -r cse3310_su23_group_3 su23_group3@cse3310.org:. 
-           # % ssh su23_group3@cse3310.org "cd cse3310_su23_group_3;cd demo;mvn clean#;mvn
-           # sysstemctl --user start webchat.service" 
-           # %  ssh su23_group3@cse3310.org "systemctl --user status webchat.service" 
+           # without enable-linger, you must be logged in. So, we enable it.
+           ssh production "loginctl enable-linger"
+           ssh production "mkdir --parents .config/systemd/user"
+           ssh production "rm -f .config/systemd/user/${{ vars.service_name }}.service"
+           ssh production 'echo "[Unit]" >> .config/systemd/user/${{ vars.service_name }}.service'
+           ssh production 'echo "Description=${{ vars.service_name }}" >> .config/systemd/user/${{ vars.service_name }}.service'
+           ssh production 'echo "[Service]" >> .config/systemd/user/${{ vars.service_name }}.service'
+           ssh production 'echo "Type=simple" >> .config/systemd/user/${{ vars.service_name }}.service'
+           ssh production 'echo "Restart=always" >> .config/systemd/user/${{ vars.service_name }}.service'
+           ssh production 'echo "RestartSec=5" >> .config/systemd/user/${{ vars.service_name }}.service'
+           ssh production 'echo "Environment=VERSION=\"${{ github.sha }}\"" >>.config/systemd/user/${{ vars.service_name }}.service'
+           ssh production 'echo "Environment=WEBSOCKET_PORT=${{ vars.websocket_port }}" >>.config/systemd/user/${{ vars.service_name }}.service'
+           ssh production 'echo "Environment=HTTP_PORT=${{ vars.http_port }}" >>.config/systemd/user/${{ vars.service_name }}.service'
+           ssh production 'echo "ExecStart=mvn exec:java -Dexec.mainClass=uta.cse3310.App" >> .config/systemd/user/${{ vars.service_name }}.service'
+           ssh production 'echo "WorkingDirectory=$PWD/${{ github.event.repository.name }}" >> .config/systemd/user/${{ vars.service_name }}.service'
+           ssh production 'echo "[Install]" >>.config/systemd/user/${{ vars.service_name }}.service'
+           ssh production 'echo "WantedBy=default.target" >>.config/systemd/user/${{ vars.service_name }}.service'
+      - name: systemd reload
+        run: |
+            ssh production "systemctl --user daemon-reload"
            
-      - name: Start the server
-        if: ${{ always() }}
-        run: ssh staging ls
+      - name: restart daemon
+        run: |
+           ssh production "systemctl --user enable  ${{ vars.service_name }}"
+           ssh production "systemctl --user restart ${{ vars.service_name }}"
+           ssh production "systemctl --user status  ${{ vars.service_name }}"
+           
