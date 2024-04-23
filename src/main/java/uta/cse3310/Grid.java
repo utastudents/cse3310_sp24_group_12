@@ -1,8 +1,10 @@
 package uta.cse3310;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
+import java.awt.Point;
 
 public class Grid {
   // class atributes
@@ -63,44 +65,51 @@ public class Grid {
       // downward, 3: diagonal upward, 4: diagonal downward)
       int orientation = random.nextInt(5);
 
-      int endX, endY;
+      int endX = startX, endY = startY;
 
       switch (orientation) {
-        case 0: // Horizontal
+        case 0: // Horizontal: X Remains the same, Y increases
+          endY = startY + wordLength - 1;
+          endX = startX;
+          break;
+        case 1: // Vertical upward: Y Remains the same, X decreases
+          endX = startX - wordLength + 1;
+          endY = startY;
+          break;
+        case 2: // Vertical downward: Y Remains the same, X increases
           endX = startX + wordLength - 1;
           endY = startY;
           break;
-        case 1: // Vertical upward
-          endX = startX;
-          endY = startY - wordLength + 1;
-          break;
-        case 2: // Vertical downward
-          endX = startX;
-          endY = startY + wordLength - 1;
-          break;
-        case 3: // Diagonal upward
+        case 3: // Diagonal upward: X and Y decrease
           endX = startX - wordLength + 1;
           endY = startY - wordLength + 1;
           break;
-        case 4: // Diagonal downward
+        case 4: // Diagonal downward: X and Y increase
           endX = startX + wordLength - 1;
           endY = startY + wordLength - 1;
           break;
-        default:
-          endX = startX;
-          endY = startY;
-          break;
-      }
 
+      }
+      
       if (endX >= 0 && endX < size && endY >= 0 && endY < size) {
+
+        // Create a Word object and add it to the wordsInGrid set
+        Word wordObject = new Word(word, startX, endX, startY, endY, wordLength);
+
         // Check if the word overlaps with any existing words
+        ArrayList<Point> newWordCoordinates = wordObject.getPoints();
+
         boolean overlaps = false;
         for (Word existingWord : wordsInGrid) {
-          if (startX <= existingWord.endx && endX >= existingWord.startx &&
-              startY <= existingWord.endy && endY >= existingWord.starty) {
-            overlaps = true;
-            break;
+          ArrayList<Point> wordCoordinates = existingWord.getPoints();
+
+          for (Point point : newWordCoordinates) {
+            if (wordCoordinates.contains(point)) {
+              overlaps = true;
+              break;
+            }
           }
+
         }
 
         // If the word doesn't overlap, add it to the grid
@@ -109,13 +118,13 @@ public class Grid {
             int x = startX, y = startY;
             switch (orientation) {
               case 0: // Horizontal
-                x = startX + i;
+                y = startY + i;
                 break;
               case 1: // Vertical upward
-                y = startY - i;
+                x = startX - i;
                 break;
               case 2: // Vertical downward
-                y = startY + i;
+                x = startX + i;
                 break;
               case 3: // Diagonal upward
                 x = startX - i;
@@ -132,8 +141,6 @@ public class Grid {
             grid[x][y].color = "white";
           }
 
-          // Create a Word object and add it to the wordsInGrid set
-          Word wordObject = new Word(word, startX, endX, startY, endY, wordLength);
           wordsInGrid.add(wordObject);
           wordCount += wordLength;
 
@@ -144,67 +151,29 @@ public class Grid {
         }
       }
     }
+
   }
 
-  public void colorIn(int startx, int starty, int endx, int endy, Color color) {
-    if (endx == -1) {
-      grid[startx][starty].color = color.name();
-      return;
-    }
-    System.out.printf("startx%d\nstarty%d\nendx%d\nendy%d\n\nhorizontal %s", startx, starty, endx, endy, horizontal(startx, endx, starty, endy));
-    // If it is horizontal, x coordinate remains the same
-    if (horizontal(startx, endx, starty, endy)) {
-      for (int i = starty; i <= endy; i++)
-        grid[startx][i].color = color.name();
-      System.out.println("Updated horizontal");
-      return;
-    }
-
-    if (verticalUpward(startx, endx, starty, endy)) {
-      for (int i = startx; i >= endx; i--)
-        grid[i][starty].color = color.name();
-      System.out.println("Updated vertical up");
-      return;
-    }
-
-    if (verticalDownward(startx, endx, starty, endy)) {
-      for (int i = startx; i <= endx; i++)
-        grid[i][starty].color = color.name();
-      System.out.println("Updated vertical down");
-      return;
-    }
-
-    if (diagonalDownward(startx, starty, endx, endy)) {
-      for (int i = startx, j = starty; i <= endx && j <= endy; i++, j++)
-        grid[i][j].color = color.name();
-      return;
-    }
-
-    if (diagonalUpward(startx, starty, endx, endy)) {
-      for (int i = startx, j = starty; i >= endx && j >= endy; i--, j--)
-        grid[i][j].color = color.name();
-      return;
-    }
+  public void colorIn(int x, int y, Color color) {
+    grid[x][y].color = color.name();
+    return;
   }
 
   public void resetColor(int x, int y) {
     grid[x][y].color = "white";
   }
 
-
-
   public boolean checkWord(int startx, int starty, int endx, int endy, Color color) {
-    if (horizontal(startx, endx, starty, endy) || verticalUpward(startx, endx, starty, endy) ||
-        verticalDownward(startx, endx, starty, endy) || diagonalDownward(startx, starty, endx, endy) ||
-        diagonalUpward(startx, starty, endx, endy)) {
-      colorIn(startx, starty, endx, endy, color);
+    if (horizontal(startx, endx, starty, endy, color) || verticalUpward(startx, endx, starty, endy, color) ||
+        verticalDownward(startx, endx, starty, endy, color) || diagonalDownward(startx, starty, endx, endy, color) ||
+        diagonalUpward(startx, starty, endx, endy, color)) {
       return true;
     }
     return false;
   }
 
   // In the case of horizontal, x value will remain the same.
-  public boolean horizontal(int startx, int endx, int starty, int endy) {
+  public boolean horizontal(int startx, int endx, int starty, int endy, Color color) {
     if (startx != endx) {
       return false;
     }
@@ -219,14 +188,19 @@ public class Grid {
 
     if (wordsInGrid.contains(wordObject) && !foundWords.contains(wordObject)) {
       foundWords.add(wordObject);
+
+      for (int i = starty; i <= endy; i++) {
+        grid[x][i].color = color.name();
+      }
+
       return true;
     }
-''
+
     return false;
   }
 
   // Vertical upward, y will remain the same.
-  public boolean verticalUpward(int startx, int endx, int starty, int endy) {
+  public boolean verticalUpward(int startx, int endx, int starty, int endy, Color color) {
     if (starty != endy) {
       return false;
     }
@@ -242,13 +216,18 @@ public class Grid {
 
     if (wordsInGrid.contains(wordObject) && !foundWords.contains(wordObject)) {
       foundWords.add(wordObject);
+
+      for (int i = startx; i >= endx; i--) {
+        grid[i][y].color = color.name();
+      }
+
       return true;
     }
 
     return false;
   }
 
-  public boolean verticalDownward(int startx, int endx, int starty, int endy) {
+  public boolean verticalDownward(int startx, int endx, int starty, int endy, Color color) {
     if (starty != endy) {
       return false;
     }
@@ -264,13 +243,18 @@ public class Grid {
 
     if (wordsInGrid.contains(wordObject) && !foundWords.contains(wordObject)) {
       foundWords.add(wordObject);
+
+      for (int i = startx; i <= endx; i++) {
+        grid[i][y].color = color.name();
+      }
+
       return true;
     }
 
     return false;
   }
 
-  public boolean diagonalDownward(int startx, int starty, int endx, int endy) {
+  public boolean diagonalDownward(int startx, int starty, int endx, int endy, Color color) {
     StringBuilder currentWord = new StringBuilder();
 
     for (int i = startx, j = starty; i <= endx && j <= endy; i++, j++) {
@@ -281,23 +265,33 @@ public class Grid {
 
     if (wordsInGrid.contains(wordObject) && !foundWords.contains(wordObject)) {
       foundWords.add(wordObject);
+
+      for (int i = startx, j = starty; i <= endx && j <= endy; i++, j++) {
+        grid[i][j].color = color.name();
+      }
+
       return true;
     }
 
     return false;
   }
 
-  public boolean diagonalUpward(int startx, int starty, int endx, int endy) {
+  public boolean diagonalUpward(int startx, int starty, int endx, int endy, Color color) {
     StringBuilder currentWord = new StringBuilder();
-
-    for (int i = startx, j = starty; i >= endx && i >= endy; i--, j--) {
+    for (int i = endx, j = endy; i <= startx && j <= starty; i++, j++) {
       currentWord.append(grid[i][j].alphabet);
     }
+    currentWord = currentWord.reverse();
 
     Word wordObject = new Word(currentWord.toString(), startx, endx, starty, endy, currentWord.toString().length());
 
     if (wordsInGrid.contains(wordObject) && !foundWords.contains(wordObject)) {
       foundWords.add(wordObject);
+
+      for (int i = endx, j = endy; i <= startx && j <= starty; i++, j++) {
+        grid[i][j].color = color.name();
+      }
+
       return true;
     }
 
