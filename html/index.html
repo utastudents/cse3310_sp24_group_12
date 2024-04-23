@@ -437,10 +437,8 @@
             connection.send("< " + username + " " + i + " " + j +" "+ usernameList.get(username))   
             if (userStartClick === null) {
                 userStartClick = { i, j };
-                console.log("startClick: ", userStartClick);
             } else if (userEndClick === null) {
                 userEndClick = { i, j };
-                console.log("endClick: ", userEndClick);
                 connection.send(
                     ") " +
                         username +
