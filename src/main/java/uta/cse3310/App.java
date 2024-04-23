@@ -283,16 +283,17 @@ public class App extends WebSocketServer {
   }
 
   public static void main(String[] args) {
+    int groupNumber =12;
 
     // Set up the http server
-    int port = 9080;
+    int port = 9000 +groupNumber;
     HttpServer H = new HttpServer(port, "./html");
     H.start();
     System.out.println("http Server started on port: " + port);
 
     // create and start the websocket server
 
-    port = 9180;
+    port = 9100 + groupNumber;
     App A = new App(port);
     A.setReuseAddr(true);
     A.start();
