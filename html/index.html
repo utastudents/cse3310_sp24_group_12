@@ -129,6 +129,7 @@
                 </div>
             </div>
         </div>
+
         <!-- Game Screen Here -->
         <div id="GameScreen" class="container-fluid mt-5" style="display: none">
             <div class="row justify-content-start">
@@ -437,10 +438,8 @@
             connection.send("< " + username + " " + i + " " + j +" "+ usernameList.get(username))   
             if (userStartClick === null) {
                 userStartClick = { i, j };
-                console.log("startClick: ", userStartClick);
             } else if (userEndClick === null) {
                 userEndClick = { i, j };
-                console.log("endClick: ", userEndClick);
                 connection.send(
                     ") " +
                         username +
