@@ -19,10 +19,10 @@ public class UserEventTest extends TestCase{
         //Check if setters and getters work
         UserEvent userEvent = new UserEvent();
         
-        userEvent.setYouAre(PlayerType.Player_1);
+        userEvent.setYouAre(PlayerType.player_1);
         userEvent.setGameId(88);
 
-        assertEquals(PlayerType.Player_1, userEvent.getYouAre());
+        assertEquals(PlayerType.player_1, userEvent.getYouAre());
         assertEquals(88, userEvent.getGameId());
     }
 }
