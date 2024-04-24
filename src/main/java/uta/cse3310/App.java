@@ -59,6 +59,7 @@ import java.time.Duration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 public class App extends WebSocketServer {
 
@@ -162,9 +163,10 @@ public class App extends WebSocketServer {
     System.out.println(message);
     GsonBuilder builder = new GsonBuilder();
     Gson gson = builder.create();
+    
+    Game G = conn.getAttachment();
 
     if (message.contains("startGame")) {
-      Game G = conn.getAttachment();
       if (G.gameState == 1) {
         return;
       }
@@ -172,30 +174,52 @@ public class App extends WebSocketServer {
       broadcast(gson.toJson(G));
       return;
     }
-    if (message.startsWith("+")) {
-      Game G = conn.getAttachment();
-      var username = message.substring(1, message.length());
+    if (message.contains("register")) {
+      JsonObject json = gson.fromJson(message, JsonObject.class);
+      JsonObject registree = json.get("register").getAsJsonObject();
+
+      String username = registree.get("username").getAsString();
+      int connectionGameID = json.get("gameid").getAsInt();
+
+      if (G.GameId != connectionGameID) {
+        return;
+      }
+
       if(username.length() < 3){
-        broadcast("!Too Short");
+        JsonObject error = new JsonObject();
+        error.addProperty("error", "Username must be at least 3 characters long");
+        conn.send(gson.toJson(error));
         return;
       }
       if (!G.loginManager.registerUser(username)) {
-        broadcast("!Invalid Username");
+        JsonObject error = new JsonObject();
+        error.addProperty("error", "Username already taken");
+        conn.send(gson.toJson(error));
         return;
       }
+
       G.scores.addNewPlayer(username);
       String jsonString;
       jsonString = gson.toJson(G);
       broadcast(jsonString);
-    } else if (message.startsWith(")")) {
-      Game G = conn.getAttachment();
-      String[] parts = message.split(" ");
-      String name = parts[1];
-      int startx = Integer.parseInt(parts[2]);
-      int starty = Integer.parseInt(parts[3]);
-      int endx = Integer.parseInt(parts[4]);
-      int endy = Integer.parseInt(parts[5]);
-      // TODO: Get player from username. Send to checkWord. checkWord sends to highlight. After that, broadcast updated game.
+
+    } else if (message.contains("startClick")) {
+      JsonObject json = gson.fromJson(message, JsonObject.class);
+      int connectionGameID = json.get("gameid").getAsInt();
+
+      if (G.GameId != connectionGameID) {
+        return;
+      }
+      
+      JsonObject startClick = json.get("startClick").getAsJsonObject();
+      JsonObject endClick = json.get("endClick").getAsJsonObject();
+
+      String name = json.get("username").getAsString();
+      int startx = startClick.get("x").getAsInt();
+      int starty = startClick.get("y").getAsInt();
+      int endx = endClick.get("x").getAsInt();
+      int endy = endClick.get("y").getAsInt();
+
       if (G.grid.checkWord(startx, starty, endx, endy, G.loginManager.usernames.get(name))) {
         G.scores.updateScore(name, 1);
         broadcast(gson.toJson(G));
@@ -206,17 +230,24 @@ public class App extends WebSocketServer {
         broadcast("!Invalid Word");
       } 
       
-    }else if(message.startsWith("<")){
-      Game G = conn.getAttachment();
-      String[] parts = message.split(" ");
-      String name = parts[1];
-      int startx = Integer.parseInt(parts[2]);
-      int starty = Integer.parseInt(parts[3]);
-      String colorChange = parts[4];
-      G.grid.colorIn(startx, starty, Color.valueOf(colorChange));
+    } else if (message.contains("click")) {
+      JsonObject json = gson.fromJson(message, JsonObject.class);
+      int connectionGameID = json.get("gameid").getAsInt();
+
+      if (G.GameId != connectionGameID) {
+        return;
+      }
+
+      JsonObject click = json.get("click").getAsJsonObject();
+      String name = click.get("username").getAsString();
+      int x = click.get("x").getAsInt();
+      int y = click.get("y").getAsInt();
+      String color = click.get("color").getAsString();
+
+      G.grid.colorIn(x, y, Color.valueOf(color));
+
       broadcast(gson.toJson(G));
     }else if(message.startsWith("~")){
-      Game G = conn.getAttachment();
       G.chatLog.addToChat(message);
       broadcast(gson.toJson(G));
     }
@@ -232,7 +263,6 @@ public class App extends WebSocketServer {
       UserEvent U = gson.fromJson(message, UserEvent.class);
 
       // Get our Game Object
-      Game G = conn.getAttachment();
       G.Update(U);
 
       // send out the game state every time
