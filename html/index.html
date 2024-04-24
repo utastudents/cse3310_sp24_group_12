@@ -272,12 +272,12 @@
     var userStartClick = null;
     var userEndClick = null;
     let colormap = {
-        RED: "Red",
-        GREEN: "Green",
-        BLUE: "Blue",
-        ORANGE: "Orange",
-        YELLOW: "Yellow",
-        PURPLE: "Purple",
+        RED: "Crimson",
+        GREEN: "MediumAquaMarine",
+        BLUE: "CornflowerBlue",
+        ORANGE: "DarkOrange",
+        YELLOW: "Gold",
+        PURPLE: "MediumSlateBlue",
         WHITE: "White",
     };
     const wordGrid = document.getElementById("WordGrid");
@@ -324,7 +324,7 @@
                 console.log("gameState: " + obj.gameState);
                 startCountdown();
             }
-            
+
             if ("loginManager" in obj && obj.GameId == gameid && !started) {
                 usernameList = obj.loginManager.usernames;
                 usernameList = new Map(Object.entries(usernameList));
@@ -517,6 +517,7 @@
             }
         };
     }
+
     function colorIn() {
         for (let i = 0; i < 50; i++) {
             for (let j = 0; j < 50; j++) {
@@ -525,7 +526,7 @@
                 if (getSpan === null) {
                     return;
                 } else {
-                    const color = buttonsList[i][j].color;
+                    const color = colormap[buttonsList[i][j].color.toUpperCase()];
                     getSpan.style.backgroundColor = color;
                 }
             }
