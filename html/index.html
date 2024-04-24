@@ -13,44 +13,86 @@
     <title>TWSG</title>
 
     <body class="bg-dark text-white">
-        <nav class="navbar navbar-dark  d-flex border-bottom border-white">
-            <div class="container-fluid justify-content-evenly position-relative pt-3 pb-3">
+        <nav class="navbar navbar-dark d-flex border-bottom border-white">
+            <div
+                class="container-fluid justify-content-evenly position-relative pt-3 pb-3"
+            >
                 <h1
                     id="TWSG"
-                    class="navbar-brand font-weight-bold extra-bold position-absolute start-50 translate-middle-x "
+                    class="navbar-brand font-weight-bold extra-bold position-absolute start-50 translate-middle-x"
                     title="The World Search Game"
                     style="font-size: 2em"
                 >
                     TWSG
                 </h1>
-                <button id="Chat" class="btn btn-primary ms-auto mx-5" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" style="display: none;">OPEN CHAT</button>
+                <button
+                    id="Chat"
+                    class="btn btn-primary ms-auto mx-5"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasBottom"
+                    aria-controls="offcanvasBottom"
+                    style="display: none"
+                >
+                    OPEN CHAT
+                </button>
             </div>
         </nav>
 
-        <div class="offcanvas offcanvas-bottom bg-dark mx-auto" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel" style="width: 60%; height: 75%; overflow: hidden">
+        <div
+            class="offcanvas offcanvas-bottom bg-dark mx-auto"
+            tabindex="-1"
+            id="offcanvasBottom"
+            aria-labelledby="offcanvasBottomLabel"
+            style="width: 60%; height: 75%; overflow: hidden"
+        >
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasBottomLabel">CHAT</h5>
-              <button type="button" class="btn-close bg-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <h5 class="offcanvas-title" id="offcanvasBottomLabel">CHAT</h5>
+                <button
+                    type="button"
+                    class="btn-close bg-white"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
+                ></button>
             </div>
-            <div  class="offcanvas-body small position-relative">
-                <div class="bg-secondary position-relative" style="overflow-x: hidden; overflow-y: hidden; max-height: 400px; height: 75%; max-width: 100%; border-radius: 5px;">
-                    <ul  id="chatLog" class="list-group pt-2 mx-2 position-absolute bottom-0 start-0 ">
-                        
-                    </ul>
+            <div class="offcanvas-body small position-relative">
+                <div
+                    class="bg-secondary position-relative"
+                    style="
+                        overflow-x: hidden;
+                        overflow-y: hidden;
+                        max-height: 400px;
+                        height: 75%;
+                        max-width: 100%;
+                        border-radius: 5px;
+                    "
+                >
+                    <ul
+                        id="chatLog"
+                        class="list-group pt-2 mx-2 position-absolute bottom-0 start-0"
+                    ></ul>
                 </div>
-                <span class="position-absolute start-50 translate-middle-x fs-3 "> Enter Message</span>
+                <span
+                    class="position-absolute start-50 translate-middle-x fs-3"
+                >
+                    Enter Message</span
+                >
                 <form id="hit-send">
-                    <input class="position-absolute  my-5 start-50 translate-middle-x w-50 text-break form" type="text"  id="MessageInput" />
-                    <button type="submit" class="btn btn-primary my-5 position-absolute start-50 translate-middle-x" style="translate: 300px;" >SEND</button>
+                    <input
+                        class="position-absolute my-5 start-50 translate-middle-x w-50 text-break form"
+                        type="text"
+                        id="MessageInput"
+                    />
+                    <button
+                        type="submit"
+                        class="btn btn-primary my-5 position-absolute start-50 translate-middle-x"
+                        style="translate: 300px"
+                    >
+                        SEND
+                    </button>
                 </form>
             </div>
         </div>
-       
-
-
-
-
-
 
         <!--Login Screen Here -->
         <div id="LoginScreen" style="display: block">
@@ -134,13 +176,20 @@
         <div id="GameScreen" class="container-fluid mt-5" style="display: none">
             <div class="row justify-content-start">
                 <div class="col-9">
-                    <div id="WordGrid" class="d-flex card bg-secondary align-items-between justify-content-between" style="width: 100%; height: 100%; overflow-x: auto; overflow-y: auto;">
-                
-                    </div>
+                    <div
+                        id="WordGrid"
+                        class="d-flex card bg-secondary align-items-between justify-content-between"
+                        style="
+                            width: 100%;
+                            height: 100%;
+                            overflow-x: auto;
+                            overflow-y: auto;
+                        "
+                    ></div>
                 </div>
                 <div class="col-1">
                     <div
-                        class="position-fixed d-flex card bg-secondary "
+                        class="position-fixed d-flex card bg-secondary"
                         style="max-height: 300px; width: 200px"
                     >
                         <ul
@@ -153,21 +202,29 @@
             </div>
         </div>
         <!-- Leaderboard Screen Here -->
-<div id="LeaderboardScreen" class="container" style="display: none">
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-6">
-            <div class="card bg-secondary">
-                <div class="card-header">
-                    <h2 class="text-center">Leaderboard</h2>
-                </div>
-                <ul id="leaderboardList" class="list-group list-group-flush"></ul>
-                <div class="card-footer text-center">
-                    <button id="refreshLeaderboardButton" class="btn btn-primary">Refresh</button>
+        <div id="LeaderboardScreen" class="container" style="display: none">
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-6">
+                    <div class="card bg-secondary">
+                        <div class="card-header">
+                            <h2 class="text-center">Leaderboard</h2>
+                        </div>
+                        <ul
+                            id="leaderboardList"
+                            class="list-group list-group-flush"
+                        ></ul>
+                        <div class="card-footer text-center">
+                            <button
+                                id="refreshLeaderboardButton"
+                                class="btn btn-primary"
+                            >
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
     </body>
 </html>
 <script>
@@ -197,10 +254,10 @@
     };
     const LoginScreen = document.getElementById("LoginScreen");
     const LobbyScreen = document.getElementById("LobbyScreen");
-    const chat = document.getElementById("Chat")
+    const chat = document.getElementById("Chat");
     const chatbox = document.getElementById("chatLog");
-    const Send = document.getElementById("hit-send")
-    const MessageIn = document.getElementById("MessageInput")
+    const Send = document.getElementById("hit-send");
+    const MessageIn = document.getElementById("MessageInput");
     var username;
     var form = document.getElementById("usernameForm");
     var input = document.getElementById("inputUsername");
@@ -232,22 +289,14 @@
         console.log("Message received: " + msg);
 
         usernameError.textContent = "";
-        
+
         if (msg == "startGame") {
             startCountdown();
             return;
-        }
-
-
-        if (msg.startsWith("!")) {
-            if (msg.slice(1, msg.length) == "Invalid Username") {
-                usernameError.textContent = "Username in use.";
-                return;
-            }
-            if (msg.slice(1, msg.length) == "Too Short") {
-                nameLength.classList.add("text-danger");
-                return;
-            }
+        } else if (msg.includes("error")) {
+            const obj = JSON.parse(msg);
+            usernameError.textContent = obj.error;
+            return;
         } else {
             const obj = JSON.parse(msg);
 
@@ -263,19 +312,19 @@
                 }
                 gameid = obj.GameId;
             }
+
             if (
                 "gameState" in obj &&
                 obj.gameState == 1 &&
                 obj.GameId == gameid &&
                 !started
-
             ) {
-                
                 startButton.style.display = "none";
                 console.log("gameid: " + gameid);
                 console.log("gameState: " + obj.gameState);
                 startCountdown();
             }
+            
             if ("loginManager" in obj && obj.GameId == gameid && !started) {
                 usernameList = obj.loginManager.usernames;
                 usernameList = new Map(Object.entries(usernameList));
@@ -287,20 +336,22 @@
                     chat.style.display = "block";
                     input.value = "";
                     Lobby(usernameList);
-                    
                 }
             }
             if ("grid" in obj && obj.GameId == gameid) {
                 console.log("gameid: " + gameid);
                 buttonsList = obj.grid.grid;
                 colorIn();
-
             }
             if ("scores" in obj && obj.GameId == gameid) {
                 scoremap = obj.scores.score;
             }
-            
-            if ("latestPlayer" in obj && obj.GameId == gameid && obj.gameState !=1) {
+
+            if (
+                "latestPlayer" in obj &&
+                obj.GameId == gameid &&
+                obj.gameState != 1
+            ) {
                 if (
                     obj.latestPlayer == "player_1" ||
                     obj.latestPlayer == "player_5"
@@ -311,15 +362,14 @@
                 }
             }
 
-            if("chatLog" in obj && obj.GameId == gameid){
+            if ("chatLog" in obj && obj.GameId == gameid) {
                 chatLog = obj.chatLog.chatLog;
-                if(chatLog.length === 0){
-                    console.log("Empty chat")
-                }else{
+                if (chatLog.length === 0) {
+                    console.log("Empty chat");
+                } else {
                     fillChat();
                 }
             }
-                   
         }
     };
 
@@ -327,18 +377,22 @@
         //take in user input (username)
         e.preventDefault();
         username = input.value;
-        connection.send("+" + username);
+        var newUser = {
+            register: {
+                username: username,
+            },
+            gameid: gameid,
+        };
+        connection.send(JSON.stringify(newUser));
     });
 
-    Send.addEventListener("submit", function(e){
+    Send.addEventListener("submit", function (e) {
         e.preventDefault();
-        if(MessageIn.value !== " "){
-            connection.send("~`" + username + "`" + MessageIn.value)
-        } 
-        MessageIn.value = ""
-    })
-
-
+        if (MessageIn.value !== " ") {
+            connection.send("~`" + username + "`" + MessageIn.value);
+        }
+        MessageIn.value = "";
+    });
 
     function Lobby(usernameList) {
         //lobby screen, for each username in usernamelist create new list element and populate the lobby list.
@@ -416,109 +470,123 @@
                 Col.style.justifyContent = "center";
                 Col.style.alignItems = "center";
                 Col.style.backgroundColor = buttonsList[i][j].color;
-                Col.addEventListener(
-                    "click",
-                    ClickListener(Col, i, j)
-                );
+                Col.addEventListener("click", ClickListener(Col, i, j));
                 Row.appendChild(Col);
             }
             wordGrid.appendChild(Row);
         }
     }
 
-
-
-    
     function ClickListener(Col, i, j) {
         return function () {
-            if(Col.style.backgroundColor !== "white")return;
+            if (Col.style.backgroundColor !== "white") return;
             Col.style.backgroundColor = usernameList.get(username);
-            connection.send("< " + username + " " + i + " " + j +" "+ usernameList.get(username))   
+            var click = {
+                click: {
+                    username: username,
+                    x: i,
+                    y: j,
+                    color: usernameList.get(username),
+                },
+                gameid: gameid,
+            };
+
+            connection.send(JSON.stringify(click));
+
             if (userStartClick === null) {
                 userStartClick = { i, j };
             } else if (userEndClick === null) {
                 userEndClick = { i, j };
-                connection.send(
-                    ") " +
-                        username +
-                        " " +
-                        userStartClick.i +
-                        " " +
-                        userStartClick.j +
-                        " " +
-                        userEndClick.i +
-                        " " +
-                        userEndClick.j
-                );
+
+                var clickCoords = {
+                    startClick: {
+                        x: userStartClick.i,
+                        y: userStartClick.j,
+                    },
+                    endClick: {
+                        x: userEndClick.i,
+                        y: userEndClick.j,
+                    },
+                    gameid: gameid,
+                    color: usernameList.get(username),
+                    username: username,
+                };
+                connection.send(JSON.stringify(clickCoords));
                 userStartClick = null;
                 userEndClick = null;
             }
         };
     }
-    function colorIn(){
-        for(let i = 0; i < 50; i++){
-            for(let j=0; j < 50; j++){
-                const spanId = `${i},${j}`
-                const getSpan = document.getElementById(spanId)
-                if(getSpan === null){
+    function colorIn() {
+        for (let i = 0; i < 50; i++) {
+            for (let j = 0; j < 50; j++) {
+                const spanId = `${i},${j}`;
+                const getSpan = document.getElementById(spanId);
+                if (getSpan === null) {
                     return;
-                }else{
-                        const color = buttonsList[i][j].color
-                        getSpan.style.backgroundColor = color;
-                   }
-                
+                } else {
+                    const color = buttonsList[i][j].color;
+                    getSpan.style.backgroundColor = color;
+                }
             }
         }
     }
-    
-    function fillChat(){
-        if(hasChildElements()){
-            createChildElement(chatLog[(chatLog.length)-1])
+
+    function fillChat() {
+        if (hasChildElements()) {
+            createChildElement(chatLog[chatLog.length - 1]);
             return;
         }
-        chatLog.forEach(element => {
-            createChildElement(element)
+        chatLog.forEach((element) => {
+            createChildElement(element);
         });
     }
 
-    function createChildElement(element){
-        const Div = document.createElement("div")
-        Div.style.width = "420px"
-        Div.style.height = "100px"
-        Div.style.overflowY = "hidden"
-        Div.style.maxWidth = "420px"
-        Div.style.maxHeight = "100px"
-        Div.style.borderRadius = "5px"
-        Div.classList.add("list-group-item", "justify-content-between", "bg-dark","mb-2" ,"text-white" ,"fs-5", "text-bold")
-        const Span  = document.createElement("span")
-        
-        const paragraph = document.createElement("p")
-        paragraph.classList.add("text-break")
-        paragraph.textContent = element.message
-        if(element.sender === username){
-            Span.textContent = "ME:"
-            Div.style.translate = "295px"
-        }else{
-            Span.textContent = element.sender + ":"
-            Div.style.translate = "0px"
+    function createChildElement(element) {
+        const Div = document.createElement("div");
+        Div.style.width = "420px";
+        Div.style.height = "100px";
+        Div.style.overflowY = "hidden";
+        Div.style.maxWidth = "420px";
+        Div.style.maxHeight = "100px";
+        Div.style.borderRadius = "5px";
+        Div.classList.add(
+            "list-group-item",
+            "justify-content-between",
+            "bg-dark",
+            "mb-2",
+            "text-white",
+            "fs-5",
+            "text-bold"
+        );
+        const Span = document.createElement("span");
+
+        const paragraph = document.createElement("p");
+        paragraph.classList.add("text-break");
+        paragraph.textContent = element.message;
+        if (element.sender === username) {
+            Span.textContent = "ME:";
+            Div.style.translate = "295px";
+        } else {
+            Span.textContent = element.sender + ":";
+            Div.style.translate = "0px";
         }
-        Div.appendChild(Span)
-        Div.appendChild(paragraph)
-        chatbox.appendChild(Div)
+        Div.appendChild(Span);
+        Div.appendChild(paragraph);
+        chatbox.appendChild(Div);
     }
-    function hasChildElements(){
-        const childNodes = Array.from(chatbox.childNodes).filter(node => node.nodeType === Node.ELEMENT_NODE)
+    function hasChildElements() {
+        const childNodes = Array.from(chatbox.childNodes).filter(
+            (node) => node.nodeType === Node.ELEMENT_NODE
+        );
         return childNodes.length > 0;
     }
-
-
-
 
     function startCountdown() {
         // 10 second countdown, displays the coundown timer
         //changes the text content of the Count span (so it displayes like 10, 9 , 8 ...)
         //when timer reaches 0 the countdown display and lobby become invisible, game screen becomes visible
-        
+
         const Countdown = document.getElementById("Countdown");
         const Count = document.getElementById("Count");
         var timer = 10;
