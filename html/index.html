@@ -343,8 +343,12 @@
                 buttonsList = obj.grid.grid;
                 colorIn();
             }
-            if ("scores" in obj && obj.GameId == gameid) {
+            if ("scores" in obj && obj.GameId == gameid && obj.gameState == 1) {
                 scoremap = obj.scores.score;
+                console.log(scoremap)
+                for(let key in scoremap){
+                    updateScore(key)
+                }
             }
 
             if (
@@ -389,7 +393,13 @@
     Send.addEventListener("submit", function (e) {
         e.preventDefault();
         if (MessageIn.value !== " ") {
-            connection.send("~`" + username + "`" + MessageIn.value);
+            var chatMessage = {
+                incoming: {
+                    from: username,
+                },
+                details: MessageIn.value,
+            };
+            connection.send(JSON.stringify(chatMessage));
         }
         MessageIn.value = "";
     });
@@ -405,7 +415,6 @@
                     listItem.style.width = "100%";
                     listItem.style.height = "60px";
                     listItem.style.fontWeight = "bold";
-                    // listItem.style.backgroundColor = colormap[value];
                     listItem.textContent = key.toUpperCase();
                     listItem.id = key;
                     document
@@ -434,16 +443,15 @@
         gameUserList.innerHTML = ""; // Clear the previous user list
         if (usernameList) {
             for (let [key, value] of usernameList) {
-                let listItem = document.createElement("li");
+                const listItem = document.createElement("li");
+                listItem.id = key +"1"
                 listItem.classList.add("list-group-item", "text-start");
                 listItem.style.width = "100%";
                 listItem.style.height = "60px";
                 listItem.style.fontWeight = "bold";
                 listItem.style.backgroundColor = colormap[value];
-                listItem.textContent =
-                    key.toUpperCase() + "'s Score: " + scoremap[key];
-
                 gameUserList.appendChild(listItem);
+                updateScore(key)
             }
         }
 
@@ -463,9 +471,9 @@
                 Col.textContent = buttonsList[i][j].alphabet;
                 Col.id = i + "," + j;
                 Col.style.cursor = "pointer";
-                Col.style.width = "2px";
-                Col.style.height = "10px";
-                Col.style.margin = "3px";
+                Col.style.width = "20px";
+                Col.style.height = "20px";
+                Col.style.margin = "1px";
                 Col.style.display = "flex";
                 Col.style.justifyContent = "center";
                 Col.style.alignItems = "center";
@@ -475,6 +483,14 @@
             }
             wordGrid.appendChild(Row);
         }
+    }
+
+    function updateScore(key){
+        const keyElement = document.getElementById(key + "1")
+        if(keyElement === null){
+            return
+        }
+        keyElement.textContent = key.toUpperCase() + "'s score: " + scoremap[key]
     }
 
     function ClickListener(Col, i, j) {
@@ -567,7 +583,7 @@
         paragraph.textContent = element.message;
         if (element.sender === username) {
             Span.textContent = "ME:";
-            Div.style.translate = "295px";
+            Div.style.translate = "300px";
         } else {
             Span.textContent = element.sender + ":";
             Div.style.translate = "0px";

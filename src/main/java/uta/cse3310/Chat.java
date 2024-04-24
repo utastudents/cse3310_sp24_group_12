@@ -7,22 +7,16 @@ public class Chat {
 
      
     ArrayList<Message> chatLog;
-    Message newMessage;
+    private Message newMessage;
     public Chat(){
         this.chatLog = new ArrayList<Message>();
-        // newMessage = new Message();
-        // newMessage.sender = "Test";
-        // newMessage.message = "This is a test String";
-        // chatLog.add(newMessage);
     }
 
-    public void addToChat(String send){
+    public void addToChat(String user, String message){
         newMessage = new Message();
-        String[] message = send.split("`");
-        newMessage.sender = message[1];
-        newMessage.message = message[2];
+        newMessage.sender = user;
+        newMessage.message = message;
         chatLog.add(newMessage);
-        
     }
     // Scanner input = new Scanner(System.in);
     // System.out.println("<Type a message. Press enter to send.>");

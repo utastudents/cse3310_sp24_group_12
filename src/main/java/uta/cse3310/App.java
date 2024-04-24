@@ -246,8 +246,13 @@ public class App extends WebSocketServer {
       G.grid.colorIn(x, y, Color.valueOf(color));
 
       broadcast(gson.toJson(G));
-    }else if(message.startsWith("~")){
-      G.chatLog.addToChat(message);
+    }else if(message.contains("incoming")){
+      JsonObject json = gson.fromJson(message, JsonObject.class);
+      JsonObject incoming = json.get("incoming").getAsJsonObject();
+
+      String username = incoming.get("from").getAsString();
+      String messageDetails = json.get("details").getAsString();
+      G.chatLog.addToChat(username,messageDetails);
       broadcast(gson.toJson(G));
     }
     
