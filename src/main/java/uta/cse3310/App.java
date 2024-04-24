@@ -210,7 +210,7 @@ public class App extends WebSocketServer {
       if (G.GameId != connectionGameID) {
         return;
       }
-      
+
       JsonObject startClick = json.get("startClick").getAsJsonObject();
       JsonObject endClick = json.get("endClick").getAsJsonObject();
 
@@ -227,7 +227,6 @@ public class App extends WebSocketServer {
         G.grid.resetColor(endx, endy);
         G.grid.resetColor(startx, starty);
         broadcast(gson.toJson(G));// to reset color on grid
-        broadcast("!Invalid Word");
       } 
       
     } else if (message.contains("click")) {
