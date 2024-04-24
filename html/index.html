@@ -345,9 +345,9 @@
             }
             if ("scores" in obj && obj.GameId == gameid && obj.gameState == 1) {
                 scoremap = obj.scores.score;
-                console.log(scoremap)
-                for(let key in scoremap){
-                    updateScore(key)
+                console.log(scoremap);
+                for (let key in scoremap) {
+                    updateScore(key);
                 }
             }
 
@@ -444,14 +444,14 @@
         if (usernameList) {
             for (let [key, value] of usernameList) {
                 const listItem = document.createElement("li");
-                listItem.id = key +"1"
+                listItem.id = key + "1";
                 listItem.classList.add("list-group-item", "text-start");
                 listItem.style.width = "100%";
                 listItem.style.height = "60px";
                 listItem.style.fontWeight = "bold";
                 listItem.style.backgroundColor = colormap[value];
                 gameUserList.appendChild(listItem);
-                updateScore(key)
+                updateScore(key);
             }
         }
 
@@ -485,12 +485,13 @@
         }
     }
 
-    function updateScore(key){
-        const keyElement = document.getElementById(key + "1")
-        if(keyElement === null){
-            return
+    function updateScore(key) {
+        const keyElement = document.getElementById(key + "1");
+        if (keyElement === null) {
+            return;
         }
-        keyElement.textContent = key.toUpperCase() + "'s score: " + scoremap[key]
+        keyElement.textContent =
+            key.toUpperCase() + "'s score: " + scoremap[key];
     }
 
     function ClickListener(Col, i, j) {
@@ -542,7 +543,8 @@
                 if (getSpan === null) {
                     return;
                 } else {
-                    const color = colormap[buttonsList[i][j].color.toUpperCase()];
+                    const color =
+                        colormap[buttonsList[i][j].color.toUpperCase()];
                     getSpan.style.backgroundColor = color;
                 }
             }
