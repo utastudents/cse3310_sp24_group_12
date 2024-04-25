@@ -176,32 +176,9 @@
         <div id="GameScreen" class="container-fluid mt-5" style="display: none">
             <div class="d-flex" style="border-radius: 2px;">
                 <p>Word Bank</p>
-                <div class="d-flex" style="overflow-x: auto; border-radius: 2px; max-height: 50px; overflow-y: hidden;">
+                <div class="d-flex mx-2" style="overflow-x: auto; border-radius: 2px; max-height: 50px; overflow-y: hidden;">
                     <ul id="wordBank" class="list-group list-group-horizontal" style="height: 40px;">
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
-                        <li class="list-group-item"> WORD</li>
+                        
                     </ul>
                 </div>
             </div>
@@ -289,6 +266,7 @@
     const chatbox = document.getElementById("chatLog");
     const Send = document.getElementById("hit-send");
     const MessageIn = document.getElementById("MessageInput");
+    const WordBank = document.getElementById("wordBank")
     var username;
     var form = document.getElementById("usernameForm");
     var input = document.getElementById("inputUsername");
@@ -297,6 +275,7 @@
     var startButton = document.getElementById("startButton");
     var GameScreen = document.getElementById("GameScreen");
     var buttonsList;
+    var wordBank;
     var chatLog;
     var scoremap = new Map();
     var started = false;
@@ -372,7 +351,10 @@
             if ("grid" in obj && obj.GameId == gameid) {
                 console.log("gameid: " + gameid);
                 buttonsList = obj.grid.grid;
+                wordBank = obj.grid.wordsInGrid
+                console.log(wordBank[0])
                 colorIn();
+                fillWordBank();
             }
             if ("scores" in obj && obj.GameId == gameid && obj.gameState == 1) {
                 scoremap = obj.scores.score;
@@ -407,6 +389,8 @@
             }
         }
     };
+
+
 
     form.addEventListener("submit", function (e) {
         //take in user input (username)
@@ -513,6 +497,15 @@
                 Row.appendChild(Col);
             }
             wordGrid.appendChild(Row);
+        }
+    }
+
+    function fillWordBank(){
+        for(let i =0; i < wordBank.length -1; i++){
+            const word = document.createElement("li");
+            word.classList.add("list-group-item")
+            word.textContent = wordBank[i].word;
+            WordBank.append(word);
         }
     }
 
