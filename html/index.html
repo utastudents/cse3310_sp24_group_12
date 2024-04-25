@@ -176,7 +176,7 @@
         <div id="GameScreen" class="container-fluid mt-5" style="display: none">
             <div class="d-flex" style="border-radius: 2px;">
                 <p>Word Bank</p>
-                <div class="d-flex" style="overflow-x: auto; border-radius: 2px;">
+                <div class="d-flex" style="overflow-x: auto; border-radius: 2px; max-height: 50px; overflow-y: hidden;">
                     <ul id="wordBank" class="list-group list-group-horizontal" style="height: 40px;">
                         <li class="list-group-item"> WORD</li>
                         <li class="list-group-item"> WORD</li>
@@ -423,7 +423,7 @@
 
     Send.addEventListener("submit", function (e) {
         e.preventDefault();
-        if (MessageIn.value !== " ") {
+        if (MessageIn.value.trim()) {
             var chatMessage = {
                 incoming: {
                     from: username,
@@ -685,5 +685,20 @@
         color: transparent;
         -webkit-background-clip: text;
         animation: gradientAnimation 3s linear infinite;
+    }
+</style>
+
+<style>
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: darkgrey;
+        border-radius: 5px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 5px;
     }
 </style>
