@@ -97,6 +97,7 @@ public class App extends WebSocketServer {
     // search for a game needing a player
     Game G = null;
     for (Game i : ActiveGames) {
+
       System.out.println(i.latestPlayer);
       if (((i.latestPlayer == uta.cse3310.PlayerType.player_1) ||
           (i.latestPlayer == uta.cse3310.PlayerType.player_2) ||
@@ -165,7 +166,9 @@ public class App extends WebSocketServer {
     Gson gson = builder.create();
     
     Game G = conn.getAttachment();
-
+    if(G == null){
+      return;
+    }
     if (message.contains("startGame")) {
       if (G.gameState == 1) {
         return;

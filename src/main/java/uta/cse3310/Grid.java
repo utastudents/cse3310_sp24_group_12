@@ -24,7 +24,7 @@ public class Grid {
     wordsInGrid = new HashSet<>();
     foundWords = new HashSet<>();
 
-    populateGrid(50);
+    populateGrid(20);
   }
 
   public void populateGrid(int size) {
