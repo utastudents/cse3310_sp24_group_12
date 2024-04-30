@@ -117,10 +117,12 @@ public class WholeGameTest
         List<Map.Entry<String, Integer>> sortedScores = new ArrayList<>(game.scores.score.entrySet());
         sortedScores.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
 
-        for (Map.Entry<String, Integer> entry : sortedScores) {
+        // Fill up the stringbuilder with the players and their scores
+        for (Map.Entry<String, Integer> entry : game.scores.score.entrySet()) {
             formatScores.append("Player: ").append(entry.getKey()).append("   Score: ").append(entry.getValue())
                     .append("\n");
         }
+
         assertEquals(formatScores.toString(), game.leaderboard.generateLeaderboard());
 
     }
