@@ -50,17 +50,13 @@ public class GameTest {
         game.loginManager.registerUser("player3");
         game.loginManager.registerUser("player4");
 
-        assertEquals(1, game.loginManager.currentGameSize);
-        assertEquals(2, game.loginManager.currentGameSize);
-        assertEquals(3, game.loginManager.currentGameSize);
-        assertEquals(4, game.loginManager.currentGameSize);
-        
-        assertEquals(4, game.loginManager.getRegisteredUsers().size());
+        Assert.assertEquals(1, game.loginManager.currentGameSize);
+        Assert.assertEquals(2, game.loginManager.currentGameSize);
+        Assert.assertEquals(3, game.loginManager.currentGameSize);
+        Assert.assertEquals(4, game.loginManager.currentGameSize);
+
+        Assert.assertEquals(4, game.loginManager.getRegisteredUsers().size());
 
     }
 
-    private void assertEquals(int i, int currentGameSize) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'assertEquals'");
-    }
 }
