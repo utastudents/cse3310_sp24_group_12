@@ -53,7 +53,7 @@ public class Grid {
 
     int wordCount = 0;
 
-    while (wordCount < (size * size) * 0.8) {
+    while (wordCount < (size * size) * 0.5) {
       String word = wordList.getRandomWord(); // Get a random word from the word list
       int wordLength = word.length();
 
@@ -109,9 +109,8 @@ public class Grid {
               break;
             }
           }
-
         }
-
+        
         // If the word doesn't overlap, add it to the grid
         if (!overlaps) {
           for (int i = 0; i < wordLength; i++) {
@@ -145,7 +144,7 @@ public class Grid {
           wordCount += wordLength;
 
           // Check if 80% of the grid is filled with valid words
-          if (wordCount >= (size * size) * 0.8) {
+          if (wordCount >= (size * size) * 0.5) {
             break;
           }
         }
