@@ -87,7 +87,12 @@ public class App extends WebSocketServer {
 
   @Override
   public void onOpen(WebSocket conn, ClientHandshake handshake) {
-
+    String version = System.getenv("VERSION");
+    JsonObject versionObj = new JsonObject();
+    GsonBuilder builder = new GsonBuilder();
+    Gson gson = builder.create();
+    versionObj.addProperty("version", version);
+    conn.send(versionObj.toString()); 
     connectionId++;
 
     System.out.println(conn.getRemoteSocketAddress().getAddress().getHostAddress() + " connected");
@@ -134,7 +139,6 @@ public class App extends WebSocketServer {
     // when we ask for it
     conn.setAttachment(G);
 
-    Gson gson = new Gson();
 
     // Note only send to the single connection
     String jsonString = gson.toJson(E);
@@ -335,6 +339,7 @@ public class App extends WebSocketServer {
     A.setReuseAddr(true);
     A.start();
     System.out.println("websocket Server started on port: " + port);
+
 
   }
 }
