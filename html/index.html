@@ -312,7 +312,7 @@
         } else if (msg.includes("version")) {
             const obj = JSON.parse(msg);
             if (obj.version)
-                document.getElementById("title").textContent += " : " + obj.version;
+                document.title += " : " + obj.version;
         } else if (msg.includes("error")) {
             const obj = JSON.parse(msg);
             usernameError.textContent = obj.error;
