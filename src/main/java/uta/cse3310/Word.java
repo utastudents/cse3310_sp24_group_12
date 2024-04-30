@@ -48,11 +48,23 @@ public class Word {
             for (int i = starty; i <= endy; i++) {
                 points.add(new Point(startx, i));
             }
-        } else if (starty == endy) {
+        } else if ((starty == endy) && (startx < endx)){
             for (int i = startx; i <= endx; i++) {
                 points.add(new Point(i, starty));
             }
-        } else {
+        } else if ((starty == endy) && (startx > endx)){
+            for (int i = startx; i >= endx; i--) {
+                points.add(new Point(i, starty));
+            }
+        } else if (startx < endx && starty > endy) {
+            int x = startx;
+            int y = starty;
+            while (x <= endx && y >= endy) {
+                points.add(new Point(x, y));
+                x++;
+                y--;
+            }
+        } else if (startx < endx && starty < endy) {
             int x = startx;
             int y = starty;
             while (x <= endx && y <= endy) {
@@ -60,7 +72,16 @@ public class Word {
                 x++;
                 y++;
             }
+        } else if (startx > endx && starty > endy) {
+            int x = startx;
+            int y = starty;
+            while (x >= endx && y >= endy) {
+                points.add(new Point(x, y));
+                x--;
+                y--;
+            }
         }
+
         return points;
     }
 }
