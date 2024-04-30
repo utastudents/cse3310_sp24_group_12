@@ -43,8 +43,8 @@ public class LoginManagerUnitTest extends TestCase {
     }
 
     public void testRemoveUser() {
-         // Initialize LoginManager
-     LoginManager loginManager = new LoginManager();
+        // Initialize LoginManager
+        LoginManager loginManager = new LoginManager();
         // Test removing a registered user
         loginManager.registerUser("User1");
         loginManager.registerUser("User2");
@@ -58,4 +58,35 @@ public class LoginManagerUnitTest extends TestCase {
         // Test removing a non-existent user
         assertFalse(loginManager.removeUser("NonExistentUser"));
     }
+    
+    public void testUserCount() {
+        // Test registering users
+        loginManager.registerUser("User1");
+        loginManager.registerUser("User2");
+        loginManager.registerUser("User3");
+        loginManager.registerUser("User4");
+
+        // Test the number of registered users
+        assertEquals(4, loginManager.currentGameSize);
+    }
+
+    public void testRemoveUserCount() {
+        // Test registering users
+        loginManager.registerUser("User1");
+        loginManager.registerUser("User2");
+        loginManager.registerUser("User3");
+        loginManager.registerUser("User4");
+
+        // Test removing a user
+        loginManager.removeUser("User1");
+
+        // Test the number of registered users
+        assertEquals(3, loginManager.currentGameSize);
+    }
+
+    public void testRemoveNonExistentUser() {
+        // Test removing a non-existent user
+        assertFalse(loginManager.removeUser("NonExistentUser"));
+    }
+
 }
