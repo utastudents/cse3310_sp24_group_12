@@ -57,6 +57,10 @@ public class Grid {
       String word = wordList.getRandomWord(); // Get a random word from the word list
       int wordLength = word.length();
 
+      if (wordLength > size) {
+        continue;
+      }
+
       // Determine random start coordinates within the grid bounds
       int startX = random.nextInt(size - wordLength);
       int startY = random.nextInt(size - wordLength);
