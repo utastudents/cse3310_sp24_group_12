@@ -181,6 +181,10 @@ public class App extends WebSocketServer {
       broadcast(gson.toJson(G));
       return;
     }
+    if(message.contains("startCountdown")){
+      broadcast("countdown");
+      return;
+    }
     if (message.contains("register")) {
       JsonObject json = gson.fromJson(message, JsonObject.class);
       JsonObject registree = json.get("register").getAsJsonObject();

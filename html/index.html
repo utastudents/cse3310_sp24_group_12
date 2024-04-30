@@ -272,6 +272,7 @@
     const size = 20;
     const LeaderboardList = document.getElementById("leaderboardList")
     var username;
+    var gametime = false
     var form = document.getElementById("usernameForm");
     var input = document.getElementById("inputUsername");
     var usernameError = document.getElementById("usernameError");
@@ -317,7 +318,12 @@
             const obj = JSON.parse(msg);
             usernameError.textContent = obj.error;
             return;
-        } else {
+        } else if(msg == "countdown"){
+            if(!gametime){
+                gametime = true
+                Gametimer();
+            }
+        }else {
             const obj = JSON.parse(msg);
 
             if ("YouAre" in obj) {
@@ -485,7 +491,7 @@
 
         populateWordGrid(buttonsList);
         fillWordBank();
-        Gametimer();
+        connection.send("startCountdown")
         started = true;
     }
     function populateWordGrid(buttonsList) {
