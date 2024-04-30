@@ -1,37 +1,38 @@
 package uta.cse3310;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Leaderboard {
     private Map<String, Integer> score = new HashMap<>();
 
+    // Constructor to initialize the leaderboard with initial scores
     Leaderboard(Map<String, Integer> scores) {
         score = scores;
-        //code to be implemented later
     }
-    
 
-    // THIS METHOD WILL BE REQUIRED IF THE SCORE IS BEING UPDATED IN REALTIME.
-    // That is, if we want to update the leaderboard immediately after a user finds a word. 
+    // Method to update the leaderboard with real-time scores
     public void updateLeaderboard(Map<String, Integer> scores) {
         score = scores;
     }
 
+    // Method to generate a formatted leaderboard string
     public String generateLeaderboard() {
-        // Go through each map (players username and their respective scores), sort it, generate a readable string and return it.
-
-        //Define a stringbuilder to fill up
         StringBuilder formatScores = new StringBuilder();
 
-        //Fill up the stringbuilder with the players and their scores
-        for(Map.Entry<String, Integer> entry : score.entrySet()){
+        // Sort the scores by descending order
+        List<Map.Entry<String, Integer>> sortedScores = new ArrayList<>(score.entrySet());
+        sortedScores.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+
+        // Fill up the string builder with the players and their scores
+        for (Map.Entry<String, Integer> entry : sortedScores) {
             formatScores.append("Player: ").append(entry.getKey()).append("   Score: ").append(entry.getValue()).append("\n");
         }
 
-        //return the formatted stringbuilder
+        // Return the formatted string
         return formatScores.toString();
     }
-
-    // Reset leaderboard not required since we will initiate a new leaderboard every time a new game is created. 
 }
