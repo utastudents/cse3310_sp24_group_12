@@ -46,14 +46,14 @@ public class GameTest {
         Game game = new Game();
 
         game.loginManager.registerUser("player1");
-        game.loginManager.registerUser("player2");
-        game.loginManager.registerUser("player3");
-        game.loginManager.registerUser("player4");
-
         Assert.assertEquals(1, game.loginManager.currentGameSize);
+        game.loginManager.registerUser("player2");
         Assert.assertEquals(2, game.loginManager.currentGameSize);
+        game.loginManager.registerUser("player3");
         Assert.assertEquals(3, game.loginManager.currentGameSize);
+        game.loginManager.registerUser("player4");
         Assert.assertEquals(4, game.loginManager.currentGameSize);
+
 
         Assert.assertEquals(4, game.loginManager.getRegisteredUsers().size());
 
