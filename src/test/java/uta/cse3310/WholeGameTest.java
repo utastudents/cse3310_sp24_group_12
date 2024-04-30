@@ -70,11 +70,11 @@ public class WholeGameTest
         }
     
 
-        HashMap<String, Integer> colors = new HashMap<>();
         Random random = new Random();
         List<String> users = game.loginManager.getRegisteredUsers();
         String[] usernamesArray = users.toArray(new String[users.size()]);
-
+        
+        HashMap<String, Integer> colors = new HashMap<>();
         colors.put("RED", 0);
         colors.put("GREEN", 1);
         colors.put("BLUE", 2);
