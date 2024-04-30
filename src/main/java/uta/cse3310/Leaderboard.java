@@ -7,16 +7,23 @@ import java.util.List;
 import java.util.Map;
 
 public class Leaderboard {
-    private Map<String, Integer> score = new HashMap<>();
+    private final Map<String, Integer> score;
 
     // Constructor to initialize the leaderboard with initial scores
-    Leaderboard(Map<String, Integer> scores) {
-        score = scores;
+    public Leaderboard(Map<String, Integer> scores) {
+        if (scores == null) {
+            throw new IllegalArgumentException("Scores map cannot be null");
+        }
+        this.score = new HashMap<>(scores);
     }
 
     // Method to update the leaderboard with real-time scores
     public void updateLeaderboard(Map<String, Integer> scores) {
-        score = scores;
+        if (scores == null) {
+            throw new IllegalArgumentException("Scores map cannot be null");
+        }
+        this.score.clear();
+        this.score.putAll(scores);
     }
 
     // Method to generate a formatted leaderboard string
@@ -36,3 +43,4 @@ public class Leaderboard {
         return formatScores.toString();
     }
 }
+
