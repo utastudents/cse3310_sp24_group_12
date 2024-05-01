@@ -42,6 +42,13 @@ public class WordTest {
         // Test that the points are correctly generated for a diagonal word
         Assert.assertEquals(diagonalWord.getPoints(), new ArrayList<Point>(
                 Arrays.asList(new Point(0, 0), new Point(1, 1), new Point(2, 2), new Point(3, 3))));
-        
+
     }
+    
+    public void testWordLength() {
+        Word word = new Word("test", 0, 3, 0, 0, 4);
+        // Test that the word length is correctly calculated
+        Assert.assertEquals(word.length, 4);
+    }
+
 }
