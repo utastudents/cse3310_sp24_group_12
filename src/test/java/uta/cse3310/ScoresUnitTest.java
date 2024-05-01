@@ -2,7 +2,7 @@ package uta.cse3310;
 
 import junit.framework.Assert;
 
-public class ScoresTest {
+public class ScoresUnitTest {
 
     public void testAddNewPlayer() {
         Scores scores = new Scores();
