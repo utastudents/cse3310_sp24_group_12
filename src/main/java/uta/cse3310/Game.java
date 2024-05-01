@@ -1,5 +1,8 @@
 package uta.cse3310;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 public class Game {
     // class atributes
@@ -31,9 +34,11 @@ public class Game {
         gameState = 1;
         currentTurn = PlayerType.player_1;
     }
-    public int getGameState(){
+
+    public int getGameState() {
         return gameState;
     }
+
     /**
      * Returns an index for each player based on the enum.
      * 
@@ -68,45 +73,128 @@ public class Game {
     // Update method
     public void Update(UserEvent user) {
         // Update players and messages based on tictactoe's Game.Update()
-        if((currentTurn == user.PlayerId) &&
-           (currentTurn == PlayerType.player_1 ||
-            currentTurn == PlayerType.player_2 || 
-            currentTurn == PlayerType.player_3 ||
-            currentTurn == PlayerType.player_4))
-        {
-            if((grid.grid[0][user.button].player == user.PlayerId) ||
-                (grid.grid[1][user.button].player == user.PlayerId))
-            {
-                if(user.PlayerId == PlayerType.player_1){
+        if ((currentTurn == user.PlayerId) &&
+                (currentTurn == PlayerType.player_1 ||
+                        currentTurn == PlayerType.player_2 ||
+                        currentTurn == PlayerType.player_3 ||
+                        currentTurn == PlayerType.player_4)) {
+            if ((grid.grid[0][user.button].player == user.PlayerId) ||
+                    (grid.grid[1][user.button].player == user.PlayerId)) {
+                if (user.PlayerId == PlayerType.player_1) {
                     currentTurn = PlayerType.player_2;
                     msg[1] = "Player 1's move";
                     msg[0] = "Your move";
-                    
-                }
-                else if(user.PlayerId == PlayerType.player_2){
+
+                } else if (user.PlayerId == PlayerType.player_2) {
                     currentTurn = PlayerType.player_3;
                     msg[1] = "Player 2's move";
                     msg[0] = "Your move";
-                }
-                else if(user.PlayerId == PlayerType.player_3){
+                } else if (user.PlayerId == PlayerType.player_3) {
                     currentTurn = PlayerType.player_4;
                     msg[1] = "Player 3's move";
                     msg[0] = "Your move";
-                }
-                else if(user.PlayerId == PlayerType.player_4){
+                } else if (user.PlayerId == PlayerType.player_4) {
                     currentTurn = PlayerType.player_1;
                     msg[1] = "Player 4's move";
                     msg[0] = "Your move";
                 }
-            }
-            else{
+            } else {
                 msg[0] = "Not a legal move";
             }
 
-            //Possibly implement way to check if a player has won
-            //assuming we want our Game.Update() to work like
-            //tictactoe's Game.Update()
+            // Possibly implement way to check if a player has won
+            // assuming we want our Game.Update() to work like
+            // tictactoe's Game.Update()
         }
+    }
+
+    public void Update(String message) {
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+
+        if (message.contains("startGame")) {
+            if (gameState == 1) {
+                return;
+            }
+            StartGame();
+            return;
+        }
+        if (message.contains("startCountdown")) {
+            return;
+        }
+        if (message.contains("register")) {
+            JsonObject json = gson.fromJson(message, JsonObject.class);
+            JsonObject registree = json.get("register").getAsJsonObject();
+            String username = registree.get("username").getAsString();
+            int connectionGameID = json.get("gameid").getAsInt();
+            if (GameId != connectionGameID) {
+                return;
+            }
+
+            if (username.length() < 3) {
+                JsonObject error = new JsonObject();
+                error.addProperty("error", "Username must be at least 3 characters long");
+                return;
+            }
+            if (!loginManager.registerUser(username)) {
+                JsonObject error = new JsonObject();
+                error.addProperty("error", "Username already taken");
+                return;
+            }
+
+            scores.addNewPlayer(username);
+            String jsonString;
+            jsonString = gson.toJson(this);
+
+        } else if (message.contains("startClick")) {
+            JsonObject json = gson.fromJson(message, JsonObject.class);
+            int connectionGameID = json.get("gameid").getAsInt();
+
+            if (GameId != connectionGameID) {
+                return;
+            }
+
+            JsonObject startClick = json.get("startClick").getAsJsonObject();
+            JsonObject endClick = json.get("endClick").getAsJsonObject();
+
+            String name = json.get("username").getAsString();
+            int startx = startClick.get("x").getAsInt();
+            int starty = startClick.get("y").getAsInt();
+            int endx = endClick.get("x").getAsInt();
+            int endy = endClick.get("y").getAsInt();
+
+            if (grid.checkWord(startx, starty, endx, endy, loginManager.usernames.get(name))) {
+                scores.updateScore(name, 1);
+            } else {
+                grid.resetColor(endx, endy);
+                grid.resetColor(startx, starty);
+            }
+
+        } else if (message.contains("click")) {
+            JsonObject json = gson.fromJson(message, JsonObject.class);
+            int connectionGameID = json.get("gameid").getAsInt();
+
+            if (GameId != connectionGameID) {
+                return;
+            }
+
+            JsonObject click = json.get("click").getAsJsonObject();
+            String name = click.get("username").getAsString();
+            int x = click.get("x").getAsInt();
+            int y = click.get("y").getAsInt();
+            String color = click. get("color").getAsString();
+
+            grid.colorIn(x, y, Color.valueOf(color));
+
+        } else if (message.contains("incoming")) {
+            JsonObject json = gson.fromJson(message, JsonObject.class);
+            JsonObject incoming = json.get("incoming").getAsJsonObject();
+
+            String username = incoming.get("from").getAsString();
+            String messageDetails = json.get("details").getAsString();
+            chatLog.addToChat(username, messageDetails);
+        }
+
     }
 
     // tick method
