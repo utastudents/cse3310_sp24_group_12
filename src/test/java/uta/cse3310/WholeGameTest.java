@@ -183,6 +183,38 @@ public class WholeGameTest
 
         assertTrue(leaderboard.contains("Player: testing1   Score: 2"));
         assertTrue(leaderboard.contains("Player: testing2   Score: 0"));
+
+        msg = "{\"incoming\":{\"from\":\"testing1\"},\"details\":\"Hello\"}";
+        result = update(game, msg);
+        assertEquals("testing1", game.chatLog.chatLog.get(0).sender);
+        assertEquals("Hello", game.chatLog.chatLog.get(0).message);
+        messageCount++;
+
+        msg = "{\"incoming\":{\"from\":\"testing2\"},\"details\":\"Hi\"}";
+        result = update(game, msg);
+        assertEquals("testing2", game.chatLog.chatLog.get(1).sender);
+        assertEquals("Hi", game.chatLog.chatLog.get(1).message);
+        messageCount++;
+
+        msg = "{\"incoming\":{\"from\":\"testing1\"},\"details\":\"How are you?\"}";
+        result = update(game, msg);
+        assertEquals("testing1", game.chatLog.chatLog.get(2).sender);
+        assertEquals("How are you?", game.chatLog.chatLog.get(2).message);
+        messageCount++;
+
+        msg = "{\"incoming\":{\"from\":\"testing2\"},\"details\":\"I'm good\"}";
+        result = update(game, msg);
+        assertEquals("testing2", game.chatLog.chatLog.get(3).sender);
+        assertEquals("I'm good", game.chatLog.chatLog.get(3).message);
+        messageCount++;
+
+        msg = "{\"incoming\":{\"from\":\"testing1\"},\"details\":\"That's good\"}";
+        result = update(game, msg);
+        assertEquals("testing1", game.chatLog.chatLog.get(4).sender);
+        assertEquals("That's good", game.chatLog.chatLog.get(4).message);
+        messageCount++;
+
+        assertEquals(messageCount, game.chatLog.chatLog.size());
         
 
 
