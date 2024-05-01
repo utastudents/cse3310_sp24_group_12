@@ -1,7 +1,7 @@
 package uta.cse3310;
 import junit.framework.TestCase;
 
-public class ChatTest extends TestCase {
+public class ChatUnitTest extends TestCase {
 
     public void testAddToChat() {
         Chat chat = new Chat();
