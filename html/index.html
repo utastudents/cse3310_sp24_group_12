@@ -222,18 +222,17 @@
                             class="list-group list-group-flush"
                         >
                         </ul>
-                        <div class="card-footer text-center">
-                            <button
-                                id="refreshLeaderboardButton"
-                                class="btn btn-primary"
-                            >
-                                Refresh
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div id="ServerExit" class="container" style="display: none;">
+            <div class="container-fluid row g-3 py-2 justify-content-center text-center">
+                <h3>Someone has left the server</h3>
+                <p class="fw-bold text-danger" >Please refresh to find new game</p>
+            </div>
+        </div>
+
     </body>
 </html>
 <script>
@@ -261,6 +260,7 @@
     connection.onclose = function (evt) {
         console.log("close");
     };
+    const ServerExit = document.getElementById("ServerExit")
     const LoginScreen = document.getElementById("LoginScreen");
     const LobbyScreen = document.getElementById("LobbyScreen");
     const chat = document.getElementById("Chat");
@@ -271,6 +271,8 @@
     const LeaderboardScreen = document.getElementById("LeaderboardScreen")
     const size = 20;
     const LeaderboardList = document.getElementById("leaderboardList")
+    const GameScreen = document.getElementById("GameScreen");
+    var intervals = [];
     var username;
     var gametime = false
     var form = document.getElementById("usernameForm");
@@ -278,7 +280,6 @@
     var usernameError = document.getElementById("usernameError");
     var nameLength = document.getElementById("nameLength");
     var startButton = document.getElementById("startButton");
-    var GameScreen = document.getElementById("GameScreen");
     var buttonsList;
     var wordBank;
     var chatLog;
@@ -318,7 +319,14 @@
             const obj = JSON.parse(msg);
             usernameError.textContent = obj.error;
             return;
-        } else if(msg == "countdown"){
+        }else if(msg == "ServerExit"){
+            connection.close(1000,"Exit server")
+            clearIntervals();
+            LoginScreen.style.display = "none";
+            LobbyScreen.style.display = "none";
+            GameScreen.style.display = "none";
+            ServerExit.style.display = "block";
+        }else if(msg == "countdown"){
             if(!gametime){
                 gametime = true
                 Gametimer();
@@ -691,31 +699,39 @@
                 Game(usernameList);
             }
         }, 1000);
+        intervals.push(interval)
+        
     }
 
     function Gametimer(){
         const gametime = document.getElementById("gameTimer")
+        var startTime = Date.now()
         var timer = 600
-        var timerid = setInterval(updateTimer,1000)
+        var interval = setInterval(updateTimer,1000)
+        intervals.push(interval)
         function updateTimer(){
-            var minutes = Math.floor(timer/60)
-            var seconds = timer%60
+            const elapsed = Math.floor((Date.now()-startTime)/1000)
+            const remaining = timer - elapsed
+            var minutes = Math.floor(remaining/60)
+            var seconds = remaining%60
             gametime.textContent = minutes + " : " + seconds.toString().padStart(2,'0')
-            if(timer === 0){
-                clearInterval(timerid)
+            if(remaining <= 0){
+                clearInterval(interval)
                 GameScreen.style.display = "none";
                 LeaderboardScreen.style.display = "block"
                 FillLeaderBoard();
-            }else{
-                timer--;
-            }
-            if(timer <= 90){
+            }else if(remaining <= 90){
                 gametime.classList.add("text-danger")
             }
         }
 
     }
 
+    function clearIntervals(){
+        intervals.forEach(interval => clearInterval(interval))
+        intervals = []
+        console.log("timers and intervals stopped")
+    }
 
 </script>
 
