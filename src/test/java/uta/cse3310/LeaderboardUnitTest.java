@@ -7,14 +7,14 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public class LeaderboardTest extends TestCase {
+public class LeaderboardUnitTest extends TestCase {
 
-    public LeaderboardTest(String testName) {
+    public LeaderboardUnitTest(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return new TestSuite(LeaderboardTest.class);
+        return new TestSuite(LeaderboardUnitTest.class);
     }
 
     // test method
