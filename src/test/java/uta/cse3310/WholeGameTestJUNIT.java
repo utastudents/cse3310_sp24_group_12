@@ -14,17 +14,17 @@ import junit.framework.TestSuite;
 
 /*Testing the whole game */
 
-public class JUNITWholeGameTest
+public class WholeGameTestJUNIT
         extends TestCase {
     Game game = new Game();
 
-    public JUNITWholeGameTest(String testName) {
+    public WholeGameTestJUNIT(String testName) {
         super(testName);
 
     }
 
     public static Test suite() {
-        return new TestSuite(JUNITWholeGameTest.class);
+        return new TestSuite(WholeGameTestJUNIT.class);
     }
 
     // Here we will test if players navigate through the lobby
@@ -123,6 +123,5 @@ public class JUNITWholeGameTest
         String expectedLeaderboard = expectedLeaderboardBuilder.toString();
         assertEquals(expectedLeaderboard, game.leaderboard.generateLeaderboard());
         
-
     }
 }
