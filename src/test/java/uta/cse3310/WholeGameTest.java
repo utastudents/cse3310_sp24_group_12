@@ -184,6 +184,8 @@ public class WholeGameTest
         assertTrue(leaderboard.contains("Player: testing1   Score: 2"));
         assertTrue(leaderboard.contains("Player: testing2   Score: 0"));
 
+        int messageCount = 0;
+
         msg = "{\"incoming\":{\"from\":\"testing1\"},\"details\":\"Hello\"}";
         result = update(game, msg);
         assertEquals("testing1", game.chatLog.chatLog.get(0).sender);
