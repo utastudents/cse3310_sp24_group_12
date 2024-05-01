@@ -259,6 +259,13 @@
     };
     connection.onclose = function (evt) {
         console.log("close");
+        clearIntervals();
+        LoginScreen.style.display = "none";
+        LobbyScreen.style.display = "none";
+        GameScreen.style.display = "none";
+        ServerExit.querySelector('h3').textContent = "SERVER IS CURRENTLY OFFLINE"
+        ServerExit.querySelector('p').textContent = "please try again soon"
+        ServerExit.style.display = "block";
     };
     const ServerExit = document.getElementById("ServerExit")
     const LoginScreen = document.getElementById("LoginScreen");
