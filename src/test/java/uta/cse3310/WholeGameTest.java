@@ -14,17 +14,17 @@ import junit.framework.TestSuite;
 
 /*Testing the whole game */
 
-public class WholeGameTestJUNIT
+public class WholeGameTest
         extends TestCase {
     Game game = new Game();
 
-    public WholeGameTestJUNIT(String testName) {
+    public WholeGameTest(String testName) {
         super(testName);
 
     }
 
     public static Test suite() {
-        return new TestSuite(WholeGameTestJUNIT.class);
+        return new TestSuite(WholeGameTest.class);
     }
 
     // Here we will test if players navigate through the lobby
