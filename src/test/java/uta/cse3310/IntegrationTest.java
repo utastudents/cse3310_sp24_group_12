@@ -32,7 +32,15 @@ public class IntegrationTest
     //////////////////////////////////////////////////////////////////////
 
     public void singleGame(Game G) {
-
+        G.loginManager.registerUser("player1");
+        G.loginManager.registerUser("player2");
+        G.loginManager.registerUser("player3");
+        G.loginManager.registerUser("player4");
+        assertEquals(4, G.loginManager.currentGameSize);
+        assertEquals("player1", G.loginManager.getRegisteredUsers().get(0));
+        assertEquals("player2", G.loginManager.getRegisteredUsers().get(1));
+        assertEquals("player3", G.loginManager.getRegisteredUsers().get(2));
+        assertEquals("player4", G.loginManager.getRegisteredUsers().get(3));
     }
 
     public void testOneGame() {
@@ -48,5 +56,31 @@ public class IntegrationTest
         Game G1 = new Game();
         singleGame(G0);
         singleGame(G1);
+    }
+
+    public void testThreeGames() {
+        // this test does not do much,
+        // but it seemed like something to
+        // write quickly.
+        Game G0 = new Game();
+        Game G1 = new Game();
+        Game G2 = new Game();
+        singleGame(G0);
+        singleGame(G1);
+        singleGame(G2);
+    }
+
+    public void testFourGames() {
+        // this test does not do much,
+        // but it seemed like something to
+        // write quickly.
+        Game G0 = new Game();
+        Game G1 = new Game();
+        Game G2 = new Game();
+        Game G3 = new Game();
+        singleGame(G0);
+        singleGame(G1);
+        singleGame(G2);
+        singleGame(G3);
     }
 }
