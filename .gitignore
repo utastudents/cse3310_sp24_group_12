@@ -13,3 +13,4 @@ buildNumber.properties
 
 *.class
 *.tar
+.vscode/settings.json
