@@ -19,14 +19,15 @@ import java.util.Map;
      }
 
      public String generateLeaderboard() {
-         // Go through each map (players username and their respective scores), sort it, generate a readable string and return it.
+         // Go through each map (players username and their respective scores), sort it, generate a readable string and return it
 
          //Define a stringbuilder to fill up
          StringBuilder formatScores = new StringBuilder();
 
          //Fill up the stringbuilder with the players and their scores
          for(Map.Entry<String, Integer> entry : score.entrySet()){
-             formatScores.append("Player: ").append(entry.getKey()).append("   Score: ").append(entry.getValue()).append("\n");
+             formatScores.append("Player: ").append(entry.getKey()).append("   Score: ").append(entry.getValue())
+                    .append("\n");
          }
 
          //return the formatted stringbuilder
