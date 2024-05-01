@@ -5,12 +5,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import java.util.List;
 
-
-//import java.lang.annotation.Native;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 
 public class LoginManagerTest extends TestCase {
     private LoginManager loginManager;

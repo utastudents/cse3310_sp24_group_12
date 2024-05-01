@@ -1,7 +1,5 @@
 package uta.cse3310;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import junit.framework.Assert;
 
 public class GridUnitTest {

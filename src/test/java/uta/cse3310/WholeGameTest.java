@@ -5,7 +5,6 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import java.awt.Point;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 
 public class WholeGameTest
                 extends TestCase {
@@ -59,7 +57,6 @@ public class WholeGameTest
                 return jsonString;
         }
 
-
         ////////////////////////////////////////////////////////////////////////////
         public void testGame() {
                 Game game = new Game();
@@ -70,7 +67,6 @@ public class WholeGameTest
                 String result = new String();
                 GsonBuilder builder = new GsonBuilder();
                 Gson gson = builder.create();
-
 
                 msg = "{\"register\":{\"username\":\"testing1\"},\"gameid\":1}";
                 result = update(game, msg);
