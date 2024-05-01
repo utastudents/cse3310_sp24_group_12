@@ -35,4 +35,16 @@ public class WordListTest {
         File file = new File("words.txt");
         Assert.assertTrue(file.exists());
     }
+    
+    public void testWordListFileReadable() {
+        File file = new File("words.txt");
+        Assert.assertTrue(file.canRead());
+    }
+
+    public void testWordListFileNotEmpty() {
+        File file = new File("words.txt");
+        Assert.assertTrue(file.length() > 0);
+    }
+
+
 }
