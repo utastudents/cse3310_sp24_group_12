@@ -2,7 +2,7 @@ package uta.cse3310;
 
 import junit.framework.Assert;
 
-public class AlphabetTest {
+public class AlphabetUnitTest {
     public void testAlphabetFields() {
         char letter = 'A';
         PlayerType player = PlayerType.player_1;
