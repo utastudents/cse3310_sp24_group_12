@@ -3,7 +3,7 @@ package uta.cse3310;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-public class ColorTest extends TestCase {
+public class ColorUnitTest extends TestCase {
 
     public void testEnumValues() {
         // Check if expected values are present
