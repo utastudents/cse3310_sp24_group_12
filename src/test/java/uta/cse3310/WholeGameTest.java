@@ -60,7 +60,7 @@ public class WholeGameTest
     }
 
     ////////////////////////////////////////////////////////////////////////////
-    public void testXWinGame() {
+    public void testGame() {
         Game game = new Game();
 
         game.GameId = 1;
@@ -179,7 +179,10 @@ public class WholeGameTest
                                 (String) game.loginManager.usernames.get(username).name());
         }
 
-        Leaderboard leaderboard = game.Leaderboard.getLeaderboard();
+        String leaderboard = game.leaderboard.generateLeaderboard();
+
+        assertTrue(leaderboard.contains("Player: testing1   Score: 2"));
+        assertTrue(leaderboard.contains("Player: testing2   Score: 0"));
         
 
 
