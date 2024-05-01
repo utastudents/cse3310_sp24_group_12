@@ -254,7 +254,9 @@ public class App extends WebSocketServer {
       int y = click.get("y").getAsInt();
       String color = click.get("color").getAsString();
 
-      G.grid.colorIn(x, y, Color.valueOf(color));
+      if (G.grid.grid[x][y].color.equals("white")) {
+        G.grid.colorIn(x, y, Color.valueOf(color));
+      }
 
       broadcast(gson.toJson(G));
     }else if(message.contains("incoming")){

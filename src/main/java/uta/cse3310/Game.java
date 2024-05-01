@@ -1,5 +1,8 @@
 package uta.cse3310;
 
+import java.awt.Point;
+import java.util.ArrayList;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -182,9 +185,11 @@ public class Game {
             String name = click.get("username").getAsString();
             int x = click.get("x").getAsInt();
             int y = click.get("y").getAsInt();
-            String color = click. get("color").getAsString();
+            String color = click.get("color").getAsString();
+            if (grid.grid[x][y].color.equals("white")) {
+                grid.colorIn(x, y, Color.valueOf(color));
+            }
 
-            grid.colorIn(x, y, Color.valueOf(color));
 
         } else if (message.contains("incoming")) {
             JsonObject json = gson.fromJson(message, JsonObject.class);
