@@ -14,4 +14,13 @@ public class ChatTest extends TestCase {
         assertEquals("User2", chat.chatLog.get(1).sender);
         assertEquals("Hi there!", chat.chatLog.get(1).message);
     }
+
+    public void testClearChat() {
+        Chat chat = new Chat();
+        chat.addToChat("User1", "Hello");
+        chat.addToChat("User2", "Hi there!");
+
+        chat.chatLog.clear();
+        assertEquals(0, chat.chatLog.size());
+    }
 }
