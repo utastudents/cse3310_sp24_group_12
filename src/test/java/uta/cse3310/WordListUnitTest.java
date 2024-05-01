@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import junit.framework.Assert;
 
-public class WordListTest {
+public class WordListUnitTest {
 
     public void testLoadWords() {
         WordList wordList = new WordList();
@@ -45,6 +45,5 @@ public class WordListTest {
         File file = new File("words.txt");
         Assert.assertTrue(file.length() > 0);
     }
-
 
 }
