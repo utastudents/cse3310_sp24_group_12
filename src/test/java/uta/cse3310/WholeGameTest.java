@@ -1,127 +1,227 @@
 package uta.cse3310;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-/*Testing the whole game */
+import java.awt.Point;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
+//import java.lang.annotation.Native;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 public class WholeGameTest
         extends TestCase {
-    Game game = new Game();
-
+    /**
+     * Create the test case
+     *
+     * @param testName name of the test case
+     * @return
+     */
     public WholeGameTest(String testName) {
         super(testName);
-
     }
 
+    /**
+     * @return the suite of tests being tested
+     */
     public static Test suite() {
         return new TestSuite(WholeGameTest.class);
     }
 
-    // Here we will test if players navigate through the lobby
-    public void testGame() {
+    ////////////////////////////////////////////////////////////////////////////
+    // This test is very close to a system level test.
+    // Well, the system without the UI.
+    // Inputs and Outputs are provided by JSON strings.
+    //
+    //
+    // Should be able to test all of the logic in the program
+    // with these tests.
+    //
+    // The challenge is doing it without repeating a lot of code, or making
+    // it tightly coupled to the specific implementation.
+    // To minimize coupling, the majority of the tests should deal with
+    // json strings.
+    ////////////////////////////////////////////////////////////////////////////
+    // Routines to replace those in App.java
+    ///////////////////////////////////////////////////////////////////////////
 
-        game.loginManager.registerUser("player1");
-        assertEquals(1, game.loginManager.currentGameSize);
-        game.loginManager.registerUser("player2");
-        assertEquals(2, game.loginManager.currentGameSize);
-        game.loginManager.registerUser("player3");
-        assertEquals(3, game.loginManager.currentGameSize);
-        game.loginManager.registerUser("player4");
-        assertEquals(4, game.loginManager.currentGameSize);
-        assertEquals(4, game.loginManager.getRegisteredUsers().size());
+    private String update(Game G, String msg) {
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        G.Update(msg);
+        String jsonString = gson.toJson(G);
+        return jsonString;
+    }
 
+    ////////////////////////////////////////////////////////////////////////////
+    public void testXWinGame() {
+        Game game = new Game();
 
-        assertEquals("player1", game.loginManager.getRegisteredUsers().get(0));
-        assertEquals("player2", game.loginManager.getRegisteredUsers().get(1));
-        assertEquals("player3", game.loginManager.getRegisteredUsers().get(2));
-        assertEquals("player4", game.loginManager.getRegisteredUsers().get(3));
-    
+        game.GameId = 1;
+        game.latestPlayer = PlayerType.player_1;
 
-        game.StartGame();
-
-        assertEquals(1, game.getGameState());
-
-        assertEquals(2, game.playerToId(PlayerType.player_1));
-        assertEquals(3, game.playerToId(PlayerType.player_2));
-        assertEquals(4, game.playerToId(PlayerType.player_3));
-        assertEquals(0, game.playerToId(PlayerType.NoPlayer));
-        assertEquals(1, game.playerToId(PlayerType.LobbyPlayer));
-    
-
-
-        for (Word word : game.grid.wordsInGrid) {
-            ArrayList<Point> points = word.getPoints();
-            for (int i = 0; i < word.length; i++) {
-                assertEquals(game.grid.grid[points.get(i).x][points.get(i).y].alphabet, word.word.charAt(i));
-            }
-        }
-    
-
-        Random random = new Random();
-        List<String> users = game.loginManager.getRegisteredUsers();
-        String[] usernamesArray = users.toArray(new String[users.size()]);
+        String msg = new String();
+        String result = new String();
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
         
-        HashMap<String, Integer> colors = new HashMap<>();
-        colors.put("RED", 0);
-        colors.put("GREEN", 1);
-        colors.put("BLUE", 2);
-        colors.put("ORANGE", 3);
-        colors.put("YELLOW", 4);
-        colors.put("PURPLE", 5);
-        colors.put("WHITE", 6);
-
-        for (Word word : game.grid.wordsInGrid) {
-            ArrayList<Point> points = word.getPoints();
-            String randomUser = usernamesArray[random.nextInt(users.size())];
-            game.grid.checkWord(points.get(0).x, points.get(0).y, points.get(points.size() - 1).x,
-                    points.get(points.size() - 1).y,
-                    game.loginManager.usernames.get(randomUser));
-
-            game.scores.updateScore(randomUser, 1);
-            assertEquals((Integer) game.scores.getScore(randomUser), (Integer) game.scores.score.get(randomUser));
-
-            for (int i = 0; i < word.length; i++) {
-                assertEquals((Integer) colors.get(game.grid.grid[points.get(i).x][points.get(i).y].color),
-                        (Integer) (game.loginManager.usernames.get(randomUser)).ordinal());
-            }
-        }
-    
-
-        game.chatLog.addToChat("player1", "Hello");
-        game.chatLog.addToChat("player2", "Hi");
-        game.chatLog.addToChat("player3", "Hey");
-        game.chatLog.addToChat("player4", "Hola");
-
-        assertEquals("Hello", game.chatLog.chatLog.get(0).message);
-        assertEquals("Hi", game.chatLog.chatLog.get(1).message);
-        assertEquals("Hey", game.chatLog.chatLog.get(2).message);
-        assertEquals("Hola", game.chatLog.chatLog.get(3).message);
-    
-
-        game.leaderboard.updateLeaderboard(game.scores.score);
-
-        //StringBuilder formatScores = new StringBuilder();
-        List<Map.Entry<String, Integer>> sortedScores = new ArrayList<>(game.scores.score.entrySet());
-        sortedScores.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+        msg = "{\"register\":{\"username\":\"testing1\"},\"gameid\":1}";
+        result = update(game, msg);
+        assertEquals("testing1", game.loginManager.getRegisteredUsers().get(0));
         
-        StringBuilder expectedLeaderboardBuilder = new StringBuilder();
-        // Fill up the stringbuilder with the players and their scores
-        for (Map.Entry<String, Integer> entry : game.scores.score.entrySet()) {
-            expectedLeaderboardBuilder.append("Player: ").append(entry.getKey()).append("   Score: ").append(entry.getValue())
-                    .append("\n");
-        }
-        String expectedLeaderboard = expectedLeaderboardBuilder.toString();
-        assertEquals(expectedLeaderboard, game.leaderboard.generateLeaderboard());
+        msg = "{\"register\":{\"username\":\"testing2\"},\"gameid\":1}";
+        result = update(game, msg);
+        assertEquals("testing2", game.loginManager.getRegisteredUsers().get(0));
+
+        msg = "startGame";
+        result = update(game, msg);
+        assertEquals(game.gameState, 1);
+
+        msg = "startCountdown";
+        result = update(game, msg);
+
+        List<Word> wordList = new ArrayList<>(game.grid.wordsInGrid);
         
+        Word word = wordList.get(0);
+        int startx = word.startx;
+        int starty = word.starty;
+        int endx = word.endx;
+        int endy = word.endy;
+        String username = "testing1";
+
+        msg = String.format("{\"click\":{\"username\":\"%s\",\"x\":%d,\"y\":%d,\"color\":\"%s\"},\"gameid\":1}",
+                username, startx, starty, game.loginManager.usernames.get(username));
+        result = update(game, msg);
+        assertEquals((String) game.grid.grid[startx][starty].color, (String) game.loginManager.usernames.get(username).name());
+
+        msg = String.format("{\"click\":{\"username\":\"%s\",\"x\":%d,\"y\":%d,\"color\":\"%s\"},\"gameid\":1}",
+                username, endx, endy, game.loginManager.usernames.get(username));
+        result = update(game, msg);
+        assertEquals((String) game.grid.grid[endx][endy].color, (String) game.loginManager.usernames.get(username).name());
+
+        msg = String.format(
+                "{\"startClick\":{\"x\":%d,\"y\":%d},\"endClick\":{\"x\":%d,\"y\":%d},\"gameid\":1,\"color\":\"%s\",\"username\":\"%s\"}",
+                startx, starty, endx, endy, game.loginManager.usernames.get(username), username);
+        result = update(game, msg);
+
+        ArrayList<Point> points = word.getPoints();
+        for (Point p : points) {
+            assertEquals((String) game.grid.grid[p.x][p.y].color,
+                    (String) game.loginManager.usernames.get(username).name());
+        }
+        
+        word = wordList.get(1);
+        startx = word.startx;
+        starty = word.starty;
+        endx = word.endx;
+        endy = word.endy;
+        username = "testing2";
+
+        msg = String.format("{\"click\":{\"username\":\"%s\",\"x\":%d,\"y\":%d,\"color\":\"%s\"},\"gameid\":1}",
+                username, startx, starty, game.loginManager.usernames.get(username));
+        result = update(game, msg);
+        assertEquals((String) game.grid.grid[startx][starty].color, (String) game.loginManager.usernames.get(username).name());
+
+        // Testing invalid selection
+        msg = String.format("{\"click\":{\"username\":\"%s\",\"x\":%d,\"y\":%d,\"color\":\"%s\"},\"gameid\":1}",
+                username, endx, endy + 1, game.loginManager.usernames.get(username));
+        result = update(game, msg);
+        assertEquals((String) game.grid.grid[endx][endy + 1].color, (String) game.loginManager.usernames.get(username).name());
+
+        msg = String.format(
+                "{\"startClick\":{\"x\":%d,\"y\":%d},\"endClick\":{\"x\":%d,\"y\":%d},\"gameid\":1,\"color\":\"%s\",\"username\":\"%s\"}",
+                startx, starty, endx, endy + 1, game.loginManager.usernames.get(username), username);
+        result = update(game, msg);
+
+        points = word.getPoints();
+        for (Point p : points) {
+                assertNotSame((String) game.grid.grid[p.x][p.y].color,
+                                (String) game.loginManager.usernames.get(username).name());
+        }
+        
+        for (Point p : points) {
+                assertEquals((String) game.grid.grid[p.x][p.y].color,
+                                (String) "white");
+        }
+        
+        word = wordList.get(2);
+        startx = word.startx;
+        starty = word.starty;
+        endx = word.endx;
+        endy = word.endy;
+        username = "testing1";
+
+        msg = String.format("{\"click\":{\"username\":\"%s\",\"x\":%d,\"y\":%d,\"color\":\"%s\"},\"gameid\":1}",
+                        username, startx, starty, game.loginManager.usernames.get(username));
+        result = update(game, msg);
+        assertEquals((String) game.grid.grid[startx][starty].color,
+                        (String) game.loginManager.usernames.get(username).name());
+        
+        msg = String.format("{\"click\":{\"username\":\"%s\",\"x\":%d,\"y\":%d,\"color\":\"%s\"},\"gameid\":1}",
+                        username, endx, endy, game.loginManager.usernames.get(username));
+        result = update(game, msg);
+        assertEquals((String) game.grid.grid[endx][endy].color,
+                        (String) game.loginManager.usernames.get(username).name());
+        
+        msg = String.format("{\"startClick\":{\"x\":%d,\"y\":%d},\"endClick\":{\"x\":%d,\"y\":%d},\"gameid\":1,\"color\":\"%s\",\"username\":\"%s\"}",
+                        startx, starty, endx, endy, game.loginManager.usernames.get(username), username);
+        result = update(game, msg);
+
+        points = word.getPoints();
+        for (Point p : points) {
+                assertEquals((String) game.grid.grid[p.x][p.y].color,
+                                (String) game.loginManager.usernames.get(username).name());
+        }
+
+        Leaderboard leaderboard = game.Leaderboard.getLeaderboard();
+        
+
+
+
+
+
+        // // > 7707 1 {\"YouAre\":\"XPLAYER\",\"GameId\":1}
+        // // < 7746 *
+        // // {\"Players\":\"XPLAYER\",\"CurrentTurn\":\"NOPLAYER\",\"Button\":[\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\"],\"Msg\":[\"Waiting
+        // // for other player to join\",\"\"],\"GameId\":1}
+
+        // // > 17987 2 {\"YouAre\":\"OPLAYER\",\"GameId\":1}
+        // // game.Players = PlayerType.OPLAYER;
+        // game.StartGame();
+
+        // msg = "{\"Players\":\"OPLAYER\",\"CurrentTurn\":\"XPLAYER\",\"Button\":[\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\"],\"Msg\":[\"You are X. Your turn\",\"You are O. Other players turn\"],\"GameId\":1}";
+        // assertTrue(msg.indexOf("\"Msg\":[\"You are X. Your turn\"")>-1);
+         
+        // result = update(game, "{\"Button\":0,\"PlayerIdx\":\"XPLAYER\",\"GameId\":1}");
+       
+        // // {\"Players\":\"OPLAYER\",\"CurrentTurn\":\"OPLAYER\",\"Button\":[\"XPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\"],\"Msg\":[\"Other
+       
+        // // Players Move.\",\"Your Move.\"],\"GameId\":1}
+        // result = update(game,"{\"Button\":1,\"PlayerIdx\":\"OPLAYER\",\"GameId\":1}");
+        // // > 24067 *
+        // // {\"Players\":\"OPLAYER\",\"CurrentTurn\":\"XPLAYER\",\"Button\":[\"XPLAYER\",\"OPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\"],\"Msg\":[\"Your
+        // // Move.\",\"Other Players Move.\"],\"GameId\":1}
+        // result = update(game,"{\"Button\":4,\"PlayerIdx\":\"XPLAYER\",\"GameId\":1}");
+        // // > 25126 *
+        // // {\"Players\":\"OPLAYER\",\"CurrentTurn\":\"OPLAYER\",\"Button\":[\"XPLAYER\",\"OPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"XPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\"],\"Msg\":[\"Other
+        // // Players Move.\",\"Your Move.\"],\"GameId\":1}
+        // result = update(game,"{\"Button\":2,\"PlayerIdx\":\"OPLAYER\",\"GameId\":1}");
+        // // > 26285 *
+        // // {\"Players\":\"OPLAYER\",\"CurrentTurn\":\"XPLAYER\",\"Button\":[\"XPLAYER\",\"OPLAYER\",\"OPLAYER\",\"NOPLAYER\",\"XPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\"],\"Msg\":[\"Your
+        // // Move.\",\"Other Players Move.\"],\"GameId\":1}
+        // result = update(game,"{\"Button\":8,\"PlayerIdx\":\"XPLAYER\",\"GameId\":1}");
+        
+        // assertTrue(result.indexOf("[\"You Win!\",\"You Lose!\"]")>-1);
+       
+        // // > 27683 *
+        // // {\"Players\":\"OPLAYER\",\"CurrentTurn\":\"NOPLAYER\",\"Button\":[\"XPLAYER\",\"OPLAYER\",\"OPLAYER\",\"NOPLAYER\",\"XPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"XPLAYER\"],\"Msg\":[\"You
+        // // Win!\",\"You Lose!\"],\"GameId\":1}
+
     }
 }
