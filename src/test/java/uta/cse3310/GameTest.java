@@ -33,7 +33,6 @@ public class GameTest {
         game.StartGame();
         // Assuming player 1 tries to make an illegal move at index 0
         UserEvent userEvent = new UserEvent();
-        Grid grid = new Grid();
         userEvent.PlayerId = PlayerType.player_1;
         userEvent.button = 0;
         userEvent.GameId = 1;
@@ -54,9 +53,21 @@ public class GameTest {
         game.loginManager.registerUser("player4");
         Assert.assertEquals(4, game.loginManager.currentGameSize);
 
-
         Assert.assertEquals(4, game.loginManager.getRegisteredUsers().size());
 
+    }
+    
+    public void testPlayerToId() {
+        Game game = new Game();
+        game.loginManager.registerUser("player1");
+        game.loginManager.registerUser("player2");
+        game.loginManager.registerUser("player3");
+        game.loginManager.registerUser("player4");
+
+        Assert.assertEquals(2, game.playerToId(PlayerType.player_1));
+        Assert.assertEquals(3, game.playerToId(PlayerType.player_2));
+        Assert.assertEquals(4, game.playerToId(PlayerType.player_3));
+        Assert.assertEquals(0, game.playerToId(PlayerType.NoPlayer));
     }
 
 }
