@@ -4,7 +4,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import java.util.List;
-import java.util.ArrayList;
+
 
 public class LoginManagerUnitTest extends TestCase {
     private LoginManager loginManager;
@@ -87,6 +87,24 @@ public class LoginManagerUnitTest extends TestCase {
     public void testRemoveNonExistentUser() {
         // Test removing a non-existent user
         assertFalse(loginManager.removeUser("NonExistentUser"));
+    }
+
+    public void testNameUnique() {
+        // Test registering users with the same name
+        loginManager.registerUser("User1");
+        loginManager.registerUser("User2");
+
+        // Test the number of registered users
+        assertNotSame(loginManager.getRegisteredUsers().get(0), loginManager.getRegisteredUsers().get(1));
+    }
+
+    public void testPlayerColorUnique() {
+        // Test registering users with the same name
+        loginManager.registerUser("User1");
+        loginManager.registerUser("User2");
+
+        // Test the number of registered users
+        assertNotSame(loginManager.usernames.get("User1"), loginManager.usernames.get("User2"));
     }
 
 }
