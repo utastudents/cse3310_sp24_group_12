@@ -7,7 +7,7 @@ import java.util.Arrays;
 import junit.framework.Assert;
 
 
-public class WordTest {
+public class WordUnitTest {
 
     public void testEquals() {
         Word word1 = new Word("test", 0, 3, 0, 0, 4);
