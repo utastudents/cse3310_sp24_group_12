@@ -8,9 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -113,17 +110,19 @@ public class WholeGameTest
 
         game.leaderboard.updateLeaderboard(game.scores.score);
 
-        StringBuilder formatScores = new StringBuilder();
+        //StringBuilder formatScores = new StringBuilder();
         List<Map.Entry<String, Integer>> sortedScores = new ArrayList<>(game.scores.score.entrySet());
         sortedScores.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
-
+        
+        StringBuilder expectedLeaderboardBuilder = new StringBuilder();
         // Fill up the stringbuilder with the players and their scores
         for (Map.Entry<String, Integer> entry : game.scores.score.entrySet()) {
-            formatScores.append("Player: ").append(entry.getKey()).append("   Score: ").append(entry.getValue())
+            expectedLeaderboardBuilder.append("Player: ").append(entry.getKey()).append("   Score: ").append(entry.getValue())
                     .append("\n");
         }
-
-        assertEquals(formatScores.toString(), game.leaderboard.generateLeaderboard());
+        String expectedLeaderboard = expectedLeaderboardBuilder.toString();
+        assertEquals(expectedLeaderboard, game.leaderboard.generateLeaderboard());
+        
 
     }
 }
