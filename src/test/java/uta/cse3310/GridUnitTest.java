@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import junit.framework.Assert;
 
-public class GridTest {
+public class GridUnitTest {
 
     public void testCreateGrid() {
         Grid grid = new Grid();
