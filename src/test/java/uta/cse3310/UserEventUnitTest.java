@@ -4,7 +4,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public class UserEventTest extends TestCase{
+public class UserEventUnitTest extends TestCase{
 
     public void testAttributes(){
         //Check if attributes are initialized correctly
