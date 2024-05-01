@@ -28,6 +28,7 @@ import java.util.Map;
          for(Map.Entry<String, Integer> entry : score.entrySet()){
              formatScores.append("Player: ").append(entry.getKey()).append("   Score: ").append(entry.getValue())
                     .append("\n");
+                    //working
          }
 
          //return the formatted stringbuilder

@@ -122,6 +122,7 @@ public class WholeGameTest
         }
         String expectedLeaderboard = expectedLeaderboardBuilder.toString();
         assertEquals(expectedLeaderboard, game.leaderboard.generateLeaderboard());
+        
 
     }
 }
