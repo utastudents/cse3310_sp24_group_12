@@ -2,7 +2,7 @@ package uta.cse3310;
 
 import junit.framework.TestCase;
 
-public class ServerEventTest extends TestCase{
+public class ServerEventUnitTest extends TestCase{
 
     public void testAttributes(){
         //Check if attributes are initialized correctly
