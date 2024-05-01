@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>uta.cse3310</groupId>
-  <artifactId>The Word Search Game - Group 12</artifactId>
+  <artifactId>TWSG</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>The Word Search Game - Group 12</name>
-  <description>A simple game example.</description>
+  <name>Word Search Game - Group 12</name>
+  <description>A word search game created by group 12 as a part of CSE3310's final project.</description>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
