@@ -58,7 +58,7 @@ public class LeaderboardTest
         }
 
         ////////////////////////////////////////////////////////////////////////////
-        public void testGame() {
+        public void testLeaderboard() {
                 Game game = new Game();
 
                 game.GameId = 1;
@@ -82,6 +82,9 @@ public class LeaderboardTest
 
                 msg = "startCountdown";
                 result = update(game, msg);
+                
+                assertEquals(game.scores.getScore("testing1"), 0);
+                assertEquals(game.scores.getScore("testing2"), 0);
 
                 List<Word> wordList = new ArrayList<>(game.grid.wordsInGrid);
 
