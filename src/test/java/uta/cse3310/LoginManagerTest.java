@@ -53,6 +53,16 @@ public class LoginManagerTest extends TestCase {
         result = update(game, msg);
         assertEquals("testing4", game.loginManager.getRegisteredUsers().get(0));
 
+        // Testing a username that is shorter than 3 characters
+        msg = "{\"register\":{\"username\":\"testing4\"},\"gameid\":1}";
+        result = update(game, msg);
+        assertNotSame("te", game.loginManager.getRegisteredUsers().get(0));
+
+        // Testing a duplicate username
+        msg = "{\"register\":{\"username\":\"testing1\"},\"gameid\":1}";
+        result = update(game, msg);
+        assertNotSame("testing1", game.loginManager.getRegisteredUsers().get(0));
+
         List<String> registeredUsers = game.loginManager.getRegisteredUsers();
         assertEquals(4, registeredUsers.size());
         assertTrue(registeredUsers.contains("testing1"));
