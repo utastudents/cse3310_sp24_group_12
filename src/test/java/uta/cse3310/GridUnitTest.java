@@ -10,6 +10,12 @@ public class GridUnitTest {
         Assert.assertNotNull(grid.grid);
     }
 
+    public void testGridSize() {
+        Grid grid = new Grid();
+        grid.createGrid();
+        Assert.assertEquals(20, grid.grid.length);
+    }
+
     public void testCheckWordHorizontal() {
         Grid grid = new Grid();
         grid.createGrid();
