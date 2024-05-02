@@ -63,6 +63,14 @@ public class LoginManagerTest extends TestCase {
         result = update(game, msg);
         assertNotSame("testing1", game.loginManager.getRegisteredUsers().get(0));
 
+        assertNotSame(game.loginManager.usernames.get("testing1"), game.loginManager.usernames.get("testing2"));
+        assertNotSame(game.loginManager.usernames.get("testing1"), game.loginManager.usernames.get("testing3"));
+        assertNotSame(game.loginManager.usernames.get("testing1"), game.loginManager.usernames.get("testing4"));
+        assertNotSame(game.loginManager.usernames.get("testing2"), game.loginManager.usernames.get("testing3"));
+        assertNotSame(game.loginManager.usernames.get("testing2"), game.loginManager.usernames.get("testing4"));
+        assertNotSame(game.loginManager.usernames.get("testing3"), game.loginManager.usernames.get("testing4"));
+        
+
         List<String> registeredUsers = game.loginManager.getRegisteredUsers();
         assertEquals(4, registeredUsers.size());
         assertTrue(registeredUsers.contains("testing1"));
