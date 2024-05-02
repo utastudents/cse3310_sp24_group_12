@@ -16,6 +16,18 @@ public class WordListUnitTest {
         }
     }
 
+    public void testWordLength() {
+        WordList wordList = new WordList();
+        try {
+            wordList.loadWords();
+            for (String word : wordList.wordList) {
+                Assert.assertTrue(word.length() >= 3);
+            }
+        } catch (IOException e) {
+            Assert.fail("Exception should not be thrown when loading words");
+        }
+    }
+
     public void testGetRandomWord() {
         WordList wordList = new WordList();
         try {
