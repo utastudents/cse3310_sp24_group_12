@@ -83,13 +83,42 @@ public class LeaderboardTest
                 msg = "startCountdown";
                 result = update(game, msg);
 
-                game.scores.updateScore("testing1", 2);
-                game.scores.updateScore("testing2", 0);
+                List<Word> wordList = new ArrayList<>(game.grid.wordsInGrid);
+
+                Word word = wordList.get(0);
+                int startx = word.startx;
+                int starty = word.starty;
+                int endx = word.endx;
+                int endy = word.endy;
+                String username = "testing1";
+
+                msg = String.format("{\"click\":{\"username\":\"%s\",\"x\":%d,\"y\":%d,\"color\":\"%s\"},\"gameid\":1}",
+                                username, startx, starty, game.loginManager.usernames.get(username));
+                result = update(game, msg);
+                assertEquals((String) game.grid.grid[startx][starty].color,
+                                (String) game.loginManager.usernames.get(username).name());
+
+                msg = String.format("{\"click\":{\"username\":\"%s\",\"x\":%d,\"y\":%d,\"color\":\"%s\"},\"gameid\":1}",
+                                username, endx, endy, game.loginManager.usernames.get(username));
+                result = update(game, msg);
+                assertEquals((String) game.grid.grid[endx][endy].color,
+                                (String) game.loginManager.usernames.get(username).name());
+
+                msg = String.format(
+                                "{\"startClick\":{\"x\":%d,\"y\":%d},\"endClick\":{\"x\":%d,\"y\":%d},\"gameid\":1,\"color\":\"%s\",\"username\":\"%s\"}",
+                                startx, starty, endx, endy, game.loginManager.usernames.get(username), username);
+                result = update(game, msg);
+
+                ArrayList<Point> points = word.getPoints();
+                for (Point p : points) {
+                        assertEquals((String) game.grid.grid[p.x][p.y].color,
+                                        (String) game.loginManager.usernames.get(username).name());
+                }
                 
 
                 String leaderboard = game.leaderboard.generateLeaderboard();
 
-                assertTrue(leaderboard.contains("Player: testing1   Score: 2"));
+                assertTrue(leaderboard.contains("Player: testing1   Score: 1"));
                 assertTrue(leaderboard.contains("Player: testing2   Score: 0"));
 
                 
