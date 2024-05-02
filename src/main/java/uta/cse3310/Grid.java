@@ -53,7 +53,7 @@ public class Grid {
 
     int wordCount = 0;
 
-    while (wordCount < (size * size) * 0.5) {
+    while (wordCount < (size * size) * 0.67) {
       String word = wordList.getRandomWord(); // Get a random word from the word list
       int wordLength = word.length();
 
@@ -148,7 +148,7 @@ public class Grid {
           wordCount += wordLength;
 
           // Check if 80% of the grid is filled with valid words
-          if (wordCount >= (size * size) * 0.5) {
+          if (wordCount >= (size * size) * 0.6) {
             break;
           }
         }
